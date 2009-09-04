@@ -1,0 +1,4 @@
+/sudo:root@OZU:/etc/avahi/services/daap.service
+#_asudo_broot@OZU_b_aetc_aavahi_aservices_adaap.service#
+/sudo:root@OZU:/etc/init.d/mt-daapd
+#_asudo_broot@OZU_b_aetc_ainit.d_amt-daapd#
