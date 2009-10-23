@@ -60,13 +60,10 @@
 ;;=======================================================================
 ;;Mac Misc
 ;;=======================================================================
-;; Macのキーバインドを使う。optionをメタキーにする。
-;; (mac-key-mode 1)
-;; (setq mac-option-modifier 'meta)
-;; フォント設定
-;; (if (eq window-system 'mac) (require 'carbon-font))
-;; (fixed-width-set-fontset "hirakaku_w3" 14)
-;; (setq fixed-width-rescale nil)
+;; Command-Key and Option-Key
+(setq ns-command-modifier (quote meta))
+(setq ns-alternate-modifier (quote super))
+
 
 
 ;;=====================================================
