@@ -1,3 +1,4 @@
+;; .emacs.d を再帰的に読み込み
 (let ((default-directory "~/.emacs.d"))
 (setq load-path (cons default-directory load-path))
 (normal-top-level-add-subdirs-to-load-path))
@@ -8,14 +9,18 @@
 ;; ==============================================
 ;; Misc
 ;; ===============================================
-(setq inhibit-startup-message t)				;; スタートアップページを表示しない
-(setq make-backup-files nil)					;; バックアップファイルを作らない
+;; スタートアップページを表示しない
+(setq inhibit-startup-message t)
+
+;; バックアップファイルを作らない
+(setq make-backup-files nil)	
       
 ;; フレームのタイトル
 (setq frame-title-format
       `( " %b " (buffer-file-name "( %f )") " on ",(system-name)
         )
 )
+
 ;; シフト + 矢印で範囲選択
 (setq pc-select-selection-keys-only t)
 (pc-selection-mode 1)
@@ -28,15 +33,21 @@
 ;; gnuserv の設定
 ;;
 
-(mouse-wheel-mode t)						;; ホイールマウス
+;; ホイールマウス
+(mouse-wheel-mode t)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
+;; カーソルのある行番号を表示
+(setq line-number-mode t)
 
-(setq line-number-mode t)					;; カーソルのある行番号を表示
-(auto-compression-mode t)					;; 日本語infoの文字化け防止
-(set-scroll-bar-mode 'right)					;; スクロールバーを右に表示
-								;; gnome clipboard
+;; 日本語infoの文字化け防止
+(auto-compression-mode t)
+
+;; スクロールバーを右に表示
+(set-scroll-bar-mode 'right)
+
+;; gnome clipboard
 (cond (window-system
        (setq x-select-enable-clipboard t)
        ))
@@ -73,6 +84,7 @@
 (define-key function-key-map [67109029] [?\C-\\])
 (define-key function-key-map [134217893] [?\M-\\])
 (define-key function-key-map [201326757] [?\C-\M-\\])
+
 
 ;;=====================================================
 ;; ウィンドウ設定
@@ -116,21 +128,22 @@
              ))
     (save-buffer)
     ))
-
 (defun my-window-size-load ()
   (let* ((file "~/.emacs.d/.framesize.el"))
     (if (file-exists-p file)
         (load file))))
-
 (my-window-size-load)
-
 ;; Call the function above at C-x C-c.
 (defadvice save-buffers-kill-emacs
   (before save-frame-size activate)
   (my-window-size-save))
 
+;;ピープ音を消す
+(setq visible-bell t)
 
-(add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))			;; ウィンドウを透明化
+;; ウィンドウを透明化
+(add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
+
 
 ;;=====================================================
 ;; バッファタブ
@@ -140,6 +153,7 @@
 (global-set-key [(control shift tab)] 'tabbar-backward)
 (global-set-key [(control tab)]       'tabbar-forward)
 (tabbar-mode)
+
 
 ;;==============================================
 ;; indent
@@ -151,9 +165,7 @@
 (setq indent-tabs-mode nil)
 (setq c-tab-always-indent nil)
 (setq c-basic-offset 4)
-;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント]
-
-
+;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
 
 
 ;;=====================================================
@@ -170,6 +182,7 @@
 		(setq indent-tabs-mode nil)
 ))
 
+
 ;;===========================================================
 ;; sgml-mode
 ;;=========================================================
@@ -182,6 +195,8 @@
 		(setq indent-tabs-mode nil)
 		(setq sgml-basic-offset 4)
 ))
+
+
 ;;=========================
 ;; mmm-mode
 ;;=================================
@@ -195,11 +210,11 @@
 (mmm-add-mode-ext-class nil "\\.php?\\'" 'html-php)
 (mmm-add-classes '(
    
-    (html-php
-    :submode php-mode 
-    :front "<\\?php *echo " 
-    :back "\\?>" 
-    )
+    ;; (html-php
+    ;; :submode php-mode 
+    ;; :front "<\\?php *echo " 
+    ;; :back "\\?>" 
+    ;; )
     (html-php 
     :submode php-mode 
     :front "<\\?\\(php\\)?" 
@@ -207,27 +222,20 @@
     )    ))
 
 ;;php-modeでtab出来ない問題を解決
-(defun save-mmm-c-locals ()
-(with-temp-buffer
-(php-mode)
-(dolist (v (buffer-local-variables))
-(when (string-match "\\`c-" (symbol-name (car v)))
-(add-to-list 'mmm-save-local-variables `(,(car v) nil
-,mmm-c-derived-modes))))))
+;; (defun save-mmm-c-locals ()
+;; (with-temp-buffer
+;; (php-mode)
+;; (dolist (v (buffer-local-variables))
+;; (when (string-match "\\`c-" (symbol-name (car v)))
+;; (add-to-list 'mmm-save-local-variables `(,(car v) nil
+;; ,mmm-c-derived-modes))))))
 
-(save-mmm-c-locals)
+;; (save-mmm-c-locals)
+
 
 ;;=================================================
 ;; js2-mode
 ;;=====================================================
-;; (autoload 'js2-mode "js2" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;; (add-hook 'js2-mode-hook
-;;           '(lambda ()
-;;              (setq js2-basic-offset 4)))
-
-
-;;; js2-mode
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
@@ -309,6 +317,7 @@
 
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
 
+
 ;;=================================================
 ;; ruby-mode 
 ;;
@@ -325,6 +334,14 @@
   (c-set-style "ruby"))
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 
+
+;;=======================================================================
+;; yaml-mode
+;;=====================================================================
+ (require 'yaml-mode)
+ (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+
 ;;=================================================
 ;; rinari
 ;;=====================================================
@@ -338,6 +355,7 @@
 (add-hook 'rhtml-mode-hook
     (lambda () (rinari-launch)))
 
+
 ;;=======================================================================
 ;; yasnippet
 ;;=====================================================================
@@ -345,10 +363,12 @@
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/eschulte-yasnippets-rails-9b12c79/rails-snippets")
 
+
 ;;=======================================================================
 ;; minibuf-isearch
 ;;=====================================================================
 (require 'minibuf-isearch)
+
 
 ;;=======================================================================
 ;; session
@@ -366,12 +386,6 @@
   (add-hook 'after-init-hook 'session-initialize)
   ;; 前回閉じたときの位置にカーソルを復帰
   (setq session-undo-check -1))
-
-;;=======================================================================
-;; yaml-mode
-;;=====================================================================
- (require 'yaml-mode)
- (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 
 ;;=======================================================================
