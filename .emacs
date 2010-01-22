@@ -415,19 +415,6 @@
   (setq session-undo-check -1))
 
 
-;;tramp
-
-;;  (require 'tramp)
-;;  (setq tramp-default-method "ssh")
-
-
-;;  (add-to-list 'tramp-default-proxies-alist
-;;               '(nil nil "/ssh:%u@%h:"))
-;; ;; (add-to-list 'tramp-default-proxies-alist '("OZU\\'" "\\`root\\'" nil)) ;; 追加
-;;  (add-to-list 'tramp-default-proxies-alist '("localhost\\'" "\\`root\\'" nil))	 ;; 追加
-
-
-
 
 ;;=======================================================================
 ;; color
