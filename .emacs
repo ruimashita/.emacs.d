@@ -768,3 +768,12 @@
 
 (my-color-theme)
 
+
+;;http://d.hatena.ne.jp/kakurasan/20090807/p1
+(if (>= emacs-major-version 23)
+ (progn
+  (set-default-font "Liberation Mono-12")
+  (set-fontset-font (frame-parameter nil 'font)
+                     'japanese-jisx0208
+                     '("M+1P+IPAG" . "unicode-bmp")))
+)
