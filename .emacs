@@ -25,8 +25,6 @@
 ;; Ubuntu Misc
 ;; =======================================================================
 
-;; gnuserv の設定
-;;
 
 (mouse-wheel-mode t)						;; ホイールマウス
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
@@ -34,7 +32,7 @@
 
 
 (setq line-number-mode t)					;; カーソルのある行番号を表示
-(auto-compression-mode t)					;; 日本語infoの文字化け防止
+;;(auto-compression-mode t)					;; 日本語infoの文字化け防止
 (set-scroll-bar-mode 'right)					;; スクロールバーを右に表示
 								;; gnome clipboard
 (cond (window-system
@@ -151,15 +149,33 @@
 (setq indent-tabs-mode nil)
 (setq c-tab-always-indent nil)
 (setq c-basic-offset 4)
-;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント]
+;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
 
 
+
+
+
+
+;;===========================================================
+;; sgml-mode
+;;=========================================================
+(require 'sgml-mode)
+(autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
+
+(add-hook 
+	'sgml-mode-hook 
+	'(lambda () 
+		(setq tab-width 4)
+		(setq sgml-indent-step 4)
+		(setq indent-tabs-mode nil)
+		(setq sgml-basic-offset 4)
+))
 
 
 ;;=====================================================
 ;; phpmode
 ;;==============================================
-;(require 'php-mode)
+;;(require 'php-mode)
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
 (add-hook 
@@ -170,18 +186,10 @@
 		(setq indent-tabs-mode nil)
 ))
 
-;;===========================================================
-;; sgml-mode
-;;=========================================================
-(require 'sgml-mode)
-(add-hook 
-	'sgml-mode-hook 
-	'(lambda () 
-		(setq tab-width 4)
-		(setq sgml-indent-step 4)
-		(setq indent-tabs-mode nil)
-		(setq sgml-basic-offset 4)
-))
+
+
+
+
 ;;=========================
 ;; mmm-mode
 ;;=================================
@@ -191,31 +199,53 @@
 (set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
 (set-face-background 'mmm-default-submode-face "gray20")	;; submodeの時の背景色
 ;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
-(add-to-list 'auto-mode-alist '("\\.php?\\'" . sgml-mode))
-(mmm-add-mode-ext-class nil "\\.php?\\'" 'html-php)
+
 (mmm-add-classes '(
-   
-    (html-php
-    :submode php-mode 
-    :front "<\\?php *echo " 
-    :back "\\?>" 
-    )
     (html-php 
     :submode php-mode 
     :front "<\\?\\(php\\)?" 
     :back "\\?>" 
     )    ))
+    ;; (html-php
+    ;; :submode php-mode 
+    ;; :front "<\\?php *echo " 
+    ;; :back "\\?>" 
+    ;; )
+
+
+(mmm-add-mode-ext-class nil "\\.php?\\'" 'html-php)
+(add-to-list 'auto-mode-alist '("\\.php?\\'" . html-mode))
+
 
 ;;php-modeでtab出来ない問題を解決
-(defun save-mmm-c-locals ()
-(with-temp-buffer
-(php-mode)
-(dolist (v (buffer-local-variables))
-(when (string-match "\\`c-" (symbol-name (car v)))
-(add-to-list 'mmm-save-local-variables `(,(car v) nil
-,mmm-c-derived-modes))))))
+;; (defun save-mmm-c-locals ()
+;; (with-temp-buffer
+;; (php-mode)
+;; (dolist (v (buffer-local-variables))
+;; (when (string-match "\\`c-" (symbol-name (car v)))
+;; (add-to-list 'mmm-save-local-variables `(,(car v) nil
+;; ,mmm-c-derived-modes))))))
 
-(save-mmm-c-locals)
+;; (save-mmm-c-locals)
+
+;;=========================
+;; css-mode
+;;=================================
+(autoload 'css-mode "css-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.css?\\'" . css-mode))
+
+;;タブ幅を4に
+(setq cssm-indent-level 4)
+;;インデントをc-styleにする
+(setq cssm-indent-function #'cssm-c-style-indenter)
+;; C-\ で補完
+(add-hook 'css-mode-hook
+          '(lambda ()
+             (define-key cssm-mode-map
+                         "\C-\\"
+                         'cssm-complete-property)
+             ))
+
 
 ;;=================================================
 ;; js2-mode
@@ -372,6 +402,20 @@
 ;;=====================================================================
  (require 'yaml-mode)
  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+
+;;tramp
+
+;;  (require 'tramp)
+;;  (setq tramp-default-method "ssh")
+
+
+;;  (add-to-list 'tramp-default-proxies-alist
+;;               '(nil nil "/ssh:%u@%h:"))
+;; ;; (add-to-list 'tramp-default-proxies-alist '("OZU\\'" "\\`root\\'" nil)) ;; 追加
+;;  (add-to-list 'tramp-default-proxies-alist '("localhost\\'" "\\`root\\'" nil))	 ;; 追加
+
+
 
 
 ;;=======================================================================
