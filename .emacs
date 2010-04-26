@@ -147,10 +147,10 @@
 ;; バッファタブ
 ;;=====================================================
 
-(require 'tabbar)
-(global-set-key [(control shift tab)] 'tabbar-backward)
-(global-set-key [(control tab)]       'tabbar-forward)
-(tabbar-mode)
+;;(require 'tabbar)
+;;(global-set-key [(control shift tab)] 'tabbar-backward)
+;;(global-set-key [(control tab)]       'tabbar-forward)
+;;(tabbar-mode)
 
 
 ;;==============================================
@@ -171,16 +171,16 @@
 ;; sgml-mode
 ;;=========================================================
 
-(require 'sgml-mode)
+;;(autoload 'sgml-mode “psgml” “Major mode to edit SGML files.” t) 
 (autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
 
 (add-hook 
 	'sgml-mode-hook 
 	'(lambda () 
-		(setq tab-width 4)
-		(setq sgml-indent-step 4)
+		(setq tab-width 2)
+		(setq sgml-indent-step 2)
 		(setq indent-tabs-mode nil)
-		(setq sgml-basic-offset 4)
+		(setq sgml-basic-offset 2)
 ))
 
 
@@ -226,7 +226,7 @@
 
 
 (mmm-add-mode-ext-class nil "\\.php?\\'" 'html-php)
-(add-to-list 'auto-mode-alist '("\\.php?\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.php?\\'" . sgml-mode))
 
 
 ;;php-modeでtab出来ない問題を解決
@@ -380,8 +380,13 @@
 (require 'rhtml-mode)
 (setq auto-mode-alist (cons '("\\.erb$" . rhtml-mode) auto-mode-alist))
 (add-hook 'rhtml-mode-hook
-    (lambda () (rinari-launch)))
-
+          (lambda () (rinari-launch)
+            (setq tab-width 2)
+            (setq sgml-indent-step 2)
+            (setq indent-tabs-mode nil)
+            (setq sgml-basic-offset 2)
+            )
+          )
 
 ;;=======================================================================
 ;; yasnippet
