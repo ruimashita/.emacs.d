@@ -170,8 +170,7 @@
 ;;===========================================================
 ;; sgml-mode
 ;;=========================================================
-
-;;(autoload 'sgml-mode “psgml” “Major mode to edit SGML files.” t) 
+(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
 (autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
 
 (add-hook 
@@ -205,40 +204,37 @@
 ;;=========================
 ;; mmm-mode
 ;;=================================
-(require 'mmm-mode)
+(require 'mmm-auto)
 (setq mmm-global-mode 'maybe)
 (setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
 (set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
-(set-face-background 'mmm-default-submode-face "gray20")	;; submodeの時の背景色
+(set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
 ;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
 
+(mmm-add-mode-ext-class nil "\\.php?\\'" 'sgml-php)
 (mmm-add-classes '(
-    (html-php 
+    (sgml-php 
     :submode php-mode 
     :front "<\\?\\(php\\)?" 
     :back "\\?>" 
     )    ))
-    ;; (html-php
-    ;; :submode php-mode 
-    ;; :front "<\\?php *echo " 
-    ;; :back "\\?>" 
-    ;; )
-
-
-(mmm-add-mode-ext-class nil "\\.php?\\'" 'html-php)
-(add-to-list 'auto-mode-alist '("\\.php?\\'" . sgml-mode))
-
 
 ;;php-modeでtab出来ない問題を解決
-;; (defun save-mmm-c-locals ()
-;; (with-temp-buffer
-;; (php-mode)
-;; (dolist (v (buffer-local-variables))
-;; (when (string-match "\\`c-" (symbol-name (car v)))
-;; (add-to-list 'mmm-save-local-variables `(,(car v) nil
-;; ,mmm-c-derived-modes))))))
+(defun save-mmm-c-locals ()
+  (with-temp-buffer
+    (php-mode)
+    (dolist (v (buffer-local-variables))
+      (when (string-match "\\`c-" (symbol-name (car v)))
+        (add-to-list 'mmm-save-local-variables `(,(car v) nil ,mmm-c-derived-modes))
+        )
+      )
+    )
+  )
 
-;; (save-mmm-c-locals)
+(save-mmm-c-locals)
+
+(add-to-list 'auto-mode-alist '("\\.php?\\'" . sgml-mode))
+
 
 
 ;;=========================
@@ -754,7 +750,7 @@
      (tooltip ((t (:background "lightyellow" :foreground "black"))))
      (trailing-whitespace ((t (:background "red"))))
      (underline ((t (:underline t))))
-;;     (variable-pitch ((t (:family "Sans Serif"))))
+     (variable-pitch ((t (:family "Sans Serif"))))
      (vertical-border ((t (nil))))
      (which-func ((t (:foreground "Blue1"))))
      (widget-button ((t (:bold t :weight bold))))
@@ -783,4 +779,5 @@
                     '("Hiragino Kaku Gothic Pro" . "unicode-bmp")))
 )
 
-;;   '("M+1P+IPAG" . "unicode-bmp")))
+
+
