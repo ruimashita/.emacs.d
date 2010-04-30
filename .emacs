@@ -137,7 +137,8 @@
   (my-window-size-save))
 
 ;;ピープ音を消す
-(setq visible-bell t)
+;;(setq visible-bell t)
+(setq ring-bell-function 'ignore)
 
 ;; ウィンドウを透明化
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
@@ -779,5 +780,10 @@
                     '("Hiragino Kaku Gothic Pro" . "unicode-bmp")))
 )
 
+;;=======================================================================
+;; auto-complete
+;;=====================================================================
+(require 'auto-complete)
+(global-auto-complete-mode t)
 
 
