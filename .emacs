@@ -50,8 +50,21 @@
        (setq x-select-enable-clipboard t)
        ))
 
-;;(load-library "anthy")						;; Anthy CTRL-\で入力モード切替え
-;;(setq default-input-method "japanese-anthy")
+;; Anthy 
+(load-library "anthy")
+(setq anthy-accept-timeout 1)
+(setq default-input-method "japanese-anthy")
+; Shift-space to toggle anthy-mode (default is Ctrl-\)
+(global-set-key (kbd "M-SPC") 'anthy-mode)
+;; 半角スペース
+(setq anthy-wide-space " ")
+;; アンダーライン
+(set-face-underline 'anthy-underline-face t)
+;; フェンス | を削除
+(setq anthy-preedit-begin-mark "")
+;; その他のローマ字かな変換
+;;(anthy-change-hiragana-map   "/"   "・")
+
 
 
 ;; 言語・文字コード関連の設定
