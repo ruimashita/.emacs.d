@@ -7,3 +7,6 @@
 [submodule "auto-complete-acr.el"]
 	path = auto-complete-acr.el
 	url = git://github.com/myuhe/auto-complete-acr.el.git
+[submodule "rvm.el"]
+	path = rvm.el
+	url = git://github.com/senny/rvm.el.git
