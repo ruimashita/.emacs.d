@@ -6,6 +6,10 @@
 ;;(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 ;; デバッグ
 (setq debug-on-error t)
+
+
+
+
 ;; ==============================================
 ;; Misc
 ;; ===============================================
@@ -27,7 +31,7 @@
 
 
 ;; =======================================================================
-;; Ubuntu Misc
+;;  Misc
 ;; =======================================================================
 
 
@@ -68,7 +72,6 @@
 
 
 ;; 言語・文字コード関連の設定
-(when (equal emacs-major-version 21) (require 'un-define))
 (set-language-environment "Japanese")
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -78,10 +81,27 @@
 (set-default-coding-systems 'utf-8)
 (setq file-name-coding-system 'utf-8)
 
+;; =======================================================================
+;;  OSX Misc
+;; =======================================================================
 
-;;=======================================================================
-;;Mac Misc
-;;=======================================================================
+;; Check if system is Darwin/Mac OS X
+(defun system-type-is-darwin ()
+(interactive)
+"Return true if system is darwin-based (Mac OS X)"
+(string-equal system-type "darwin")
+)
+
+;; Check if system is GNU/Linux
+(defun system-type-is-gnu ()
+(interactive)
+"Return true if system is GNU/Linux-based"
+(string-equal system-type "gnu/linux")
+)
+
+;;  if Mac OS X
+(if (system-type-is-darwin)
+
 ;; Command-Key and Option-Key
 (setq ns-command-modifier (quote meta))
 (setq ns-alternate-modifier (quote super))
@@ -95,6 +115,9 @@
 (define-key function-key-map [67109029] [?\C-\\])
 (define-key function-key-map [134217893] [?\M-\\])
 (define-key function-key-map [201326757] [?\C-\M-\\])
+
+)
+
 
 
 ;;=====================================================
