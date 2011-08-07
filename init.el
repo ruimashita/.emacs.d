@@ -18,7 +18,10 @@
 
 ;; バックアップファイルを作らない
 (setq make-backup-files nil)	
-      
+
+;; メニューバーを表示しない
+(setq menu-bar-mode nil)
+
 ;; フレームのタイトル
 (setq frame-title-format
       `( " %b " (buffer-file-name "( %f )") " on ",(system-name)
