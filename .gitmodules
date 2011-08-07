@@ -5,8 +5,8 @@
 	path = auto-complete
 	url = git://github.com/m2ym/auto-complete.git
 [submodule "auto-complete-acr.el"]
-	path = auto-complete-acr.el
+	path = auto-complete-acr
 	url = git://github.com/myuhe/auto-complete-acr.el.git
 [submodule "rvm.el"]
-	path = rvm.el
+	path = rvm
 	url = git://github.com/senny/rvm.el.git
