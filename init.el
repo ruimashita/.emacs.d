@@ -52,28 +52,6 @@
 ;; スクロールバーを右に表示
 (set-scroll-bar-mode 'right)
 
-;; gnome clipboard
-(cond (window-system
-       (setq x-select-enable-clipboard t)
-       ))
-
-;; ;; Anthy 
-;; (load-library "anthy")
-;; (setq anthy-accept-timeout 1)
-;; (setq default-input-method "japanese-anthy")
-;; ; Shift-space to toggle anthy-mode (default is Ctrl-\)
-;; (global-set-key (kbd "M-SPC") 'anthy-mode)
-;; ;; 半角スペース
-;; (setq anthy-wide-space " ")
-;; ;; アンダーライン
-;; (set-face-underline 'anthy-underline-face t)
-;; ;; フェンス | を削除
-;; (setq anthy-preedit-begin-mark "")
-;; ;; その他のローマ字かな変換
-;; ;;(anthy-change-hiragana-map   "/"   "・")
-
-
-
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
 (set-terminal-coding-system 'utf-8)
@@ -85,7 +63,7 @@
 (setq file-name-coding-system 'utf-8)
 
 ;; =======================================================================
-;;  OSX Misc
+;;  OSX or Ubunt
 ;; =======================================================================
 
 ;; Check if system is Darwin/Mac OS X
@@ -102,25 +80,57 @@
 (string-equal system-type "gnu/linux")
 )
 
+;;=======================================================================
 ;;  if Mac OS X
+;;=======================================================================
 (if (system-type-is-darwin)
 
-;; Command-Key and Option-Key
-(setq ns-command-modifier (quote meta))
-(setq ns-alternate-modifier (quote super))
+	;; Command-Key and Option-Key
+	(setq ns-command-modifier (quote meta))
+	(setq ns-alternate-modifier (quote super))
 
-;; 円期号をバックスラッシュに変更
-(define-key global-map [165] nil)
-(define-key global-map [67109029] nil)
-(define-key global-map [134217893] nil)
-(define-key global-map [201326757] nil)
-(define-key function-key-map [165] [?\\])
-(define-key function-key-map [67109029] [?\C-\\])
-(define-key function-key-map [134217893] [?\M-\\])
-(define-key function-key-map [201326757] [?\C-\M-\\])
+	;; 円期号をバックスラッシュに変更
+	(define-key global-map [165] nil)
+	(define-key global-map [67109029] nil)
+	(define-key global-map [134217893] nil)
+	(define-key global-map [201326757] nil)
+	(define-key function-key-map [165] [?\\])
+	(define-key function-key-map [67109029] [?\C-\\])
+	(define-key function-key-map [134217893] [?\M-\\])
+	(define-key function-key-map [201326757] [?\C-\M-\\])
 
 )
 
+;;=======================================================================
+;;  if Ubuntu
+;;=======================================================================
+(if (system-type-is-gnu)
+
+	;; ホイールマウス
+	(mouse-wheel-mode t)
+	(setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
+	(setq mouse-wheel-progressive-speed nil)
+
+
+
+	;; gnome clipboard
+	(cond (window-system
+	       (setq x-select-enable-clipboard t)
+	       ))
+
+	;; ibus
+	;; Ref: http://www11.atwiki.jp/s-irie/pages/21.html, http://d.hatena.ne.jp/iRiE/20100530/1275212234
+	;;     
+	(require 'ibus)
+	(add-hook 'after-init-hook 'ibus-mode-on)
+	;; Toggle input status by alt + SPC
+	(global-set-key "\M- " 'ibus-toggle)
+	;; すべてのバッファで入力状態を共有
+	(setq ibus-mode-local nil)
+	;; Busがオンの時のカーソル色
+	(setq ibus-cursor-color "aquamarine")
+
+)
 
 
 ;;=====================================================
