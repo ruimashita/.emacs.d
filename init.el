@@ -433,6 +433,7 @@
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/eschulte-yasnippets-rails-9b12c79/rails-snippets")
+(yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
 
 
 ;;=======================================================================
