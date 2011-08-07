@@ -834,3 +834,11 @@
 ;; 大文字小文字を区別しない
 (setq ac-ignore-case t)
 (put 'downcase-region 'disabled nil)
+
+
+;;=======================================================================
+;; rvm
+;;=====================================================================
+(require 'rvm)
+
+(rvm-use-default) ;; use rvm’s default ruby for the current Emacs session
