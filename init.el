@@ -32,17 +32,6 @@
 (setq pc-select-selection-keys-only t)
 (pc-selection-mode 1)
 
-
-;; =======================================================================
-;;  Misc
-;; =======================================================================
-
-
-;; ホイールマウス
-(mouse-wheel-mode t)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
-(setq mouse-wheel-progressive-speed nil)
-
 ;; カーソルのある行番号を表示
 (setq line-number-mode t)
 
@@ -54,6 +43,10 @@
 
 ;;buffer-menuのキーバインドを設定
 (global-set-key "\C-x\C-b" 'buffer-menu)
+
+;;ピープ音を消す
+;;(setq visible-bell t)
+(setq ring-bell-function 'ignore)
 
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
@@ -188,9 +181,6 @@
   (before save-frame-size activate)
   (my-window-size-save))
 
-;;ピープ音を消す
-;;(setq visible-bell t)
-(setq ring-bell-function 'ignore)
 
 ;; ウィンドウを透明化
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
