@@ -473,7 +473,7 @@
 (require 'color-theme)								;; ウィンドウカラーテーマ
 ;;(color-theme-initialize)
 ;;(color-theme-charcoal-black)
-(set-face-background 'region "#0d191e")					;; リージョンの背景色
+(set-face-background 'region "#192C35")					;; リージョンの背景色
 
 (defun my-color-theme ()
   "Color theme by mikio, created 2010-04-26."
