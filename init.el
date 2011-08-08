@@ -1,7 +1,7 @@
 ;; .emacs.d を再帰的に読み込み
 (let ((default-directory "~/.emacs.d"))
-(setq load-path (cons default-directory load-path))
-(normal-top-level-add-subdirs-to-load-path))
+  (setq load-path (cons default-directory load-path))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;;(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 ;; デバッグ
@@ -25,8 +25,8 @@
 ;; フレームのタイトル
 (setq frame-title-format
       `( " %b " (buffer-file-name "( %f )") " on ",(system-name)
-        )
-)
+         )
+      )
 
 ;; シフト + 矢印で範囲選択
 (setq pc-select-selection-keys-only t)
@@ -64,69 +64,69 @@
 
 ;; Check if system is Darwin/Mac OS X
 (defun system-type-is-darwin ()
-(interactive)
-"Return true if system is darwin-based (Mac OS X)"
-(string-equal system-type "darwin")
-)
+  (interactive)
+  "Return true if system is darwin-based (Mac OS X)"
+  (string-equal system-type "darwin")
+  )
 
 ;; Check if system is GNU/Linux
 (defun system-type-is-gnu ()
-(interactive)
-"Return true if system is GNU/Linux-based"
-(string-equal system-type "gnu/linux")
-)
+  (interactive)
+  "Return true if system is GNU/Linux-based"
+  (string-equal system-type "gnu/linux")
+  )
 
 ;;=======================================================================
 ;;  if Mac OS X
 ;;=======================================================================
 (if (system-type-is-darwin)
+    (progn
+      ;; Command-Key and Option-Key
+      (setq ns-command-modifier (quote meta))
+      (setq ns-alternate-modifier (quote super))
 
-	;; Command-Key and Option-Key
-	(setq ns-command-modifier (quote meta))
-	(setq ns-alternate-modifier (quote super))
-
-	;; 円期号をバックスラッシュに変更
-	(define-key global-map [165] nil)
-	(define-key global-map [67109029] nil)
-	(define-key global-map [134217893] nil)
-	(define-key global-map [201326757] nil)
-	(define-key function-key-map [165] [?\\])
-	(define-key function-key-map [67109029] [?\C-\\])
-	(define-key function-key-map [134217893] [?\M-\\])
-	(define-key function-key-map [201326757] [?\C-\M-\\])
-
-)
+      ;; 円期号をバックスラッシュに変更
+      (define-key global-map [165] nil)
+      (define-key global-map [67109029] nil)
+      (define-key global-map [134217893] nil)
+      (define-key global-map [201326757] nil)
+      (define-key function-key-map [165] [?\\])
+      (define-key function-key-map [67109029] [?\C-\\])
+      (define-key function-key-map [134217893] [?\M-\\])
+      (define-key function-key-map [201326757] [?\C-\M-\\])
+      )
+  )
 
 ;;=======================================================================
 ;;  if Ubuntu
 ;;=======================================================================
 (if (system-type-is-gnu)
+    (progn
+      ;; ホイールマウス
+      (mouse-wheel-mode t)
+      (setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
+      (setq mouse-wheel-progressive-speed nil)
 
-	;; ホイールマウス
-	(mouse-wheel-mode t)
-	(setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
-	(setq mouse-wheel-progressive-speed nil)
 
 
+      ;; gnome clipboard
+      (cond (window-system
+             (setq x-select-enable-clipboard t)
+             ))
 
-	;; gnome clipboard
-	(cond (window-system
-	       (setq x-select-enable-clipboard t)
-	       ))
-
-	;; ibus
-	;; Ref: http://www11.atwiki.jp/s-irie/pages/21.html, http://d.hatena.ne.jp/iRiE/20100530/1275212234
-	;;     
-	(require 'ibus)
-	(add-hook 'after-init-hook 'ibus-mode-on)
-	;; Toggle input status by alt + SPC
-	(global-set-key "\M- " 'ibus-toggle)
-	;; すべてのバッファで入力状態を共有
-	(setq ibus-mode-local nil)
-	;; Busがオンの時のカーソル色
-	(setq ibus-cursor-color "aquamarine")
-
-)
+      ;; ibus
+      ;; Ref: http://www11.atwiki.jp/s-irie/pages/21.html, http://d.hatena.ne.jp/iRiE/20100530/1275212234
+      ;;     
+      (require 'ibus)
+      (add-hook 'after-init-hook 'ibus-mode-on)
+      ;; Toggle input status by alt + SPC
+      (global-set-key "\M- " 'ibus-toggle)
+      ;; すべてのバッファで入力状態を共有
+      (setq ibus-mode-local nil)
+      ;; Busがオンの時のカーソル色
+      (setq ibus-cursor-color "aquamarine")
+      )
+  )
 
 
 ;;=====================================================
@@ -217,13 +217,13 @@
 (autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
 
 (add-hook 
-	'sgml-mode-hook 
-	'(lambda () 
-		(setq tab-width 2)
-		(setq sgml-indent-step 2)
-		(setq indent-tabs-mode nil)
-		(setq sgml-basic-offset 2)
-))
+ 'sgml-mode-hook 
+ '(lambda () 
+    (setq tab-width 2)
+    (setq sgml-indent-step 2)
+    (setq indent-tabs-mode nil)
+    (setq sgml-basic-offset 2)
+    ))
 
 
 
@@ -235,12 +235,12 @@
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
 (add-hook 
-	'php-mode-user-hook 
-	'(lambda () 
-		(setq tab-width 4)
-		(setq c-basic-offset 4)
-		(setq indent-tabs-mode nil)
-))
+ 'php-mode-user-hook 
+ '(lambda () 
+    (setq tab-width 4)
+    (setq c-basic-offset 4)
+    (setq indent-tabs-mode nil)
+    ))
 
 
 
@@ -256,11 +256,11 @@
 
 (mmm-add-mode-ext-class nil "\\.php?\\'" 'sgml-php)
 (mmm-add-classes '(
-    (sgml-php 
-    :submode php-mode 
-    :front "<\\?\\(php\\)?" 
-    :back "\\?>" 
-    )    ))
+                   (sgml-php 
+                    :submode php-mode 
+                    :front "<\\?\\(php\\)?" 
+                    :back "\\?>" 
+                    )    ))
 
 ;;php-modeでtab出来ない問題を解決
 (defun save-mmm-c-locals ()
@@ -294,8 +294,8 @@
 (add-hook 'css-mode-hook
           '(lambda ()
              (define-key cssm-mode-map
-                         "\C-\\"
-                         'cssm-complete-property)
+               "\C-\\"
+               'cssm-complete-property)
              ))
 
 
@@ -305,8 +305,8 @@
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-; fixing indentation
-; refer to http://mihai.bazon.net/projects/editing-javascript-with-emacs-js2-mode
+                                        ; fixing indentation
+                                        ; refer to http://mihai.bazon.net/projects/editing-javascript-with-emacs-js2-mode
 (autoload 'espresso-mode "espresso")
 
 (defun my-js2-indent-function ()
@@ -372,10 +372,10 @@
   (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
-  ; (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
+                                        ; (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
   (define-key js2-mode-map "\C-m" 'newline-and-indent)
-  ; (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
-  ; (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
+                                        ; (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
+                                        ; (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
   (define-key js2-mode-map "\C-\M-q" 'my-indent-sexp)
   (if (featurep 'js2-highlight-vars)
       (js2-highlight-vars-mode))
@@ -390,11 +390,11 @@
 ;; Ref: http://pub.cozmixng.org/~the-rwiki/rw-cgi.rb?cmd=view;name=Emacs
 ;;=====================================================
 (c-add-style "ruby" '("bsd"
-                     (c-basic-offset . 4)
-                     (c-offsets-alist (case-label . 2)
-                                      (label . 2)
-                                      (statement-case-intro . 2)
-                                      (statement-case-open . 2))))
+                      (c-basic-offset . 4)
+                      (c-offsets-alist (case-label . 2)
+                                       (label . 2)
+                                       (statement-case-intro . 2)
+                                       (statement-case-open . 2))))
 
 (defun my-c-mode-hook ()
   (c-set-style "ruby"))
@@ -404,8 +404,8 @@
 ;;=======================================================================
 ;; yaml-mode
 ;;=====================================================================
- (require 'yaml-mode)
- (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 
 ;;=================================================
@@ -439,7 +439,7 @@
 ;;=======================================================================
 ;; minibuf-isearch
 ;;=====================================================================
-(require 'minibuf-isearch)
+;; (require 'minibuf-isearch)
 
 
 ;;=======================================================================
@@ -810,19 +810,19 @@
      (yas/field-debug-face ((t (nil))))
      (yas/field-highlight-face ((t (:background "DimGrey"))))
      (zmacs-region ((t (:background "DarkSlateBlue")))))))
-     
+
 (my-color-theme)
 
 ;;=======================================================================
 ;; font http://d.hatena.ne.jp/kakurasan/20090807/p1
 ;;=====================================================================
 (if (>= emacs-major-version 23)
- (progn
-  (set-default-font "Inconsolata-14")
-  (set-fontset-font (frame-parameter nil 'font)
-                     'japanese-jisx0208
-                    '("Hiragino Kaku Gothic Pro" . "unicode-bmp")))
-)
+    (progn
+      (set-default-font "Inconsolata-14")
+      (set-fontset-font (frame-parameter nil 'font)
+                        'japanese-jisx0208
+                        '("Hiragino Kaku Gothic Pro" . "unicode-bmp")))
+  )
 
 ;;=======================================================================
 ;; auto-complete
