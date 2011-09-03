@@ -10,6 +10,8 @@
 
 
 
+
+
 ;; ==============================================
 ;; Misc
 ;; ===============================================
@@ -208,6 +210,7 @@
 (setq c-tab-always-indent nil)
 (setq c-basic-offset 4)
 ;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
+
 
 
 ;;===========================================================
@@ -447,7 +450,7 @@
 ;;=====================================================================
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory "~/.emacs.d/eschulte-yasnippets-rails-9b12c79/rails-snippets")
+(yas/load-directory "~/.emacs.d/yasnippets-rails/rails-snippets")
 (yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
 
 

@@ -10,3 +10,9 @@
 [submodule "rvm.el"]
 	path = rvm
 	url = git://github.com/senny/rvm.el.git
+[submodule "yasnippets-rails"]
+	path = yasnippets-rails
+	url = https://github.com/eschulte/yasnippets-rails.git
+[submodule "rhtml"]
+	path = rhtml
+	url = https://github.com/eschulte/rhtml.git
