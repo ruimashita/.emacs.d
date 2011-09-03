@@ -5,7 +5,7 @@
 
 ;;(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 ;; デバッグ
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 
 
@@ -241,6 +241,21 @@
     (setq c-basic-offset 4)
     (setq indent-tabs-mode nil)
     ))
+
+
+
+;;=====================================================
+;; php completion
+;;==============================================
+;; (add-hook 'php-mode-hook
+;;          (lambda ()
+;;              (require 'php-completion)
+;;              (php-completion-mode t)
+;;              (define-key php-mode-map (kbd "C-o") 'phpcmp-complete)
+;;              (when (require 'auto-complete nil t)
+;;              (make-variable-buffer-local 'ac-sources)
+;;              (add-to-list 'ac-sources 'ac-source-php-completion)
+;;              (auto-complete-mode t))))
 
 
 
@@ -842,3 +857,13 @@
 (require 'rvm)
 
 (rvm-use-default) ;; use rvm’s default ruby for the current Emacs session
+
+
+
+;;=======================================================================
+;; auto-install
+;;=====================================================================
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/auto-install/")
+(auto-install-update-emacswiki-package-name t)
+(auto-install-compatibility-setup)             ; 互換性確保
