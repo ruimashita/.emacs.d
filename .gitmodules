@@ -16,3 +16,6 @@
 [submodule "rhtml"]
 	path = rhtml
 	url = https://github.com/eschulte/rhtml.git
+[submodule "coffee-mode"]
+	path = coffee-mode
+	url = git://github.com/defunkt/coffee-mode.git
