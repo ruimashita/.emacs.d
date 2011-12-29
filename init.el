@@ -19,7 +19,7 @@
 (setq inhibit-startup-message t)
 
 ;; バックアップファイルを作らない
-(setq make-backup-files nil)	
+(setq make-backup-files nil)
 
 ;; メニューバーを表示しない
 (setq menu-bar-mode nil)
@@ -49,6 +49,13 @@
 ;;ピープ音を消す
 ;;(setq visible-bell t)
 (setq ring-bell-function 'ignore)
+
+;; 対応する括弧を光らせる。
+(show-paren-mode 1)
+
+;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
+(setq show-paren-style 'mixed)
+
 
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
@@ -118,7 +125,7 @@
 
       ;; ibus
       ;; Ref: http://www11.atwiki.jp/s-irie/pages/21.html, http://d.hatena.ne.jp/iRiE/20100530/1275212234
-      ;;     
+      ;;
       (require 'ibus)
       (add-hook 'after-init-hook 'ibus-mode-on)
       ;; Toggle input status by alt + SPC
@@ -219,9 +226,9 @@
 (autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
 (autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
 
-(add-hook 
- 'sgml-mode-hook 
- '(lambda () 
+(add-hook
+ 'sgml-mode-hook
+ '(lambda ()
     (setq tab-width 2)
     (setq sgml-indent-step 2)
     (setq indent-tabs-mode nil)
@@ -237,9 +244,9 @@
 ;;(require 'php-mode)
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
-(add-hook 
- 'php-mode-user-hook 
- '(lambda () 
+(add-hook
+ 'php-mode-user-hook
+ '(lambda ()
     (setq tab-width 4)
     (setq c-basic-offset 4)
     (setq indent-tabs-mode nil)
@@ -274,10 +281,10 @@
 
 (mmm-add-mode-ext-class nil "\\.php?\\'" 'sgml-php)
 (mmm-add-classes '(
-                   (sgml-php 
-                    :submode php-mode 
-                    :front "<\\?\\(php\\)?" 
-                    :back "\\?>" 
+                   (sgml-php
+                    :submode php-mode
+                    :front "<\\?\\(php\\)?"
+                    :back "\\?>"
                     )    ))
 
 ;;php-modeでtab出来ない問題を解決
@@ -403,7 +410,7 @@
 
 
 ;;=================================================
-;; ruby-mode 
+;; ruby-mode
 ;;
 ;; Ref: http://pub.cozmixng.org/~the-rwiki/rw-cgi.rb?cmd=view;name=Emacs
 ;;=====================================================
@@ -870,3 +877,45 @@
 (setq auto-install-directory "~/.emacs.d/auto-install/")
 (auto-install-update-emacswiki-package-name t)
 (auto-install-compatibility-setup)             ; 互換性確保
+
+
+
+;;=======================================================================
+;; coffee-mode
+;;=====================================================================
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(defun coffee-custom ()
+  "coffee-mode-hook"
+
+  ;; CoffeeScript uses two spaces.
+  (make-local-variable 'tab-width)
+  (set 'tab-width 4)
+
+  ;; If you don't have js2-mode
+  ;; (setq coffee-js-mode 'javascript-mode)
+
+  ;; If you don't want your compiled files to be wrapped
+  (setq coffee-args-compile '("-c" "--bare"))
+
+  ;; *Messages* spam
+  (setq coffee-debug-mode t)
+
+  ;; Emacs key binding
+  (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+
+  ;; Riding edge.
+  (setq coffee-command "~/node_modules/.bin/coffee")
+
+  ;; Compile '.coffee' files on every save
+  (and (file-exists-p (buffer-file-name))
+       (file-exists-p (coffee-compiled-file-name))
+       (coffee-cos-mode t)))
+
+(add-hook 'coffee-mode-hook 'coffee-custom)
+
+
+;; PATH
+(setq path "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/Users/mikio/.gem/ruby/1.8/bin:/Users/mikio/android-sdk-mac_86/tools/:/Users/mikio/.nave/installed/0.5.10/bin:/Users/mikio/node_modules/.bin")
+(setenv "PATH" path)
