@@ -22,3 +22,9 @@
 [submodule "haml-mode"]
 	path = haml-mode
 	url = https://github.com/nex3/haml-mode.git
+[submodule "sass-mode"]
+	path = sass-mode
+	url = https://github.com/nex3/sass-mode.git
+[submodule "scss-mode"]
+	path = scss-mode
+	url = https://github.com/antonj/scss-mode.git
