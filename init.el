@@ -919,3 +919,14 @@
 ;; PATH
 (setq path "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/Users/mikio/.gem/ruby/1.8/bin:/Users/mikio/android-sdk-mac_86/tools/:/Users/mikio/.nave/installed/0.5.10/bin:/Users/mikio/node_modules/.bin")
 (setenv "PATH" path)
+
+
+;;=======================================================================
+;; haml-mode
+;;=====================================================================
+(require 'haml-mode)
+ (add-hook 'haml-mode-hook
+           '(lambda ()
+              (setq indent-tabs-mode nil)
+              (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+
