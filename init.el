@@ -940,3 +940,13 @@
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 
 
+(require 'tramp)
+;;(setq tramp-default-method "ssh")
+(add-to-list 'tramp-default-proxies-alist
+             '(".*" "\\`root\\'" "/ssh:%h:"))
+(add-to-list 'tramp-default-proxies-alist
+             '("localhost" "\\`root\\'" nil))
+(add-to-list 'tramp-default-proxies-alist
+             '((regexp-quote (system-name)) "\\`root\\'" nil))
+
+
