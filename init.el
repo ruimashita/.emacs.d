@@ -930,3 +930,13 @@
               (setq indent-tabs-mode nil)
               (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 
+
+;;=======================================================================
+;; as-mode
+;;=====================================================================
+
+(require 'actionscript-mode)
+(autoload 'actionscript-mode "actionscript-mode" "Major mode for actionscript." t)
+(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+
+

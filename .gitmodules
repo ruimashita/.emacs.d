@@ -28,3 +28,6 @@
 [submodule "scss-mode"]
 	path = scss-mode
 	url = https://github.com/antonj/scss-mode.git
+[submodule "actionscript-mode"]
+	path = actionscript-mode
+	url = https://github.com/austinhaas/actionscript-mode.git
