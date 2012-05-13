@@ -857,11 +857,12 @@
 ;;=======================================================================
 ;; rvm
 ;;=====================================================================
-(require 'rvm)
-
-(rvm-use-default) ;; use rvm’s default ruby for the current Emacs session
-
-
+(if (file-exists-p "~/.rvm/bin/rvm")
+    (progn
+      (require 'rvm)
+      (rvm-use-default) ;; use rvm’s default ruby for the current Emacs session
+      )
+  )
 
 ;;=======================================================================
 ;; auto-install
