@@ -219,6 +219,15 @@
 ;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
 
 
+;;=======================================================================
+;; auto-install
+;;=====================================================================
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/auto-install/")
+(auto-install-update-emacswiki-package-name t)
+(auto-install-compatibility-setup)             ; 互換性確保
+
+
 
 ;;===========================================================
 ;; sgml-mode
@@ -301,7 +310,7 @@
 
 (save-mmm-c-locals)
 
-(add-to-list 'auto-mode-alist '("\\.php?\\'" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.php?\\'" . php-mode))
 
 
 
@@ -438,6 +447,7 @@
 ;;=====================================================
 (require 'ido)
 (ido-mode t)
+
 
 (require 'rinari)
 
@@ -871,13 +881,7 @@
       )
   )
 
-;;=======================================================================
-;; auto-install
-;;=====================================================================
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/auto-install/")
-(auto-install-update-emacswiki-package-name t)
-(auto-install-compatibility-setup)             ; 互換性確保
+
 
 
 
@@ -949,5 +953,67 @@
              '("localhost" "\\`root\\'" nil))
 (add-to-list 'tramp-default-proxies-alist
              '((regexp-quote (system-name)) "\\`root\\'" nil))
+
+
+
+
+;; http://d.hatena.ne.jp/khiker/20090604/forward_word
+(defun my-forward-word (arg)
+  (interactive "p")
+  (let ((char-category
+         '(lambda (ch)
+            (when ch
+              (let* ((c (char-category-set ch))
+                     ct)
+                (cond
+                 ((aref c ?a)
+                  (cond
+                   ((or (and (>= ?z ch) (>= ch ?a))
+                        (and (>= ?Z ch) (>= ch ?A))
+                        (and (>= ?9 ch) (>= ch ?0))
+                        (= ch ?-) (= ch ?_))
+                    'alphnum)
+                   (t
+                    'ex-alphnum)))
+                 ((aref c ?j) ; Japanese
+                  (cond
+                   ((aref c ?K) 'katakana)
+                   ((aref c ?A) '2alphnum)
+                   ((aref c ?H) 'hiragana)
+                   ((aref c ?C) 'kanji)
+                   (t 'ja)))
+                 ((aref c ?k) 'hankaku-kana)
+                 ((aref c ?r) 'j-roman)
+                 (t 'etc))))))
+        (direction 'char-after)
+        char type)
+    (when (null arg) (setq arg 1))
+    (when (> 0 arg)
+      (setq arg (- arg))
+      (setq direction 'char-before))
+    (while (> arg 0)
+      (setq char (funcall direction))
+      (setq type (funcall char-category char))
+      (while (and (prog1 (not (eq (point) (point-max)))
+                    (cond ((eq direction 'char-after)
+                           (goto-char (1+ (point))))
+                          (t
+                           (goto-char (1- (point))))))
+                  (eq type (funcall char-category (funcall direction)))))
+      (setq arg (1- arg)))
+    type))
+(defun my-backward-word (arg)
+  (interactive "p")
+  (my-forward-word (- (or arg 1))))
+
+;; 素のforward-word, backward-wordを潰す
+(global-set-key "\M-f" 'my-forward-word)
+(global-set-key "\M-b" 'my-backward-word)
+
+;; (defun my-forward-to-word (arg)
+;;   (interactive "p")
+;;   (or (re-search-forward (if (> arg 0) "\\(\\W\\b\\|.$\\)" "\\b\\W") nil t arg)
+;;       (goto-char (if (> arg 0) (point-max) (point-min)))))
+;; (global-set-key (kbd "M-f") my-forward-to-word)
 
 
