@@ -34,3 +34,6 @@
 [submodule "php-mode"]
 	path = php-mode
 	url = git://github.com/ejmr/php-mode.git
+[submodule "anything-config"]
+	path = anything-config
+	url = git://repo.or.cz/anything-config.git
