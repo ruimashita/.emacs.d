@@ -134,6 +134,8 @@
       (setq ibus-mode-local nil)
       ;; Busがオンの時のカーソル色
       (setq ibus-cursor-color "aquamarine")
+      ;; C-SPC は Set Mark , C-/ は Undo に使う
+      (ibus-define-common-key [?\C-\  ?\C-/]  nil)
       )
   )
 
@@ -217,15 +219,6 @@
 (setq c-tab-always-indent nil)
 (setq c-basic-offset 4)
 ;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
-
-
-;;=======================================================================
-;; auto-install
-;;=====================================================================
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/auto-install/")
-(auto-install-update-emacswiki-package-name t)
-(auto-install-compatibility-setup)             ; 互換性確保
 
 
 
@@ -859,6 +852,7 @@
                         '("Hiragino Kaku Gothic Pro" . "unicode-bmp")))
   )
 
+
 ;;=======================================================================
 ;; auto-complete
 ;;=====================================================================
@@ -1010,10 +1004,22 @@
 (global-set-key "\M-f" 'my-forward-word)
 (global-set-key "\M-b" 'my-backward-word)
 
-;; (defun my-forward-to-word (arg)
-;;   (interactive "p")
-;;   (or (re-search-forward (if (> arg 0) "\\(\\W\\b\\|.$\\)" "\\b\\W") nil t arg)
-;;       (goto-char (if (> arg 0) (point-max) (point-min)))))
-;; (global-set-key (kbd "M-f") my-forward-to-word)
 
 
+;;=======================================================================
+;; auto-install
+;;=====================================================================
+;; (require 'auto-install)
+;; (setq auto-install-directory "~/.emacs.d/auto-install/")
+;; (auto-install-update-emacswiki-package-name t)
+;; (auto-install-compatibility-setup)             ; 互換性確保
+
+
+;;=======================================================================
+;; multi-term
+;;=====================================================================
+(require 'multi-term)
+(setq multi-term-program "/usr/bin/zsh")
+(global-set-key (kbd "C-c t") '(lambda ()
+                                (interactive)
+                                (multi-term)))
