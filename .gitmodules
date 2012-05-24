@@ -31,3 +31,6 @@
 [submodule "actionscript-mode"]
 	path = actionscript-mode
 	url = https://github.com/austinhaas/actionscript-mode.git
+[submodule "php-mode"]
+	path = php-mode
+	url = git://github.com/ejmr/php-mode.git
