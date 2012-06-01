@@ -1023,3 +1023,16 @@
 (global-set-key (kbd "C-c t") '(lambda ()
                                 (interactive)
                                 (multi-term)))
+
+
+
+;;=======================================================================
+;; elscreen
+;;=====================================================================
+(require 'elscreen)
+(global-set-key "\C-t" 'elscreen-clone)
+(global-set-key "\C-T" 'elscreen-clone)
+(global-set-key "\C-W" 'elscreen-kill)
+(global-set-key [(C-tab)] 'elscreen-next)
+(global-set-key [(C-S-iso-lefttab)] 'elscreen-previous)
+
