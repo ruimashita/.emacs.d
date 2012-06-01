@@ -8,10 +8,6 @@
 (setq debug-on-error nil)
 
 
-
-
-
-
 ;; ==============================================
 ;; Misc
 ;; ===============================================
@@ -116,8 +112,6 @@
       (setq mouse-wheel-scroll-amount '(1 ((shift) . 5) ((control) . nil)))
       (setq mouse-wheel-progressive-speed nil)
 
-
-
       ;; gnome clipboard
       (cond (window-system
              (setq x-select-enable-clipboard t)
@@ -192,19 +186,123 @@
   (before save-frame-size activate)
   (my-window-size-save))
 
-
 ;; ウィンドウを透明化
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
 
 
-;;=====================================================
-;; バッファタブ
-;;=====================================================
+;;=======================================================================
+;; elscreen
+;;=====================================================================
+(require 'elscreen)
+(global-set-key "\C-t" 'elscreen-clone)
+;;(global-set-key "\C-zk" 'elscreen-kill)
+(global-set-key [(C-tab)] 'elscreen-next)
+(global-set-key [(C-S-iso-lefttab)] 'elscreen-previous)
 
-;;(require 'tabbar)
-;;(global-set-key [(control shift tab)] 'tabbar-backward)
-;;(global-set-key [(control tab)]       'tabbar-forward)
-;;(tabbar-mode)
+
+;;=======================================================================
+;; tramp
+;;=====================================================================
+(require 'tramp)
+;;(setq tramp-default-method "ssh")
+(add-to-list 'tramp-default-proxies-alist
+             '(".*" "\\`root\\'" "/ssh:%h:"))
+(add-to-list 'tramp-default-proxies-alist
+             '("localhost" "\\`root\\'" nil))
+(add-to-list 'tramp-default-proxies-alist
+             '((regexp-quote (system-name)) "\\`root\\'" nil))
+
+
+;;=======================================================================
+;; multi-term
+;;=====================================================================
+(require 'multi-term)
+(setq multi-term-program "/usr/bin/zsh")
+(global-set-key (kbd "C-c t") '(lambda ()
+                                (interactive)
+                                (multi-term)))
+
+
+;;=======================================================================
+;; forward, backward
+;;=====================================================================
+;; http://d.hatena.ne.jp/khiker/20090604/forward_word
+(defun my-forward-word (arg)
+  (interactive "p")
+  (let ((char-category
+         '(lambda (ch)
+            (when ch
+              (let* ((c (char-category-set ch))
+                     ct)
+                (cond
+                 ((aref c ?a)
+                  (cond
+                   ((or (and (>= ?z ch) (>= ch ?a))
+                        (and (>= ?Z ch) (>= ch ?A))
+                        (and (>= ?9 ch) (>= ch ?0))
+                        (= ch ?-) (= ch ?_))
+                    'alphnum)
+                   (t
+                    'ex-alphnum)))
+                 ((aref c ?j) ; Japanese
+                  (cond
+                   ((aref c ?K) 'katakana)
+                   ((aref c ?A) '2alphnum)
+                   ((aref c ?H) 'hiragana)
+                   ((aref c ?C) 'kanji)
+                   (t 'ja)))
+                 ((aref c ?k) 'hankaku-kana)
+                 ((aref c ?r) 'j-roman)
+                 (t 'etc))))))
+        (direction 'char-after)
+        char type)
+    (when (null arg) (setq arg 1))
+    (when (> 0 arg)
+      (setq arg (- arg))
+      (setq direction 'char-before))
+    (while (> arg 0)
+      (setq char (funcall direction))
+      (setq type (funcall char-category char))
+      (while (and (prog1 (not (eq (point) (point-max)))
+                    (cond ((eq direction 'char-after)
+                           (goto-char (1+ (point))))
+                          (t
+                           (goto-char (1- (point))))))
+                  (eq type (funcall char-category (funcall direction)))))
+      (setq arg (1- arg)))
+    type))
+(defun my-backward-word (arg)
+  (interactive "p")
+  (my-forward-word (- (or arg 1))))
+
+;; 素のforward-word, backward-wordを潰す
+(global-set-key "\M-f" 'my-forward-word)
+(global-set-key "\M-b" 'my-backward-word)
+
+
+;;=======================================================================
+;; ido-mode
+;;=====================================================================
+(require 'ido)
+(ido-mode t)
+
+
+;;=======================================================================
+;; session
+;;=====================================================================
+;; kill-ringやミニバッファで過去に開いたファイルなどの履歴を保存する
+(when (require 'session nil t)
+  (setq session-initialize '(de-saveplace session keys menus places)
+        session-globals-include '((kill-ring 50)
+                                  (session-file-alist 500 t)
+                                  (file-name-history 10000)))
+  ;; これがないと file-name-history に500個保存する前に max-string に達する
+  (setq session-globals-max-string 100000000)
+  ;; デフォルトでは30!
+  (setq history-length t)
+  (add-hook 'after-init-hook 'session-initialize)
+  ;; 前回閉じたときの位置にカーソルを復帰
+  (setq session-undo-check -1))
 
 
 ;;==============================================
@@ -220,6 +318,31 @@
 (setq c-basic-offset 4)
 ;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
 
+
+;;=======================================================================
+;; auto-complete
+;;=====================================================================
+(require 'auto-complete)
+(global-auto-complete-mode t)
+
+(ac-set-trigger-key "TAB")
+(require 'auto-complete-yasnippet)
+(require 'auto-complete-acr)
+;; 大文字小文字を区別しない
+(setq ac-ignore-case t)
+(put 'downcase-region 'disabled nil)
+;; Simple Python Completion Source for Auto-Complete
+;; http://chrispoole.com/project/ac-python/
+(require 'ac-python)
+
+
+;;=======================================================================
+;; yasnippet
+;;=====================================================================
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippets-rails/rails-snippets")
+(yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
 
 
 ;;===========================================================
@@ -238,11 +361,9 @@
     ))
 
 
-
 ;;=====================================================
 ;; phpmode
 ;;==============================================
-
 ;;(require 'php-mode)
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
@@ -253,7 +374,6 @@
     (setq c-basic-offset 4)
     (setq indent-tabs-mode nil)
     ))
-
 
 
 ;;=====================================================
@@ -268,7 +388,6 @@
 ;;              (make-variable-buffer-local 'ac-sources)
 ;;              (add-to-list 'ac-sources 'ac-source-php-completion)
 ;;              (auto-complete-mode t))))
-
 
 
 ;;=========================
@@ -304,7 +423,6 @@
 (save-mmm-c-locals)
 
 (add-to-list 'auto-mode-alist '("\\.php?\\'" . php-mode))
-
 
 
 ;;=========================
@@ -438,10 +556,6 @@
 ;;=================================================
 ;; rinari
 ;;=====================================================
-(require 'ido)
-(ido-mode t)
-
-
 (require 'rinari)
 
 (require 'rhtml-mode)
@@ -455,38 +569,83 @@
             )
           )
 
-;;=======================================================================
-;; yasnippet
-;;=====================================================================
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/yasnippets-rails/rails-snippets")
-(yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
-
 
 ;;=======================================================================
-;; minibuf-isearch
+;; python-mode
 ;;=====================================================================
-;; (require 'minibuf-isearch)
+(setq auto-mode-alist
+      (cons '("\\.py$" . python-mode) auto-mode-alist))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+(add-hook 'python-mode-hook '(lambda ()
+                               (define-key python-mode-map (kbd "C-m") 'newline-and-indent)))
+
+;;=======================================================================
+;; rvm
+;;=====================================================================
+(if (file-exists-p "~/.rvm/bin/rvm")
+    (progn
+      (require 'rvm)
+      (rvm-use-default) ;; use rvm’s default ruby for the current Emacs session
+      )
+  )
 
 
 ;;=======================================================================
-;; session
+;; coffee-mode
 ;;=====================================================================
-;; kill-ringやミニバッファで過去に開いたファイルなどの履歴を保存する
-(when (require 'session nil t)
-  (setq session-initialize '(de-saveplace session keys menus places)
-        session-globals-include '((kill-ring 50)
-                                  (session-file-alist 500 t)
-                                  (file-name-history 10000)))
-  ;; これがないと file-name-history に500個保存する前に max-string に達する
-  (setq session-globals-max-string 100000000)
-  ;; デフォルトでは30!
-  (setq history-length t)
-  (add-hook 'after-init-hook 'session-initialize)
-  ;; 前回閉じたときの位置にカーソルを復帰
-  (setq session-undo-check -1))
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(defun coffee-custom ()
+  "coffee-mode-hook"
 
+  ;; CoffeeScript uses two spaces.
+  (make-local-variable 'tab-width)
+  (set 'tab-width 4)
+
+  ;; If you don't have js2-mode
+  ;; (setq coffee-js-mode 'javascript-mode)
+
+  ;; If you don't want your compiled files to be wrapped
+  (setq coffee-args-compile '("-c" "--bare"))
+
+  ;; *Messages* spam
+  (setq coffee-debug-mode t)
+
+  ;; Emacs key binding
+  (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+
+  ;; Riding edge.
+  (setq coffee-command "~/node_modules/.bin/coffee")
+
+  ;; Compile '.coffee' files on every save
+  (and (file-exists-p (buffer-file-name))
+       (file-exists-p (coffee-compiled-file-name))
+       (coffee-cos-mode t)))
+
+(add-hook 'coffee-mode-hook 'coffee-custom)
+
+;; PATH
+(setq path "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/Users/mikio/.gem/ruby/1.8/bin:/Users/mikio/android-sdk-mac_86/tools/:/Users/mikio/.nave/installed/0.5.10/bin:/Users/mikio/node_modules/.bin")
+(setenv "PATH" path)
+
+
+;;=======================================================================
+;; haml-mode
+;;=====================================================================
+(require 'haml-mode)
+ (add-hook 'haml-mode-hook
+           '(lambda ()
+              (setq indent-tabs-mode nil)
+              (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+
+
+;;=======================================================================
+;; as-mode
+;;=====================================================================
+(require 'actionscript-mode)
+(autoload 'actionscript-mode "actionscript-mode" "Major mode for actionscript." t)
+(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 
 
 ;;=======================================================================
@@ -853,156 +1012,7 @@
   )
 
 
-;;=======================================================================
-;; auto-complete
-;;=====================================================================
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(require 'auto-complete-yasnippet)
-(require 'auto-complete-acr)
-;; 大文字小文字を区別しない
-(setq ac-ignore-case t)
-(put 'downcase-region 'disabled nil)
 
-
-;;=======================================================================
-;; rvm
-;;=====================================================================
-(if (file-exists-p "~/.rvm/bin/rvm")
-    (progn
-      (require 'rvm)
-      (rvm-use-default) ;; use rvm’s default ruby for the current Emacs session
-      )
-  )
-
-
-
-
-
-;;=======================================================================
-;; coffee-mode
-;;=====================================================================
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-(defun coffee-custom ()
-  "coffee-mode-hook"
-
-  ;; CoffeeScript uses two spaces.
-  (make-local-variable 'tab-width)
-  (set 'tab-width 4)
-
-  ;; If you don't have js2-mode
-  ;; (setq coffee-js-mode 'javascript-mode)
-
-  ;; If you don't want your compiled files to be wrapped
-  (setq coffee-args-compile '("-c" "--bare"))
-
-  ;; *Messages* spam
-  (setq coffee-debug-mode t)
-
-  ;; Emacs key binding
-  (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
-
-  ;; Riding edge.
-  (setq coffee-command "~/node_modules/.bin/coffee")
-
-  ;; Compile '.coffee' files on every save
-  (and (file-exists-p (buffer-file-name))
-       (file-exists-p (coffee-compiled-file-name))
-       (coffee-cos-mode t)))
-
-(add-hook 'coffee-mode-hook 'coffee-custom)
-
-
-;; PATH
-(setq path "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/Users/mikio/.gem/ruby/1.8/bin:/Users/mikio/android-sdk-mac_86/tools/:/Users/mikio/.nave/installed/0.5.10/bin:/Users/mikio/node_modules/.bin")
-(setenv "PATH" path)
-
-
-;;=======================================================================
-;; haml-mode
-;;=====================================================================
-(require 'haml-mode)
- (add-hook 'haml-mode-hook
-           '(lambda ()
-              (setq indent-tabs-mode nil)
-              (define-key haml-mode-map "\C-m" 'newline-and-indent)))
-
-
-;;=======================================================================
-;; as-mode
-;;=====================================================================
-
-(require 'actionscript-mode)
-(autoload 'actionscript-mode "actionscript-mode" "Major mode for actionscript." t)
-(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
-
-
-(require 'tramp)
-;;(setq tramp-default-method "ssh")
-(add-to-list 'tramp-default-proxies-alist
-             '(".*" "\\`root\\'" "/ssh:%h:"))
-(add-to-list 'tramp-default-proxies-alist
-             '("localhost" "\\`root\\'" nil))
-(add-to-list 'tramp-default-proxies-alist
-             '((regexp-quote (system-name)) "\\`root\\'" nil))
-
-
-
-
-;; http://d.hatena.ne.jp/khiker/20090604/forward_word
-(defun my-forward-word (arg)
-  (interactive "p")
-  (let ((char-category
-         '(lambda (ch)
-            (when ch
-              (let* ((c (char-category-set ch))
-                     ct)
-                (cond
-                 ((aref c ?a)
-                  (cond
-                   ((or (and (>= ?z ch) (>= ch ?a))
-                        (and (>= ?Z ch) (>= ch ?A))
-                        (and (>= ?9 ch) (>= ch ?0))
-                        (= ch ?-) (= ch ?_))
-                    'alphnum)
-                   (t
-                    'ex-alphnum)))
-                 ((aref c ?j) ; Japanese
-                  (cond
-                   ((aref c ?K) 'katakana)
-                   ((aref c ?A) '2alphnum)
-                   ((aref c ?H) 'hiragana)
-                   ((aref c ?C) 'kanji)
-                   (t 'ja)))
-                 ((aref c ?k) 'hankaku-kana)
-                 ((aref c ?r) 'j-roman)
-                 (t 'etc))))))
-        (direction 'char-after)
-        char type)
-    (when (null arg) (setq arg 1))
-    (when (> 0 arg)
-      (setq arg (- arg))
-      (setq direction 'char-before))
-    (while (> arg 0)
-      (setq char (funcall direction))
-      (setq type (funcall char-category char))
-      (while (and (prog1 (not (eq (point) (point-max)))
-                    (cond ((eq direction 'char-after)
-                           (goto-char (1+ (point))))
-                          (t
-                           (goto-char (1- (point))))))
-                  (eq type (funcall char-category (funcall direction)))))
-      (setq arg (1- arg)))
-    type))
-(defun my-backward-word (arg)
-  (interactive "p")
-  (my-forward-word (- (or arg 1))))
-
-;; 素のforward-word, backward-wordを潰す
-(global-set-key "\M-f" 'my-forward-word)
-(global-set-key "\M-b" 'my-backward-word)
 
 
 
@@ -1014,25 +1024,4 @@
 ;; (auto-install-update-emacswiki-package-name t)
 ;; (auto-install-compatibility-setup)             ; 互換性確保
 
-
-;;=======================================================================
-;; multi-term
-;;=====================================================================
-(require 'multi-term)
-(setq multi-term-program "/usr/bin/zsh")
-(global-set-key (kbd "C-c t") '(lambda ()
-                                (interactive)
-                                (multi-term)))
-
-
-
-;;=======================================================================
-;; elscreen
-;;=====================================================================
-(require 'elscreen)
-(global-set-key "\C-t" 'elscreen-clone)
-(global-set-key "\C-T" 'elscreen-clone)
-(global-set-key "\C-W" 'elscreen-kill)
-(global-set-key [(C-tab)] 'elscreen-next)
-(global-set-key [(C-S-iso-lefttab)] 'elscreen-previous)
 
