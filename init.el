@@ -322,18 +322,18 @@
 ;;=======================================================================
 ;; auto-complete
 ;;=====================================================================
-(require 'auto-complete)
-(global-auto-complete-mode t)
+;;(require 'auto-complete)
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
+(ac-config-default)
 
+;; (global-auto-complete-mode t)
 (ac-set-trigger-key "TAB")
-(require 'auto-complete-yasnippet)
-(require 'auto-complete-acr)
+
 ;; 大文字小文字を区別しない
 (setq ac-ignore-case t)
 (put 'downcase-region 'disabled nil)
-;; Simple Python Completion Source for Auto-Complete
-;; http://chrispoole.com/project/ac-python/
-(require 'ac-python)
+
 
 
 ;;=======================================================================
@@ -573,11 +573,17 @@
 ;;=======================================================================
 ;; python-mode
 ;;=====================================================================
-(setq auto-mode-alist
-      (cons '("\\.py$" . python-mode) auto-mode-alist))
-(autoload 'python-mode "python-mode" "Python editing mode." t)
-(add-hook 'python-mode-hook '(lambda ()
-                               (define-key python-mode-map (kbd "C-m") 'newline-and-indent)))
+;; (autoload 'python-mode "python-mode" "Python editing mode." t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.py$" . python-mode) auto-mode-alist))
+;; (setq interpreter-mode-alist 
+;;       (cons '("python" . python-mode) interpreter-mode-alist))
+;;(add-hook 'python-mode-hook '(lambda ()
+;;                               (define-key python-mode-map (kbd "C-m") 'newline-and-indent)))
+
+;; Simple Python Completion Source for Auto-Complete
+;; http://chrispoole.com/project/ac-python/
+(require 'ac-python)
 
 ;;=======================================================================
 ;; rvm
