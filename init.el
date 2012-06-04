@@ -63,6 +63,28 @@
 (set-default-coding-systems 'utf-8)
 (setq file-name-coding-system 'utf-8)
 
+
+;; =======================================================================
+;; 全角 TAB に色をつける
+;; =======================================================================
+(defface my-face-b-1 '((t (:background "gray40"))) nil)
+(defface my-face-b-2 '((t (:background "gray15"))) nil)
+(defface my-face-u-1 '((t (:foreground "SteelBlue" :underline t))) nil)
+(defvar my-face-b-1 'my-face-b-1)
+(defvar my-face-b-2 'my-face-b-2)
+(defvar my-face-u-1 'my-face-u-1)
+
+(defadvice font-lock-mode (before my-font-lock-mode ())
+  (font-lock-add-keywords
+   major-mode
+   '(("\t" 0 my-face-b-2 append)
+     ("　" 0 my-face-b-1 append)
+     ("[ \t]+$" 0 my-face-u-1 append)
+     )))
+(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+(ad-activate 'font-lock-mode)
+
+
 ;; =======================================================================
 ;;  OSX or Ubunt
 ;; =======================================================================
@@ -312,9 +334,9 @@
 (setq-default tab-width 4)
 (setq default-tab-width 4)
 (setq tab-width 4)
-(setq-default indent-tabs-mode nil)
-(setq indent-tabs-mode nil)
-(setq c-tab-always-indent nil)
+(setq-default indent-tabs-mode t)
+(setq indent-tabs-mode t)
+(setq c-tab-always-indent t)
 (setq c-basic-offset 4)
 ;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
 
@@ -573,13 +595,52 @@
 ;;=======================================================================
 ;; python-mode
 ;;=====================================================================
-;; (autoload 'python-mode "python-mode" "Python editing mode." t)
-;; (setq auto-mode-alist
-;;       (cons '("\\.py$" . python-mode) auto-mode-alist))
-;; (setq interpreter-mode-alist 
-;;       (cons '("python" . python-mode) interpreter-mode-alist))
-;;(add-hook 'python-mode-hook '(lambda ()
-;;                               (define-key python-mode-map (kbd "C-m") 'newline-and-indent)))
+
+;; 改行でインデント
+(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
+
+
+;; django用 パス・環境変数 設定
+(defun get-django-setting-file (location filename)
+  (let* ((dir (file-name-directory location))
+         (path (concat dir filename)))
+    (if (file-exists-p path)
+        path
+      (if (not (equal dir "/"))
+          (get-django-setting-file (expand-file-name (concat dir "../")) filename)
+        ))))
+
+(defun get-django-setting-dir (location dirname)
+  (let* ( (dir (file-name-directory location))
+          (path (concat dir dirname)))
+    (if (file-directory-p path)
+        path
+      (if (not (equal dir "/"))
+          (get-django-setting-dir (expand-file-name (concat dir "/../")) dirname)
+        )
+      )))
+
+(defadvice run-python (before possibly-setup-django-project-environment)
+  (let* (
+         (settings-file (get-django-setting-file buffer-file-name "settings.py"))
+         (settings-dir (get-django-setting-dir buffer-file-name "settings"))
+         )
+    (if settings-dir 
+        (progn
+          (let* ( (project-dir (expand-file-name (concat settings-dir "/../"))) )
+            (setenv "PYTHONPATH" project-dir)))
+      (progn 
+        (let* (  (project-dir (file-name-directory settings-file)) )
+          (setenv "PYTHONPATH" project-dir))))
+    (setenv "DJANGO_SETTINGS_MODULE" "settings")
+    )
+)
+
+(add-hook 'python-mode-hook
+      '(lambda()
+         (setq indent-tabs-mode nil)
+         (setq python-indent 4)
+         ))
 
 ;; Simple Python Completion Source for Auto-Complete
 ;; http://chrispoole.com/project/ac-python/
