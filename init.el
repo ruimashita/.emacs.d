@@ -1031,3 +1031,5 @@
 ;; (auto-install-compatibility-setup)             ; 互換性確保
 
 
+
+(require 'nginx-mode)

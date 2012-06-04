@@ -37,3 +37,6 @@
 [submodule "anything-config"]
 	path = anything-config
 	url = git://repo.or.cz/anything-config.git
+[submodule "nginx-mode"]
+	path = nginx-mode
+	url = https://github.com/ajc/nginx-mode.git
