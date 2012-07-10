@@ -28,9 +28,9 @@
 
 (defvar django-html-mode-map
   (let ((django-html-mode-map (make-keymap)))
-    (define-key django-html-mode-map "\C-c\C-dj" 'newline-and-indent)
-    (define-key django-html-mode-map "\C-c\C-d]" 'django-html-close-tag)
-    (define-key django-html-mode-map "\C-c\C-di" 'django-html-insert-tag)
+    ;; (define-key django-html-mode-map "\C-c\C-dj" 'newline-and-indent)
+    ;; (define-key django-html-mode-map "\C-c\C-d]" 'django-html-close-tag)
+    ;; (define-key django-html-mode-map "\C-c\C-di" 'django-html-insert-tag)
     django-html-mode-map)
   "Keymap for Django major mode.")
 
