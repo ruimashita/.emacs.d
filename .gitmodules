@@ -40,3 +40,6 @@
 [submodule "nginx-mode"]
 	path = nginx-mode
 	url = https://github.com/ajc/nginx-mode.git
+[submodule "pony-mode"]
+	path = pony-mode
+	url = https://github.com/davidmiller/pony-mode.git
