@@ -469,7 +469,7 @@
 ;;=================================================
 ;; js2-mode
 ;;=====================================================
-(autoload 'js2-mode "js2" nil t)
+(autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
                                         ; fixing indentation
@@ -535,6 +535,7 @@
   (require 'espresso)
   (setq espresso-indent-level 4
         indent-tabs-mode nil
+		js2-mirror-mode nil ;; http://8-p.info/emacs-javascript.html
         c-basic-offset 4)
   (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
