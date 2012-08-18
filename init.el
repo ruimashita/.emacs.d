@@ -771,6 +771,17 @@
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 
 
+
+;;=======================================================================
+;; scss-mode
+;;=====================================================================
+(require 'scss-mode)
+(setq exec-path (cons (expand-file-name "~/.rvm/gems/ruby-1.9.3-head
+/bin") exec-path))
+(autoload 'scss-mode "scss-mode")
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+
 ;;=======================================================================
 ;; color
 ;;=====================================================================
