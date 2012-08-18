@@ -728,7 +728,7 @@
 
   ;; CoffeeScript uses two spaces.
   (make-local-variable 'tab-width)
-  (set 'tab-width 4)
+  (set 'tab-width 2)
 
   ;; If you don't have js2-mode
   ;; (setq coffee-js-mode 'javascript-mode)
@@ -751,10 +751,6 @@
        (coffee-cos-mode t)))
 
 (add-hook 'coffee-mode-hook 'coffee-custom)
-
-;; PATH
-(setq path "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/Users/mikio/.gem/ruby/1.8/bin:/Users/mikio/android-sdk-mac_86/tools/:/Users/mikio/.nave/installed/0.5.10/bin:/Users/mikio/node_modules/.bin")
-(setenv "PATH" path)
 
 
 ;;=======================================================================
