@@ -752,6 +752,8 @@
   ;; CoffeeScript uses two spaces.
   (make-local-variable 'tab-width)
   (set 'tab-width 2)
+  (setq coffee-tab-width 2)
+
 
   ;; If you don't have js2-mode
   ;; (setq coffee-js-mode 'javascript-mode)
@@ -771,9 +773,47 @@
   ;; Compile '.coffee' files on every save
   (and (file-exists-p (buffer-file-name))
        (file-exists-p (coffee-compiled-file-name))
-       (coffee-cos-mode t)))
+       (coffee-cos-mode t))
+
+  ;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
+  (define-key coffee-mode-map (kbd "<tab>") 'coffee-indent)
+  (define-key coffee-mode-map (kbd "<backtab>") 'coffee-unindent)
+)
 
 (add-hook 'coffee-mode-hook 'coffee-custom)
+
+;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
+(defun shift-region (numcols)
+  (setq region-start (region-beginning))
+  (setq region-finish (region-end))
+  (save-excursion
+    (if (< (point) (mark)) (exchange-point-and-mark))
+    (let ((save-mark (mark)))
+      (indent-rigidly region-start region-finish numcols))))
+
+(defun coffee-indent-block ()
+  (shift-region coffee-tab-width)
+  (setq deactivate-mark nil))
+
+(defun coffee-unindent-block ()
+  (shift-region (- coffee-tab-width))
+  (setq deactivate-mark nil))
+
+(defun coffee-indent ()
+  (interactive)
+  (if (and (boundp 'ac-trigger-command-p) (ac-trigger-command-p last-command))
+      (auto-complete)
+    (if mark-active
+        (coffee-indent-block)
+      (indent-for-tab-command))))
+
+(defun coffee-unindent ()
+  (interactive)
+  (if mark-active
+      (coffee-unindent-block)
+    (progn
+      (indent-line-to (- (current-indentation) coffee-tab-width)))))
+
 
 
 ;;=======================================================================
@@ -810,7 +850,7 @@
 ;; less-css-mode
 ;;=====================================================================
 (require 'less-css-mode)
-(autoload 'lesss-mode "less-css-mode")
+(autoload 'less-css-mode "less-css-mode")
 (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 
 
