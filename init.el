@@ -768,12 +768,12 @@
   (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
 
   ;; Riding edge.
-  (setq coffee-command "~/node_modules/.bin/coffee")
+  (setq coffee-command (expand-file-name "~/node_modules/.bin/coffee"))
 
   ;; Compile '.coffee' files on every save
-  (and (file-exists-p (buffer-file-name))
-       (file-exists-p (coffee-compiled-file-name))
-       (coffee-cos-mode t))
+  ;; (and (file-exists-p (buffer-file-name))
+  ;;      (file-exists-p (coffee-compiled-file-name))
+  ;;      (coffee-cos-mode t))
 
   ;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
   (define-key coffee-mode-map (kbd "<tab>") 'coffee-indent)
@@ -815,7 +815,7 @@
       (indent-line-to (- (current-indentation) coffee-tab-width)))))
 
 
-
+(add-to-list 'ac-modes 'coffee-mode)
 ;;=======================================================================
 ;; haml-mode
 ;;=====================================================================
