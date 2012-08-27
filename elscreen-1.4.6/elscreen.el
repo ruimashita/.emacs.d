@@ -33,6 +33,11 @@
 (static-defconst elscreen-on-emacs (and (not elscreen-on-xemacs)
                                         (>= emacs-major-version 21)))
 
+(defun elscreen-booleanp (value)  
+  "Return t if VALUE is boolean.  
+ This implements GNU Emacs 22.1's `booleanp' function in earlier Emacs.  
+ This function may be removed when Emacs 21 is no longer supported."  
+  (or (equal value t) (equal value nil)))  
 
 ;;; User Customizable Variables:
 
@@ -133,7 +138,7 @@ nil means don't display tabs."
                  (integer :tag "Show (fixed width tab)" :size 4 :value 16)
                  (const :tag "Hide" nil))
   :set (lambda (symbol value)
-         (when (or (booleanp value)
+         (when (or (elscreen-booleanp value)
                    (and (numberp value)
                         (> value 0)))
            (custom-set-default symbol value)
@@ -1691,6 +1696,8 @@ Use \\[toggle-read-only] to permit editing."
                   ("-e"                . elscreen-command-line-funcall))))
 
   (static-when elscreen-on-emacs
+    (if (string-match "^\\(19\\|2[0-2]\\)" emacs-version) ; emacs22 or prior-to
+	(progn
     (defun elscreen-e21-command-line ()
       (when (string-match "\\`-" argi)
         (error "Unknown option `%s'" argi))
@@ -1708,6 +1715,27 @@ Use \\[toggle-read-only] to permit editing."
     (add-hook 'after-init-hook (lambda ()
                                  (add-to-list 'command-line-functions
                                               'elscreen-e21-command-line t))))
+      ; else
+      (progn
+    (defun elscreen-e23-command-line ()
+      (when (string-match "\\`-" argi)
+        (error "Unknown option `%s'" argi))
+      (setq file-count (1+ file-count))
+      (setq inhibit-startup-buffer-menu t)
+      (let* ((file
+              (expand-file-name
+               (command-line-normalize-file-name orig-argi)
+               cl1-dir)))
+        (elscreen-command-line-find-file file file-count cl1-line cl1-column))
+      (setq cl1-line 0)
+      (setq cl1-column 0)
+      t) ; defun
+
+    (add-hook 'after-init-hook (lambda ()
+                                 (add-to-list 'command-line-functions
+                                              'elscreen-e23-command-line t))))
+      ); endif
+    )
 
   (static-when elscreen-on-xemacs
     (defadvice command-line-1 (around elscreen-xmas-command-line-1 activate)
