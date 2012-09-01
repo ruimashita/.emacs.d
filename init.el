@@ -1232,5 +1232,85 @@
 ;; (auto-install-compatibility-setup)             ; 互換性確保
 
 
-
 (require 'nginx-mode)
+
+
+;;=======================================================================
+;; anything
+;;=====================================================================
+(require 'anything-startup)
+
+
+(define-anything-type-attribute 'file
+    `((action
+       ("Find file" . anything-find-many-files)
+       ,(and (locate-library "popwin") '("Find file in popup window" . popwin:find-file))
+	   ,(and (locate-library "elscreen")
+                 '("Find file in Elscreen"  . anything-elscreen-find-file))
+       ("Find file as root" . anything-find-file-as-root)
+       ("Find file other window" . find-file-other-window)
+       ("Find file other frame" . find-file-other-frame)
+       ("Open dired in file's directory" . anything-c-open-dired)
+       ("Grep File(s) `C-u recurse'" . anything-find-files-grep)
+       ("Zgrep File(s) `C-u Recurse'" . anything-ff-zgrep)
+       ("Pdfgrep File(s)" . anything-ff-pdfgrep)
+       ("Checksum File" . anything-ff-checksum)
+       ("Ediff File" . anything-find-files-ediff-files)
+       ("Ediff Merge File" . anything-find-files-ediff-merge-files)
+       ("View file" . view-file)
+       ("Insert file" . insert-file)
+       ("Delete file(s)" . anything-delete-marked-files)
+       ("Open file externally (C-u to choose)" . anything-c-open-file-externally)
+       ("Open file with default tool" . anything-c-open-file-with-default-tool)
+       ("Find file in hex dump" . hexl-find-file))
+      (persistent-help . "Show this file")
+      (action-transformer anything-c-transform-file-load-el
+                          anything-c-transform-file-browse-url)
+      (candidate-transformer anything-c-w32-pathname-transformer
+                             anything-c-skip-current-file
+                             anything-c-skip-boring-files
+                             anything-c-shorten-home-path))
+  "File name.")
+
+
+
+(defun anything-filelist+ ()
+  "Preconfigured `anything' to open files/buffers/bookmarks instantly.
+
+This is a replacement for `anything-for-files'.
+See `anything-c-filelist-file-name' docstring for usage."
+  (interactive)
+  (anything-other-buffer
+   '(anything-c-source-ffap-line
+     anything-c-source-ffap-guesser
+     anything-c-source-buffers-list
+     anything-c-source-recentf
+     anything-c-source-bookmarks
+     anything-c-source-file-cache
+	 anything-c-source-files-in-current-dir+
+
+     anything-c-source-filelist)
+   "*anything file list*"))
+
+
+(global-set-key "\C-x\ b" 'anything-buffers-list)
+(global-set-key (kbd "C-;") 'anything-filelist+)
+(define-key global-map (kbd "M-y") 'anything-show-kill-ring)
+
+
+(setq anything-c-filelist-file-name "/tmp/all.filelist")
+(setq anything-grep-candidates-fast-directory-regexp "^/tmp")
+
+
+(defadvice agp-command-line (after insert-LANG=C-into-agp-command-line)
+  (while (string-match "\\(^\\|| \\)\\(grep -ih\\)" ad-return-value)
+    (setq ad-return-value (replace-match "LANG=C \\2" t nil ad-return-value 2))))
+
+
+(defadvice agp-command-line (after insert-Redirection-of-STDERR-into-agp-command-line)
+  (when (string-match "| head -n" ad-return-value)
+    (setq ad-return-value (replace-match "2>/dev/null \\&" t nil ad-return-value nil))))
+
+(ad-activate 'agp-command-line)
+
+
