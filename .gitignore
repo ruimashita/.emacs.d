@@ -4,3 +4,4 @@ tramp
 .DS_Store
 session.*
 ac-comphist.dat
+*.elc
