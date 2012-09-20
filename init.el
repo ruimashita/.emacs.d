@@ -1226,6 +1226,7 @@
 ;; anything
 ;;=====================================================================
 (require 'anything-startup)
+(require 'anything-grep)
 
 
 (define-anything-type-attribute 'file
@@ -1301,3 +1302,23 @@ See `anything-c-filelist-file-name' docstring for usage."
 (ad-activate 'agp-command-line)
 
 
+;; http://d.hatena.ne.jp/akisute3/20120409/1333899842
+;;; recentf の表示数を 100 まで拡張
+(setq recentf-max-saved-items 100)
+
+(defvar anything-c-source-recentf
+  `((name . "Recentf")
+    (init . (lambda ()
+              (require 'recentf)
+              (or recentf-mode (recentf-mode 1))))
+    ;; Needed for filenames with capitals letters.
+    (disable-shortcuts)
+    (candidates . recentf-list)
+    (keymap . ,anything-generic-files-map)
+    (help-message . anything-generic-file-help-message)
+	(candidate-number-limit . ,recentf-max-saved-items) ; 標準定義にこれを追加した
+    (mode-line . anything-generic-file-mode-line-string)
+    (match anything-c-match-on-basename)
+    (type . file))
+  "See (info \"(emacs)File Conveniences\").
+Set `recentf-max-saved-items' to a bigger value if default is too small.")
