@@ -354,12 +354,12 @@
 ;; indent
 ;;===============================================
 
-(setq-default tab-width 4)
+;; (setq-default tab-width 4)
 (setq default-tab-width 4)
 (setq tab-width 4)
-(setq-default indent-tabs-mode t)
+;; (setq-default indent-tabs-mode t)
 (setq indent-tabs-mode t)
-(setq c-tab-always-indent t)
+;; (setq c-tab-always-indent t)
 (setq c-basic-offset 4)
 ;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
 
@@ -401,7 +401,7 @@
  '(lambda ()
     (setq tab-width 2)
     (setq sgml-indent-step 2)
-    (setq indent-tabs-mode nil)
+    (setq indent-tabs-mode t)
     (setq sgml-basic-offset 2)
     ))
 
@@ -413,26 +413,13 @@
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
 (add-hook
- 'php-mode-user-hook
+ 'php-mode-hook
  '(lambda ()
-    (setq tab-width 4)
-    (setq c-basic-offset 4)
-    (setq indent-tabs-mode nil)
-    ))
-
-
-;;=====================================================
-;; php completion
-;;==============================================
-;; (add-hook 'php-mode-hook
-;;          (lambda ()
-;;              (require 'php-completion)
-;;              (php-completion-mode t)
-;;              (define-key php-mode-map (kbd "C-o") 'phpcmp-complete)
-;;              (when (require 'auto-complete nil t)
-;;              (make-variable-buffer-local 'ac-sources)
-;;              (add-to-list 'ac-sources 'ac-source-php-completion)
-;;              (auto-complete-mode t))))
+    (setq tab-width 2)
+    (setq c-basic-offset 2)
+    (setq indent-tabs-mode t)
+    )
+)
 
 
 ;;=========================
