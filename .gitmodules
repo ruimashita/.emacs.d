@@ -46,3 +46,6 @@
 [submodule "mmm-mode"]
 	path = mmm-mode
 	url = git://github.com/purcell/mmm-mode.git
+[submodule "less-css-mode"]
+	path = less-css-mode
+	url = git@github.com:ruimashita/less-css-mode.git
