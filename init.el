@@ -395,7 +395,7 @@
 ;;=========================================================
 (autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
 (autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
-
+(setq auto-mode-alist (cons '("\\.tpl$" . sgml-mode) auto-mode-alist))
 (add-hook
  'sgml-mode-hook
  '(lambda ()
@@ -409,7 +409,6 @@
 ;;=====================================================
 ;; phpmode
 ;;==============================================
-;;(require 'php-mode)
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
 (add-hook
@@ -422,46 +421,17 @@
 )
 
 
-;;=========================
-;; mmm-mode
-;;=================================
-(require 'mmm-auto)
-(setq mmm-global-mode 'maybe)
-(setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
-(set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
-(set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
-;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
 
-(mmm-add-mode-ext-class nil "\\.php?\\'" 'sgml-php)
-(mmm-add-classes '(
-                   (sgml-php
-                    :submode php-mode
-                    :front "<\\?\\(php\\)?"
-                    :back "\\?>"
-                    )    ))
 
-;;php-modeでtab出来ない問題を解決
-(defun save-mmm-c-locals ()
-  (with-temp-buffer
-    (php-mode)
-    (dolist (v (buffer-local-variables))
-      (when (string-match "\\`c-" (symbol-name (car v)))
-        (add-to-list 'mmm-save-local-variables `(,(car v) nil ,mmm-c-derived-modes))
-        )
-      )
-    )
-  )
 
-(save-mmm-c-locals)
 
-(add-to-list 'auto-mode-alist '("\\.php?\\'" . php-mode))
 
 
 ;;=========================
 ;; css-mode
 ;;=================================
 (autoload 'css-mode "css-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.css?\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.Css?\\'" . css-mode))
 
 ;;タブ幅を4に
 (setq cssm-indent-level 4)
@@ -1322,3 +1292,45 @@ See `anything-c-filelist-file-name' docstring for usage."
     (type . file))
   "See (info \"(emacs)File Conveniences\").
 Set `recentf-max-saved-items' to a bigger value if default is too small.")
+
+
+
+
+
+
+
+
+
+;;=========================
+;; mmm-mode
+;;=================================
+;; (autoload 'mmm-mode)
+(require 'mmm-auto)
+(setq mmm-global-mode 'maybe)
+
+(setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
+(set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
+(set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
+;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
+
+(mmm-add-classes '(
+                   (sgml-php
+                    :submode php-mode
+                    :front "<\\?php"
+                    :back "\\?>"
+                    )    ))
+(mmm-add-mode-ext-class nil "\\.php\\'" 'html-php)
+(add-to-list 'auto-mode-alist '("\\.php\\'" . sgml-mode))
+;; ;;php-modeでtab出来ない問題を解決
+;; (defun save-mmm-c-locals ()
+;;   (with-temp-buffer
+;;     (php-mode)
+;;     (dolist (v (buffer-local-variables))
+;;       (when (string-match "\\`c-" (symbol-name (car v)))
+;;         (add-to-list 'mmm-save-local-variables `(,(car v) nil ,mmm-c-derived-modes))
+;;         )
+;;       )
+;;     )
+;;   )
+
+;; (save-mmm-c-locals)
