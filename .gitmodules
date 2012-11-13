@@ -43,9 +43,6 @@
 [submodule "pony-mode"]
 	path = pony-mode
 	url = https://github.com/davidmiller/pony-mode.git
-[submodule "less-css-mode"]
-	path = less-css-mode
-	url = git://github.com/jdhuntington/less-css-mode.git
 [submodule "mmm-mode"]
 	path = mmm-mode
 	url = git://github.com/purcell/mmm-mode.git
