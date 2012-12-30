@@ -789,7 +789,7 @@
 (require 'actionscript-mode)
 (autoload 'actionscript-mode "actionscript-mode" "Major mode for actionscript." t)
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
-
+(add-to-list 'ac-modes 'actionscript-mode) ;; auto-complete
 
 
 ;;=======================================================================
@@ -802,16 +802,15 @@
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 
-
 ;;=======================================================================
 ;; less-css-mode
 ;;=====================================================================
 (require 'less-css-mode)
 (autoload 'less-css-mode "less-css-mode")
 (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
+(add-to-list 'ac-modes 'less-css-mode) ;; auto-complete
 
 
-(add-to-list 'ac-modes 'less-css-mode)
 ;;=======================================================================
 ;; color
 ;;=====================================================================
