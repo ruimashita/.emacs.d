@@ -421,29 +421,11 @@
 )
 
 
-
-
-
-
-
-
 ;;=========================
 ;; css-mode
 ;;=================================
 (autoload 'css-mode "css-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.Css?\\'" . css-mode))
-
-;;タブ幅を4に
-(setq cssm-indent-level 4)
-;;インデントをc-styleにする
-(setq cssm-indent-function #'cssm-c-style-indenter)
-;; C-\ で補完
-(add-hook 'css-mode-hook
-          '(lambda ()
-             (define-key cssm-mode-map
-               "\C-\\"
-               'cssm-complete-property)
-             ))
+(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 
 
 ;;=================================================
@@ -799,7 +781,14 @@
 (setq exec-path (cons (expand-file-name "~/.rvm/gems/ruby-1.9.3-head
 /bin") exec-path))
 (autoload 'scss-mode "scss-mode")
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+(add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
+(add-hook 'scss-mode-hook 'ac-css-mode-setup)
+(add-hook 'scss-mode-hook
+          (lambda ()
+            (setq css-indent-offset 2)
+			(setq scss-compile-at-save nil)
+			))
+(add-to-list 'ac-modes 'scss-mode) ;; auto-complete
 
 
 ;;=======================================================================
