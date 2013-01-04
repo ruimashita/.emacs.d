@@ -75,6 +75,18 @@
 ;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
 (setq show-paren-style 'mixed)
 
+;; バッファ自動再読み込み
+(global-auto-revert-mode 1)
+
+;; 同名ファイルのバッファ名の識別文字列を変更する
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
+
+;; wdired.el
+(require 'wdired)
+(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
+
 
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
@@ -234,6 +246,14 @@
 ;; ウィンドウを透明化
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
 
+;; other-window
+(defun other-window-or-split ()
+  (interactive)
+  (when (one-window-p)
+    (split-window-horizontally))
+  (other-window 1))
+
+(global-set-key (kbd "C-z") 'other-window-or-split)
 
 ;;=======================================================================
 ;; elscreen
