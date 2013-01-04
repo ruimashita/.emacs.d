@@ -872,6 +872,7 @@
      (cperl-array-face ((t (:bold t :foreground "light salmon" :weight bold))))
      (cperl-hash-face ((t (:italic t :bold t :foreground "beige" :slant italic :weight bold))))
      (cperl-nonoverridable-face ((t (:foreground "aquamarine"))))
+	 (css-property ((t (:bold t :foreground "pale turquoise" :weight bold))))           	 (css-selector ((t (:bold t :foreground "turquoise" :weight bold))))
      (cursor ((t (:background "Grey"))))
      (custom-button-face ((t (:foreground "gainsboro"))))
      (custom-button-pressed-face ((t (:background "lightgrey" :foreground "black" :box (:line-width 2 :style pressed-button)))))
