@@ -1328,8 +1328,8 @@ Set `recentf-max-saved-items' to a bigger value if default is too small.")
                     :front "<\\?php"
                     :back "\\?>"
                     )    ))
-(mmm-add-mode-ext-class nil "\\.php\\'" 'html-php)
-(add-to-list 'auto-mode-alist '("\\.php\\'" . sgml-mode))
+(mmm-add-mode-ext-class 'sgml-mode "\\.php$" 'sgml-php)
+(add-to-list 'auto-mode-alist '("\\.php$" . sgml-mode))
 ;; ;;php-modeでtab出来ない問題を解決
 ;; (defun save-mmm-c-locals ()
 ;;   (with-temp-buffer
