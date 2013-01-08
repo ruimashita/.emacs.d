@@ -1250,62 +1250,10 @@
 (require 'anything-grep)
 
 
-(define-anything-type-attribute 'file
-    `((action
-       ("Find file" . anything-find-many-files)
-       ,(and (locate-library "popwin") '("Find file in popup window" . popwin:find-file))
-	   ,(and (locate-library "elscreen")
-                 '("Find file in Elscreen"  . anything-elscreen-find-file))
-       ("Find file as root" . anything-find-file-as-root)
-       ("Find file other window" . find-file-other-window)
-       ("Find file other frame" . find-file-other-frame)
-       ("Open dired in file's directory" . anything-c-open-dired)
-       ("Grep File(s) `C-u recurse'" . anything-find-files-grep)
-       ("Zgrep File(s) `C-u Recurse'" . anything-ff-zgrep)
-       ("Pdfgrep File(s)" . anything-ff-pdfgrep)
-       ("Checksum File" . anything-ff-checksum)
-       ("Ediff File" . anything-find-files-ediff-files)
-       ("Ediff Merge File" . anything-find-files-ediff-merge-files)
-       ("View file" . view-file)
-       ("Insert file" . insert-file)
-       ("Delete file(s)" . anything-delete-marked-files)
-       ("Open file externally (C-u to choose)" . anything-c-open-file-externally)
-       ("Open file with default tool" . anything-c-open-file-with-default-tool)
-       ("Find file in hex dump" . hexl-find-file))
-      (persistent-help . "Show this file")
-      (action-transformer anything-c-transform-file-load-el
-                          anything-c-transform-file-browse-url)
-      (candidate-transformer anything-c-w32-pathname-transformer
-                             anything-c-skip-current-file
-                             anything-c-skip-boring-files
-                             anything-c-shorten-home-path))
-  "File name.")
-
-
-
-(defun anything-filelist+ ()
-  "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-
-This is a replacement for `anything-for-files'.
-See `anything-c-filelist-file-name' docstring for usage."
-  (interactive)
-  (anything-other-buffer
-   '(anything-c-source-ffap-line
-     anything-c-source-ffap-guesser
-     anything-c-source-buffers-list
-     anything-c-source-recentf
-     anything-c-source-bookmarks
-     anything-c-source-file-cache
-	 anything-c-source-files-in-current-dir+
-
-     anything-c-source-filelist)
-   "*anything file list*"))
-
-
+;; キーバインド
 (global-set-key "\C-x\ b" 'anything-buffers-list)
 (global-set-key (kbd "C-;") 'anything-filelist+)
 (define-key global-map (kbd "M-y") 'anything-show-kill-ring)
-
 
 (setq anything-c-filelist-file-name "/tmp/all.filelist")
 (setq anything-grep-candidates-fast-directory-regexp "^/tmp")
@@ -1326,7 +1274,6 @@ See `anything-c-filelist-file-name' docstring for usage."
 ;; http://d.hatena.ne.jp/akisute3/20120409/1333899842
 ;;; recentf の表示数を 100 まで拡張
 (setq recentf-max-saved-items 100)
-
 (defvar anything-c-source-recentf
   `((name . "Recentf")
     (init . (lambda ()
@@ -1344,7 +1291,60 @@ See `anything-c-filelist-file-name' docstring for usage."
   "See (info \"(emacs)File Conveniences\").
 Set `recentf-max-saved-items' to a bigger value if default is too small.")
 
+;; anything git 
+;; http://shibayu36.hatenablog.com/entry/2012/12/22/161727
+(defun anything-git-project-is-git-repository ()
+  (let ((error-message (shell-command-to-string "git rev-parse")))
+    (if (string= error-message "")
+        t
+      nil)
+    ))
+(defun anything-git-project-project-dir ()
+  (chomp
+   (shell-command-to-string "git rev-parse --show-toplevel")
+   ))
+(defun anything-c-sources-git-project-for ()
+  (cond ((anything-git-project-is-git-repository)
+         (loop for elt in
+               '(("Modified files (%s)" . "--modified")
+                 ("Untracked files (%s)" . "--others --exclude-standard")
+                 ("All controlled files in this project (%s)" . ""))
+               collect
+               `((name . ,(format (car elt) (anything-git-project-project-dir)))
+                 (init . (lambda ()
+                           (setq current-git-project-dir
+                                 (anything-git-project-project-dir))
+                           (unless (and ,(string= (cdr elt) "") ;update candidate buffer every time except for that of all project files
+                                        (anything-candidate-buffer))
+                             (with-current-buffer
+                                 (anything-candidate-buffer 'global)
+                               (insert
+                                (shell-command-to-string
+                                 ,(format "git ls-files --full-name $(git rev-parse --show-cdup) %s"
+                                          (cdr elt))))))))
+                 (candidates-in-buffer)
+                 (display-to-real . (lambda (name)
+                                      (format "%s/%s"
+                                              current-git-project-dir name)))
+                 (type . file))
+               ))
+        ((list))
+        ))
+(defun anything-git-project ()
+  (interactive)
+  (let* ((sources (anything-c-sources-git-project-for)))
+    (anything-other-buffer sources
+                           (format "*Anything git project in %s*"
+                                   (anything-git-project-project-dir)))))
 
 
+;; sourceの設定
+(setq anything-sources
+      '(
+		(anything-c-sources-git-project-for)
+        anything-c-source-recentf
+        anything-c-source-files-in-current-dir+
+		)
+)
 
 
