@@ -1338,13 +1338,34 @@ Set `recentf-max-saved-items' to a bigger value if default is too small.")
                                    (anything-git-project-project-dir)))))
 
 
+(defun anything-filelist+ ()
+  "Preconfigured `anything' to open files/buffers/bookmarks instantly.
+
+This is a replacement for `anything-for-files'.
+See `anything-c-filelist-file-name' docstring for usage."
+  (interactive)
+  (anything-other-buffer
+     (append
+      '(anything-c-source-ffap-line
+        anything-c-source-ffap-guesser
+		anything-c-source-buffers-list
+        )
+      (anything-c-sources-git-project-for)
+      '(anything-c-source-recentf
+        anything-c-source-bookmarks
+        anything-c-source-file-cache
+        anything-c-source-filelist
+        ))
+   "*anything file list*"))
+
+
 ;; sourceの設定
-(setq anything-sources
-      '(
-		(anything-c-sources-git-project-for)
-        anything-c-source-recentf
-        anything-c-source-files-in-current-dir+
-		)
-)
+;; (setq anything-sources
+;;       '(
+;; 		(anything-c-sources-git-project-for)
+;;         anything-c-source-recentf
+;;         anything-c-source-files-in-current-dir+
+;; 		)
+;; )
 
 
