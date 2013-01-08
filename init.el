@@ -185,8 +185,8 @@
       (setq ibus-mode-local nil)
       ;; Busがオンの時のカーソル色
       (setq ibus-cursor-color "aquamarine")
-      ;; C-SPC は Set Mark , C-/ は Undo に使う
-      (ibus-define-common-key [?\C-\  ?\C-/]  nil)
+      ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
+      (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
       )
   )
 
@@ -246,24 +246,24 @@
 ;; ウィンドウを透明化
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
 
+;; popwin
+(require 'popwin) 
+(setq display-buffer-function 'popwin:display-buffer)
+(setq anything-samewindow nil) (push '("*anything*" :height 30) popwin:special-display-config)
+
 ;; other-window
 (defun other-window-or-split ()
   (interactive)
   (when (one-window-p)
     (split-window-horizontally))
   (other-window 1))
-
 (global-set-key (kbd "C-z") 'other-window-or-split)
 
-
-;; popwin
-(require 'popwin) 
-(setq display-buffer-function 'popwin:display-buffer)
-(setq anything-samewindow nil) (push '("*anything*" :height 30) popwin:special-display-config)
 
 ;;=======================================================================
 ;; elscreen
 ;;=====================================================================
+(setq elscreen-prefix-key "\C-t") 
 (require 'elscreen)
 (global-set-key "\C-t" 'elscreen-clone)
 ;;(global-set-key "\C-zk" 'elscreen-kill)
