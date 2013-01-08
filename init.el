@@ -826,6 +826,42 @@
 (add-to-list 'ac-modes 'less-css-mode) ;; auto-complete
 
 
+;;=========================
+;; mmm-mode
+;;=================================
+;; (autoload 'mmm-mode)
+(require 'mmm-auto)
+(setq mmm-global-mode 'maybe)
+
+(setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
+(set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
+(set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
+;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
+
+(mmm-add-classes '(
+				   (sgml-php
+					:submode php-mode
+					:front "<\\?php"
+					:back "\\?>"
+					)    ))
+(mmm-add-mode-ext-class 'sgml-mode "\\.php$" 'sgml-php)
+(add-to-list 'auto-mode-alist '("\\.php$" . sgml-mode))
+;; ;;php-modeでtab出来ない問題を解決
+;; (defun save-mmm-c-locals ()
+;;   (with-temp-buffer
+;;     (php-mode)
+;;     (dolist (v (buffer-local-variables))
+;;       (when (string-match "\\`c-" (symbol-name (car v)))
+;;         (add-to-list 'mmm-save-local-variables `(,(car v) nil ,mmm-c-derived-modes))
+;;         )
+;;       )
+;;     )
+;;   )
+
+;; (save-mmm-c-locals)
+
+
+
 ;;=======================================================================
 ;; color
 ;;=====================================================================
@@ -1312,40 +1348,3 @@ Set `recentf-max-saved-items' to a bigger value if default is too small.")
 
 
 
-
-
-
-
-;;=========================
-;; mmm-mode
-;;=================================
-;; (autoload 'mmm-mode)
-(require 'mmm-auto)
-(setq mmm-global-mode 'maybe)
-
-(setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
-(set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
-(set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
-;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
-
-(mmm-add-classes '(
-                   (sgml-php
-                    :submode php-mode
-                    :front "<\\?php"
-                    :back "\\?>"
-                    )    ))
-(mmm-add-mode-ext-class 'sgml-mode "\\.php$" 'sgml-php)
-(add-to-list 'auto-mode-alist '("\\.php$" . sgml-mode))
-;; ;;php-modeでtab出来ない問題を解決
-;; (defun save-mmm-c-locals ()
-;;   (with-temp-buffer
-;;     (php-mode)
-;;     (dolist (v (buffer-local-variables))
-;;       (when (string-match "\\`c-" (symbol-name (car v)))
-;;         (add-to-list 'mmm-save-local-variables `(,(car v) nil ,mmm-c-derived-modes))
-;;         )
-;;       )
-;;     )
-;;   )
-
-;; (save-mmm-c-locals)
