@@ -255,6 +255,12 @@
 
 (global-set-key (kbd "C-z") 'other-window-or-split)
 
+
+;; popwin
+(require 'popwin) 
+(setq display-buffer-function 'popwin:display-buffer)
+(setq anything-samewindow nil) (push '("*anything*" :height 30) popwin:special-display-config)
+
 ;;=======================================================================
 ;; elscreen
 ;;=====================================================================

@@ -52,3 +52,6 @@
 [submodule "popup-el"]
 	path = popup-el
 	url = git://github.com/auto-complete/popup-el.git
+[submodule "popwin-el"]
+	path = popwin-el
+	url = git://github.com/m2ym/popwin-el.git
