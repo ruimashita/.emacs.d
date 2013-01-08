@@ -19,10 +19,10 @@
               (expand-file-name "~/bin")
               (expand-file-name "~/.emacs.d/bin")
               ))
- ;; PATH と exec-path に同じ物を追加します
- (when (and (file-exists-p dir) (not (member dir exec-path)))
-   (setenv "PATH" (concat dir ":" (getenv "PATH")))
-   (setq exec-path (append (list dir) exec-path))))
+  ;; PATH と exec-path に同じ物を追加します
+  (when (and (file-exists-p dir) (not (member dir exec-path)))
+	(setenv "PATH" (concat dir ":" (getenv "PATH")))
+	(setq exec-path (append (list dir) exec-path))))
 
 
 ;; for m-x shell-command
@@ -290,8 +290,8 @@
 (require 'multi-term)
 (setq multi-term-program "/usr/bin/zsh")
 (global-set-key (kbd "C-c t") '(lambda ()
-                                (interactive)
-                                (multi-term)))
+								 (interactive)
+								 (multi-term)))
 
 
 ;;=======================================================================
@@ -444,7 +444,7 @@
     (setq c-basic-offset 2)
     (setq indent-tabs-mode t)
     )
-)
+ )
 
 
 ;;=========================
@@ -623,13 +623,13 @@
           (setenv "PYTHONPATH" project-dir))))
     (setenv "DJANGO_SETTINGS_MODULE" "settings")
     )
-)
+  )
 
 (add-hook 'python-mode-hook
-      '(lambda()
-         (setq indent-tabs-mode nil)
-         (setq python-indent 4)
-         ))
+		  '(lambda()
+			 (setq indent-tabs-mode nil)
+			 (setq python-indent 4)
+			 ))
 
 ;; Simple Python Completion Source for Auto-Complete
 ;; http://chrispoole.com/project/ac-python/
@@ -743,7 +743,7 @@
   ;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
   (define-key coffee-mode-map (kbd "<tab>") 'coffee-indent)
   (define-key coffee-mode-map (kbd "<backtab>") 'coffee-unindent)
-)
+  )
 
 (add-hook 'coffee-mode-hook 'coffee-custom)
 
@@ -785,10 +785,10 @@
 ;; haml-mode
 ;;=====================================================================
 (require 'haml-mode)
- (add-hook 'haml-mode-hook
-           '(lambda ()
-              (setq indent-tabs-mode nil)
-              (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+(add-hook 'haml-mode-hook
+		  '(lambda ()
+			 (setq indent-tabs-mode nil)
+			 (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 
 
 ;;=======================================================================
