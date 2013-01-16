@@ -87,6 +87,9 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
+;; grep-edit
+(require 'grep-edit)
+
 
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
