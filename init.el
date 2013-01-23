@@ -1372,3 +1372,7 @@ See `anything-c-filelist-file-name' docstring for usage."
 ;; )
 
 
+(defun kill-all-buffers()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
