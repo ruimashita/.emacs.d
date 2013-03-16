@@ -419,35 +419,6 @@
 (yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
 
 
-;;===========================================================
-;; sgml-mode
-;;=========================================================
-(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
-(autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
-(setq auto-mode-alist (cons '("\\.tpl$" . sgml-mode) auto-mode-alist))
-(add-hook
- 'sgml-mode-hook
- '(lambda ()
-    (setq tab-width 2)
-    (setq sgml-indent-step 2)
-    (setq indent-tabs-mode t)
-    (setq sgml-basic-offset 2)
-    ))
-
-
-;;=====================================================
-;; phpmode
-;;==============================================
-(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-
-(add-hook
- 'php-mode-hook
- '(lambda ()
-    (setq tab-width 2)
-    (setq c-basic-offset 2)
-    (setq indent-tabs-mode t)
-    )
- )
 
 
 ;;=========================
@@ -842,25 +813,59 @@
 (add-to-list 'ac-modes 'less-css-mode) ;; auto-complete
 
 
+;;===========================================================
+;; sgml-mode
+;;=========================================================
+(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
+(autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
+(setq auto-mode-alist (cons '("\\.tpl$" . sgml-mode) auto-mode-alist))
+(add-hook
+ 'sgml-mode-hook
+ '(lambda ()
+    (setq tab-width 2)
+    (setq sgml-indent-step 2)
+    (setq indent-tabs-mode t)
+    (setq sgml-basic-offset 2)
+    ))
+
+
+;;=====================================================
+;; phpmode
+;;==============================================
+(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
+
+(add-hook
+ 'php-mode-hook
+ '(lambda ()
+    (setq tab-width 2)
+    (setq c-basic-offset 2)
+    (setq indent-tabs-mode t)
+	(c-set-offset 'case-label' 2) 
+	(c-set-offset 'arglist-intro' 2) 
+	(c-set-offset 'arglist-cont-nonempty' 2)
+	(c-set-offset 'arglist-close' 0)
+    )
+ )
+
+
 ;;=========================
 ;; mmm-mode
 ;;=================================
 ;; (autoload 'mmm-mode)
-(require 'mmm-auto)
+(require 'mmm-mode)
 (setq mmm-global-mode 'maybe)
 
 (setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
 (set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
 (set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
 ;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
-
+(mmm-add-mode-ext-class 'sgml-mode "\\.php$" 'sgml-php)
 (mmm-add-classes '(
 				   (sgml-php
 					:submode php-mode
-					:front "<\\?php"
+					:front "<\\?\\(php\\)?"
 					:back "\\?>"
 					)    ))
-(mmm-add-mode-ext-class 'sgml-mode "\\.php$" 'sgml-php)
 (add-to-list 'auto-mode-alist '("\\.php$" . sgml-mode))
 ;; ;;php-modeでtab出来ない問題を解決
 ;; (defun save-mmm-c-locals ()
