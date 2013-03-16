@@ -797,11 +797,24 @@
 ;;=======================================================================
 ;; as-mode
 ;;=====================================================================
-(require 'actionscript-mode)
+;;(require 'actionscript-mode)
 (autoload 'actionscript-mode "actionscript-mode" "Major mode for actionscript." t)
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 (add-to-list 'ac-modes 'actionscript-mode) ;; auto-complete
-
+(add-hook 'actionscript-mode-hook
+		  '(lambda ()
+			 (setq tab-width 4)
+			 (setq c-basic-offset 4)
+			 (setq indent-tabs-mode t)
+			 (c-set-offset 'arglist-intro 4)
+			 (c-set-offset 'arglist-close 0)
+			 (c-set-offset 'arglist-cont-nonempty 0)
+			 (c-set-offset 'statement-cont 0)
+			 (c-set-offset 'substatement-open 0)
+			 (c-set-offset 'block-open 0)     
+			 (c-set-offset 'case-label '+)
+			 (c-set-offset 'statement-case-open 0)
+			 ))
 
 ;;=======================================================================
 ;; scss-mode
