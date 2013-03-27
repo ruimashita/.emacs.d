@@ -252,7 +252,9 @@
 ;; popwin
 (require 'popwin) 
 (setq display-buffer-function 'popwin:display-buffer)
-(setq anything-samewindow nil) (push '("*anything*" :height 30) popwin:special-display-config)
+(setq anything-samewindow nil) 
+(push '("*anything*" :height 30) popwin:special-display-config)
+(push '("*grep*" :noselect nil) popwin:special-display-config)
 
 ;; other-window
 (defun other-window-or-split ()
