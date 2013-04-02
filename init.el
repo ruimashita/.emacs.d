@@ -49,10 +49,6 @@
          )
       )
 
-;; シフト + 矢印で範囲選択
-(setq pc-select-selection-keys-only t)
-(pc-selection-mode 1)
-
 ;; カーソルのある行番号を表示
 (setq line-number-mode t)
 
@@ -190,6 +186,11 @@
       (setq ibus-cursor-color "aquamarine")
       ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
       (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
+      ;; シフト + 矢印で範囲選択
+      (setq pc-select-selection-keys-only t)
+      (pc-selection-mode 1)
+
+
       )
   )
 
