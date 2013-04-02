@@ -43,6 +43,10 @@
 ;; メニューバーを表示しない
 (setq menu-bar-mode nil)
 
+;; ツールバー非表示
+(tool-bar-mode 0)
+
+
 ;; フレームのタイトル
 (setq frame-title-format
       `( " %b " (buffer-file-name "( %f )") " on ",(system-name)
