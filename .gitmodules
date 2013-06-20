@@ -55,3 +55,6 @@
 [submodule "popwin-el"]
 	path = popwin-el
 	url = git://github.com/m2ym/popwin-el.git
+[submodule "web-mode"]
+	path = web-mode
+	url = https://github.com/fxbois/web-mode.git
