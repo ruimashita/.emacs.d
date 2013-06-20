@@ -856,57 +856,15 @@
 
 
 ;;=========================
-;; mmm-mode
+;; multi-web-mode
 ;;=================================
-;; (autoload 'mmm-mode)
-;; (require 'mmm-mode)
-;; (setq mmm-global-mode 'maybe)
-
-;; (setq mmm-submode-decoration-level 1)				;; mmm-modeをカラフルに
-;; (set-face-bold-p 'mmm-default-submode-face t)			;; mmm-modeのフェイスを変更
-;; (set-face-background 'mmm-default-submode-face "gray10")	;; submodeの時の背景色
-;; ;;(invert-face 'mmm-default-submode-face)			;; mmm-modeの前景色と背景色を入れ換える
-;; (mmm-add-mode-ext-class 'sgml-mode "\\.php$" 'sgml-php)
-;; (mmm-add-classes '(
-;; 				   (sgml-php
-;; 					:submode php-mode
-;; 					:front "<\\?\\(php\\)?"
-;; 					:back "\\?>"
-;; 					)    ))
-;; (add-to-list 'auto-mode-alist '("\\.php$" . sgml-mode))
-;; ;;php-modeでtab出来ない問題を解決
-;; (defun save-mmm-c-locals ()
-;;   (with-temp-buffer
-;;     (php-mode)
-;;     (dolist (v (buffer-local-variables))
-;;       (when (string-match "\\`c-" (symbol-name (car v)))
-;;         (add-to-list 'mmm-save-local-variables `(,(car v) nil ,mmm-c-derived-modes))
-;;         )
-;;       )
-;;     )
-;;   )
-
-;; (save-mmm-c-locals)
-
-
-
-;;=========================
-;; web-mode
-;;=================================
-;; (require 'web-mode) 
-;; (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode)) 
-;; (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-;; (defun web-mode-hook () 
-;;   "Hooks for Web mode." 
-;;   (setq web-mode-markup-indent-offset 2) 
-;;   )
-;; (add-hook 'web-mode-hook 'web-mode-hook)
+(require 'multi-web-mode)
+(setq mweb-default-major-mode 'sgml-mode)
+(setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+                  (js-mode "<script[^>]*>" "</script>")
+                  (css-mode "<style[^>]*>" "</style>")))
+(setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
+(multi-web-global-mode 1)
 
 
 
