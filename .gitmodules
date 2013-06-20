@@ -43,9 +43,6 @@
 [submodule "pony-mode"]
 	path = pony-mode
 	url = https://github.com/davidmiller/pony-mode.git
-[submodule "mmm-mode"]
-	path = mmm-mode
-	url = git://github.com/purcell/mmm-mode.git
 [submodule "less-css-mode"]
 	path = less-css-mode
 	url = git@github.com:ruimashita/less-css-mode.git
@@ -55,9 +52,6 @@
 [submodule "popwin-el"]
 	path = popwin-el
 	url = git://github.com/m2ym/popwin-el.git
-[submodule "web-mode"]
-	path = web-mode
-	url = https://github.com/fxbois/web-mode.git
 [submodule "multi-web-mode"]
 	path = multi-web-mode
 	url = https://github.com/fgallina/multi-web-mode.git
