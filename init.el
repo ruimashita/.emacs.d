@@ -869,6 +869,7 @@
   (interactive)
   (remove-hook 'php-mode-hook 'php-mode-space-hook)
   (add-hook 'php-mode-hook 'php-mode-default-hook)
+  (php-mode)
   )
 
 (defun php-mode-space ()
@@ -880,7 +881,6 @@
   )
 
 
-(php-mode-default)
 
 ;;=========================
 ;; multi-web-mode
