@@ -392,16 +392,10 @@
 ;;==============================================
 ;; indent
 ;;===============================================
-
-;; (setq-default tab-width 4)
 (setq default-tab-width 4)
 (setq tab-width 4)
-;; (setq-default indent-tabs-mode t)
 (setq indent-tabs-mode t)
-;; (setq c-tab-always-indent t)
 (setq c-basic-offset 4)
-;; (setq indent-line-function 'indent-relative-maybe) ;; 前と同じ行の幅にインデント
-
 
 ;;=======================================================================
 ;; auto-complete
@@ -843,20 +837,50 @@
 ;; phpmode
 ;;==============================================
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
+(setq php-mode-force-pear t)
 
-(add-hook
- 'php-mode-hook
- '(lambda ()
-    (setq tab-width 2)
-    (setq c-basic-offset 2)
-    (setq indent-tabs-mode t)
-	(c-set-offset 'case-label' 2) 
-	(c-set-offset 'arglist-intro' 2) 
-	(c-set-offset 'arglist-cont-nonempty' 2)
-	(c-set-offset 'arglist-close' 0)
-    )
- )
+(defun php-mode-default-hook ()
+  (setq tab-width 2)
+  (setq c-basic-offset 2)
+  (setq c-comment-indent 2)
+  (setq comment-indent 2)
+  (setq c-indent-new-comment-line 2)
+  (setq c-indent-comment-alist 2)
+  (setq indent-tabs-mode t)
+  (c-set-offset 'case-label' 2) 
+  (c-set-offset 'arglist-intro' 2) 
+  (c-set-offset 'arglist-cont-nonempty' 2)
+  (c-set-offset 'arglist-close' 0)
+  )
 
+(defun php-mode-space-hook ()
+  (setq tab-width 4)
+  (setq c-basic-offset 4)
+  (setq indent-tabs-mode nil)
+  (c-set-offset 'case-label' 4) 
+  (c-set-offset 'arglist-intro' 4) 
+  (c-set-offset 'arglist-cont-nonempty' 4)
+  (c-set-offset 'arglist-close' 0)
+  )
+
+
+
+(defun php-mode-default ()
+  (interactive)
+  (remove-hook 'php-mode-hook 'php-mode-space-hook)
+  (add-hook 'php-mode-hook 'php-mode-default-hook)
+  )
+
+(defun php-mode-space ()
+  (interactive)
+  (setq php-mode-force-pear t)
+  (remove-hook 'php-mode-hook 'php-mode-default-hook)
+  (add-hook 'php-mode-hook 'php-mode-space-hook)
+  (php-mode)
+  )
+
+
+(php-mode-default)
 
 ;;=========================
 ;; multi-web-mode
