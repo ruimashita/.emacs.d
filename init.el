@@ -56,6 +56,9 @@
 ;; カーソルのある行番号を表示
 (setq line-number-mode t)
 
+;; 全てのバッファで行番号が表示
+(global-linum-mode t)
+
 ;; 日本語infoの文字化け防止
 (auto-compression-mode t)
 
