@@ -55,3 +55,6 @@
 [submodule "multi-web-mode"]
 	path = multi-web-mode
 	url = https://github.com/fgallina/multi-web-mode.git
+[submodule "jinja2-mode"]
+	path = jinja2-mode
+	url = https://github.com/paradoxxxzero/jinja2-mode.git

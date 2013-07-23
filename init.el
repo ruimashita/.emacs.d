@@ -894,6 +894,18 @@
 ;;(multi-web-global-mode 1)
 
 
+;;=========================
+;; jinja2-mode
+;;=================================
+(require 'jinja2-mode) 
+(add-to-list 'auto-mode-alist '("\\.twig$" . jinja2-mode))
+(add-hook 'jinja2-mode-hook
+		  '(lambda ()
+			 (setq tab-width 2)
+			 (setq sgml-indent-step 2)
+			 (setq indent-tabs-mode nil)
+			 (setq sgml-basic-offset 2)
+			 ))
 
 ;;=======================================================================
 ;; color
