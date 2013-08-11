@@ -30,6 +30,12 @@
 ;; for m-x shell
 (setq explicit-shell-file-name "/bin/zsh")
 
+;; emacsclient
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+;;  C-c C-cに割り当てる
+(global-set-key (kbd "C-c C-c") 'server-edit)
 
 ;; ==============================================
 ;; Misc
