@@ -99,6 +99,9 @@
 ;; grep-edit
 (require 'grep-edit)
 
+;; シンボリックリンクを開いたときの質問を消す
+(setq vc-follow-symlinks nil)
+
 
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
