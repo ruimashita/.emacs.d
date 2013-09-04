@@ -399,6 +399,16 @@
 
 
 ;;==============================================
+;; foreign-regexp
+;;===============================================
+(require 'foreign-regexp)
+
+(custom-set-variables
+'(foreign-regexp/regexp-type 'ruby) ;; Choose by your preference.
+'(reb-re-syntax 'foreign-regexp)) ;; Tell re-builder to use foreign regexp.
+
+
+;;==============================================
 ;; indent
 ;;===============================================
 (setq default-tab-width 4)
@@ -443,8 +453,19 @@
 ;;=================================================
 ;; js-mode
 ;;=====================================================
-
+(autoload 'js-mode "js-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+
+(eval-after-load 'js
+  '(progn 
+          (font-lock-add-keywords
+           'js-mode '(("\t" 0 my-face-b-2 append)
+     ("　" 0 my-face-b-1 append)
+     ("[ \t]+$" 0 my-face-u-1 append)
+     )))
+)
+
+
 
 ;;=================================================
 ;; ruby-mode
@@ -819,7 +840,14 @@
 ;;                   (js-mode "<script[^>]*>" "</script>")
 ;;                   (css-mode "<style[^>]*>" "</style>")))
 ;; (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-;;(multi-web-global-mode 1)
+;; (multi-web-global-mode 1)
+
+;;=========================
+;; web-mode
+;;=================================
+(require 'web-mode)
+
+
 
 
 ;;=========================

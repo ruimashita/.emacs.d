@@ -58,3 +58,9 @@
 [submodule "jinja2-mode"]
 	path = jinja2-mode
 	url = https://github.com/paradoxxxzero/jinja2-mode.git
+[submodule "foreign-regexp"]
+	path = foreign-regexp
+	url = https://github.com/k-talo/foreign-regexp.el.git
+[submodule "web-mode"]
+	path = web-mode
+	url = https://github.com/fxbois/web-mode.git
