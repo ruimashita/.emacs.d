@@ -102,6 +102,12 @@
 ;; シンボリックリンクを開いたときの質問を消す
 (setq vc-follow-symlinks nil)
 
+;; kill all buffers
+(defun kill-all-buffers()
+  (interactive)
+  (loop for buffer being the buffers
+     do (kill-buffer buffer)))
+
 
 ;; 言語・文字コード関連の設定
 (set-language-environment "Japanese")
@@ -114,25 +120,6 @@
 (setq file-name-coding-system 'utf-8)
 
 
-;; =======================================================================
-;; 全角 TAB に色をつける
-;; =======================================================================
-(defface my-face-b-1 '((t (:background "gray40"))) nil)
-(defface my-face-b-2 '((t (:background "gray15"))) nil)
-(defface my-face-u-1 '((t (:foreground "SteelBlue" :underline t))) nil)
-(defvar my-face-b-1 'my-face-b-1)
-(defvar my-face-b-2 'my-face-b-2)
-(defvar my-face-u-1 'my-face-u-1)
-
-(defadvice font-lock-mode (before my-font-lock-mode ())
-  (font-lock-add-keywords
-   major-mode
-   '(("\t" 0 my-face-b-2 append)
-     ("　" 0 my-face-b-1 append)
-     ("[ \t]+$" 0 my-face-u-1 append)
-     )))
-(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
-(ad-activate 'font-lock-mode)
 
 
 ;; =======================================================================
@@ -470,18 +457,20 @@
 ;;=================================================
 ;; ruby-mode
 ;;
-;; Ref: http://pub.cozmixng.org/~the-rwiki/rw-cgi.rb?cmd=view;name=Emacs
+;; 
 ;;=====================================================
-(c-add-style "ruby" '("bsd"
-                      (c-basic-offset . 4)
-                      (c-offsets-alist (case-label . 2)
-                                       (label . 2)
-                                       (statement-case-intro . 2)
-                                       (statement-case-open . 2))))
-
-(defun my-c-mode-hook ()
-  (c-set-style "ruby"))
-(add-hook 'c-mode-hook 'my-c-mode-hook)
+(autoload 'ruby-mode "ruby-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Guardfile$" . ruby-mode))
+(add-hook 'ruby-mode-hook
+          (lambda () 
+            (setq tab-width 2)
+            (setq indent-tabs-mode t)
+            )
+          )
 
 
 ;;=======================================================================
@@ -829,7 +818,7 @@
   (php-mode)
   )
 
-
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode-default))
 
 ;;=========================
 ;; multi-web-mode
@@ -846,7 +835,15 @@
 ;; web-mode
 ;;=================================
 (require 'web-mode)
-
+(eval-after-load 'web-mode
+  '(progn 
+	 (define-key web-mode-map (kbd "C-;") 'anything-filelist+)
+	 (font-lock-add-keywords
+	  'web-mode '(("\t" 0 my-face-b-2 append)
+				 ("　" 0 my-face-b-1 append)
+				 ("[ \t]+$" 0 my-face-u-1 append)
+				 )))
+)
 
 
 
@@ -1216,6 +1213,29 @@
 
 (my-color-theme)
 
+
+
+;; =======================================================================
+;; 全角 TAB に色をつける
+;; =======================================================================
+(defface my-face-b-1 '((t (:background "gray40"))) nil)
+(defface my-face-b-2 '((t (:background "gray15"))) nil)
+(defface my-face-u-1 '((t (:foreground "SteelBlue" :underline t))) nil)
+(defvar my-face-b-1 'my-face-b-1)
+(defvar my-face-b-2 'my-face-b-2)
+(defvar my-face-u-1 'my-face-u-1)
+
+(defadvice font-lock-mode (before my-font-lock-mode ())
+  (font-lock-add-keywords
+   nil
+   '(("\t" 0 my-face-b-2 append)
+     ("　" 0 my-face-b-1 append)
+     ("[ \t]+$" 0 my-face-u-1 append)
+     )))
+(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+(ad-activate 'font-lock-mode)
+
+
 ;;=======================================================================
 ;; font http://d.hatena.ne.jp/kakurasan/20090807/p1
 ;;=====================================================================
@@ -1358,20 +1378,4 @@ See `anything-c-filelist-file-name' docstring for usage."
         anything-c-source-filelist
         ))
    "*anything file list*"))
-
-
-;; sourceの設定
-;; (setq anything-sources
-;;       '(
-;; 		(anything-c-sources-git-project-for)
-;;         anything-c-source-recentf
-;;         anything-c-source-files-in-current-dir+
-;; 		)
-;; )
-
-
-(defun kill-all-buffers()
-  (interactive)
-  (loop for buffer being the buffers
-     do (kill-buffer buffer)))
 
