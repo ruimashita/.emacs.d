@@ -618,7 +618,7 @@
           (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
             (insert "\n"))) ; 改行を挿入
         (let ((st (point)))
-          (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
+          (insert (format "-*-coding=%S-*-\n" (my-short-buffer-file-coding-system)))
           (comment-region st (point)))))))
 
 (add-hook 'python-mode-hook 'my-insert-file-local-coding)
