@@ -434,7 +434,6 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 ;; (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
-
 ;;=======================================================================
 ;; yasnippet
 ;;=====================================================================
@@ -1284,7 +1283,7 @@
 ;;=====================================================================
 (require 'anything-startup)
 (require 'anything-grep)
-
+(require 'anything-git-files)
 
 ;; キーバインド
 (global-set-key "\C-x\ b" 'anything-buffers-list)
@@ -1327,52 +1326,6 @@
   "See (info \"(emacs)File Conveniences\").
 Set `recentf-max-saved-items' to a bigger value if default is too small.")
 
-;; anything git 
-;; http://shibayu36.hatenablog.com/entry/2012/12/22/161727
-(defun anything-git-project-is-git-repository ()
-  (let ((error-message (shell-command-to-string "git rev-parse")))
-    (if (string= error-message "")
-        t
-      nil)
-    ))
-(defun anything-git-project-project-dir ()
-  (chomp
-   (shell-command-to-string "git rev-parse --show-toplevel")
-   ))
-(defun anything-c-sources-git-project-for ()
-  (cond ((anything-git-project-is-git-repository)
-         (loop for elt in
-               '(("Modified files (%s)" . "--modified")
-                 ("Untracked files (%s)" . "--others --exclude-standard")
-                 ("All controlled files in this project (%s)" . ""))
-               collect
-               `((name . ,(format (car elt) (anything-git-project-project-dir)))
-                 (init . (lambda ()
-                           (setq current-git-project-dir
-                                 (anything-git-project-project-dir))
-                           (unless (and ,(string= (cdr elt) "") ;update candidate buffer every time except for that of all project files
-                                        (anything-candidate-buffer))
-                             (with-current-buffer
-                                 (anything-candidate-buffer 'global)
-                               (insert
-                                (shell-command-to-string
-                                 ,(format "git ls-files --full-name $(git rev-parse --show-cdup) %s"
-                                          (cdr elt))))))))
-                 (candidates-in-buffer)
-                 (display-to-real . (lambda (name)
-                                      (format "%s/%s"
-                                              current-git-project-dir name)))
-                 (type . file))
-               ))
-        ((list))
-        ))
-(defun anything-git-project ()
-  (interactive)
-  (let* ((sources (anything-c-sources-git-project-for)))
-    (anything-other-buffer sources
-                           (format "*Anything git project in %s*"
-                                   (anything-git-project-project-dir)))))
-
 
 (defun anything-filelist+ ()
   "Preconfigured `anything' to open files/buffers/bookmarks instantly.
@@ -1381,16 +1334,15 @@ This is a replacement for `anything-for-files'.
 See `anything-c-filelist-file-name' docstring for usage."
   (interactive)
   (anything-other-buffer
-     (append
-      '(anything-c-source-ffap-line
-        anything-c-source-ffap-guesser
-		anything-c-source-buffers-list
-        )
-      (anything-c-sources-git-project-for)
-      '(anything-c-source-recentf
-        anything-c-source-bookmarks
-        anything-c-source-file-cache
-        anything-c-source-filelist
-        ))
+   '(anything-c-source-ffap-line
+	 anything-c-source-ffap-guesser
+	 anything-c-source-buffers-list
+	 anything-git-files:modified-source
+	 anything-git-files:untracked-source
+	 anything-git-files:all-source
+	 anything-c-source-recentf
+	 anything-c-source-bookmarks
+	 anything-c-source-file-cache
+	 anything-c-source-filelist)
    "*anything file list*"))
 
