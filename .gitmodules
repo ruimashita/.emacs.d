@@ -64,3 +64,6 @@
 [submodule "web-mode"]
 	path = web-mode
 	url = https://github.com/fxbois/web-mode.git
+[submodule "editorconfig-emacs"]
+	path = editorconfig-emacs
+	url = https://github.com/editorconfig/editorconfig-emacs.git
