@@ -1327,6 +1327,13 @@
 Set `recentf-max-saved-items' to a bigger value if default is too small.")
 
 
+(defun anything-git-files:root-1 ()
+  (ignore-errors
+	(file-name-as-directory
+	 (anything-git-files:chomp
+	  (anything-git-files:command-to-string "rev-parse" "--show-toplevel"))))
+  )
+
 (defun anything-filelist+ ()
   "Preconfigured `anything' to open files/buffers/bookmarks instantly.
 
@@ -1345,4 +1352,5 @@ See `anything-c-filelist-file-name' docstring for usage."
 	 anything-c-source-file-cache
 	 anything-c-source-filelist)
    "*anything file list*"))
+
 
