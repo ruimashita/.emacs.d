@@ -46,6 +46,10 @@
 ;; バックアップファイルを作らない
 (setq make-backup-files nil)
 
+;;; .#* とかのバックアップファイルを作らない
+(setq auto-save-default nil)
+
+
 ;; メニューバーを表示しない
 (setq menu-bar-mode nil)
 
@@ -101,6 +105,10 @@
 
 ;; シンボリックリンクを開いたときの質問を消す
 (setq vc-follow-symlinks nil)
+
+;; シンボリックリンクを開いたとき、Lockファイルをつくらない
+(setq create-lockfiles nil)
+
 
 ;; kill all buffers
 (defun kill-all-buffers()
@@ -190,8 +198,8 @@
       ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
       (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
       ;; シフト + 矢印で範囲選択
-      (setq pc-select-selection-keys-only t)
-      (pc-selection-mode 1)
+;;      (setq pc-select-selection-keys-only t)
+;;      (pc-selection-mode 1)
 
 
       )
