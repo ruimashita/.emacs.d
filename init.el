@@ -556,44 +556,13 @@
 ;;=====================================================================
 
 ;; 改行でインデント
-(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
-
-
-;; django用 パス・環境変数 設定
-(defun get-django-setting-file (location filename)
-  (let* ((dir (file-name-directory location))
-         (path (concat dir filename)))
-    (if (file-exists-p path)
-        path
-      (if (not (equal dir "/"))
-          (get-django-setting-file (expand-file-name (concat dir "../")) filename)
-        ))))
-
-(defun get-django-setting-dir (location dirname)
-  (let* ( (dir (file-name-directory location))
-          (path (concat dir dirname)))
-    (if (file-directory-p path)
-        path
-      (if (not (equal dir "/"))
-          (get-django-setting-dir (expand-file-name (concat dir "/../")) dirname)
-        )
-      )))
-
-(defadvice run-python (before possibly-setup-django-project-environment)
-  (let* (
-         (settings-file (get-django-setting-file buffer-file-name "settings.py"))
-         (settings-dir (get-django-setting-dir buffer-file-name "settings"))
-         )
-    (if settings-dir 
-        (progn
-          (let* ( (project-dir (expand-file-name (concat settings-dir "/../"))) )
-            (setenv "PYTHONPATH" project-dir)))
-      (progn 
-        (let* (  (project-dir (file-name-directory settings-file)) )
-          (setenv "PYTHONPATH" project-dir))))
-    (setenv "DJANGO_SETTINGS_MODULE" "settings")
-    )
-  )
+(add-hook 'python-mode-hook 
+		  '(lambda () 
+			 (define-key python-mode-map "\C-m" 'newline-and-indent)
+			 (setq python-indent 2)
+			 (setq indent-tabs-mode nil)
+			 )
+		  )
 
 (add-hook 'python-mode-hook
 		  '(lambda()
@@ -610,29 +579,6 @@
 (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
 
 
-(require 'pony-mode)
-
-
-;; (require 'django-mode)
-;; ;; (yas/load-directory "path-to/django-mode/snippets")
-;; (defun django-runserver ()
-;;   (interactive)
-;;   (django-manage "runserver"))
-
-;; (define-key django-mode-map (kbd "C-t") nil)
-;; (define-key django-mode-map (kbd "C-x j") nil)
-;; (define-key django-mode-map (kbd "C-c m") nil)
-;; (define-key django-mode-map (kbd "C-c t") nil)
-;; (define-key django-mode-map (kbd "C-c s") nil)
-;; (define-key django-mode-map (kbd "C-c a") nil)
-
-;; (define-key django-mode-map (kbd "C-c C-t") 'django-insert-transpy)
-;; (define-key django-mode-map (kbd "C-c C-p j") 'django-jump)
-;; (define-key django-mode-map (kbd "C-c C-p m") 'django-manage)
-;; (define-key django-mode-map (kbd "C-c C-p t") 'django-test)
-;; (define-key django-mode-map (kbd "C-c C-p s") 'django-syncdb)
-;; (define-key django-mode-map (kbd "C-c C-p a") 'django-startapp)
-;; (define-key django-mode-map (kbd "C-c C-p r") 'django-runserver)
 
 ;; http://d.hatena.ne.jp/sou-i/20120531/1338419106
 (defun my-short-buffer-file-coding-system (&optional default-coding)
@@ -642,25 +588,25 @@
           ((string-match "utf-8" coding-str) 'utf-8)
           (t (or default-coding 'utf-8)))))
 
-;; (defun my-insert-file-local-coding ()
-;;   "ファイルの先頭に `coding:' を自動挿入する"
-;;   (interactive)
-;;   (save-excursion
-;;     (goto-line 2) (end-of-line) ; ２行目の行末の移動
-;;     (let ((limit (point)))
-;;       (goto-char (point-min))
-;;       (unless (search-forward "coding=" limit t) ; 2行目以内に `coding:'がない
-;;         (goto-char (point-min))
-;;         ;; #!で始まる場合２行目に記述
-;;         (when (and (< (+ 2 (point-min)) (point-max))
-;;                    (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
-;;           (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
-;;             (insert "\n"))) ; 改行を挿入
-;;         (let ((st (point)))
-;;           (insert (format "-*-coding=%S-*-\n" (my-short-buffer-file-coding-system)))
-;;           (comment-region st (point)))))))
+(defun my-insert-file-local-coding ()
+  "ファイルの先頭に `coding:' を自動挿入する"
+  (interactive)
+  (save-excursion
+    (goto-line 2) (end-of-line) ; ２行目の行末の移動
+    (let ((limit (point)))
+      (goto-char (point-min))
+      (unless (search-forward "coding" limit t) ; 2行目以内に `coding:'がない
+        (goto-char (point-min))
+        ;; #!で始まる場合２行目に記述
+        (when (and (< (+ 2 (point-min)) (point-max))
+                   (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
+          (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
+            (insert "\n"))) ; 改行を挿入
+        (let ((st (point)))
+          (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
+          (comment-region st (point)))))))
 
-;; (add-hook 'python-mode-hook 'my-insert-file-local-coding)
+(add-hook 'python-mode-hook 'my-insert-file-local-coding)
 
 
 
