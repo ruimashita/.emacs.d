@@ -555,26 +555,18 @@
 (add-hook 'python-mode-hook 
 		  '(lambda () 
 			 (define-key python-mode-map "\C-m" 'newline-and-indent)
-			 (setq python-indent 2)
+			 (setq python-indent 4)
 			 (setq indent-tabs-mode nil)
 			 )
 		  )
 
-(add-hook 'python-mode-hook
-		  '(lambda()
-			 (setq indent-tabs-mode nil)
-			 (setq python-indent 4)
-			 ))
-
 ;; Simple Python Completion Source for Auto-Complete
 ;; http://chrispoole.com/project/ac-python/
-(require 'ac-python)
+;;(require 'ac-python)
 
 ;; https://code.launchpad.net/~eopadoan/+junk/django-html-mode
 (require 'django-html-mode)
 (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
-
-
 
 ;; http://d.hatena.ne.jp/sou-i/20120531/1338419106
 (defun my-short-buffer-file-coding-system (&optional default-coding)
