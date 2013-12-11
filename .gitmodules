@@ -45,7 +45,7 @@
 	url = https://github.com/davidmiller/pony-mode.git
 [submodule "less-css-mode"]
 	path = less-css-mode
-	url = git@github.com:ruimashita/less-css-mode.git
+	url = https://github.com/purcell/less-css-mode.git
 [submodule "popup-el"]
 	path = popup-el
 	url = git://github.com/auto-complete/popup-el.git
