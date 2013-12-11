@@ -566,7 +566,15 @@
 
 ;; https://code.launchpad.net/~eopadoan/+junk/django-html-mode
 (require 'django-html-mode)
+(add-hook 'django-html-mode-hook 
+		  '(lambda () 
+			 (setq indent-tabs-mode nil)
+			 )
+		  )
+
 (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
+
+
 
 ;; http://d.hatena.ne.jp/sou-i/20120531/1338419106
 (defun my-short-buffer-file-coding-system (&optional default-coding)
