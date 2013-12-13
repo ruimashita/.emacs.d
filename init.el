@@ -406,6 +406,7 @@
 (setq tab-width 4)
 (setq indent-tabs-mode t)
 (setq c-basic-offset 4)
+(setq c-default-style "linux")
 
 ;;=======================================================================
 ;; auto-complete
