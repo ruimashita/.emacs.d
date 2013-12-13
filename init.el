@@ -772,18 +772,15 @@
 ;; phpmode
 ;;==============================================
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-(setq php-mode-force-pear t)
+;; (setq php-mode-force-pear t)
 
 (defun php-mode-default-hook ()
-  (setq tab-width 2)
-  (setq c-basic-offset 2)
   (setq c-comment-indent 2)
   (setq comment-indent 2)
   (setq c-indent-new-comment-line 2)
   (setq c-indent-comment-alist 2)
-  (setq indent-tabs-mode t)
   (c-set-offset 'case-label' 2) 
-  (c-set-offset 'arglist-intro' 2) 
+  (c-set-offset 'arglist-intro' 0) 
   (c-set-offset 'arglist-cont-nonempty' 2)
   (c-set-offset 'arglist-close' 0)
   )
@@ -804,7 +801,18 @@
   (interactive)
   (remove-hook 'php-mode-hook 'php-mode-space-hook)
   (add-hook 'php-mode-hook 'php-mode-default-hook)
+  (setq c-default-style "linux"
+  		c-basic-offset 2)
+  (setq-default c-basic-indent 2)
+  (setq-default tab-width 2)
+  (setq standard-indent 2)
+  (setq-default indent-tabs-mode t)
+  (setq-default php-mode-coding-style nil)
+
+
   (php-mode)
+
+
   )
 
 (defun php-mode-space ()
@@ -814,6 +822,7 @@
   (add-hook 'php-mode-hook 'php-mode-space-hook)
   (php-mode)
   )
+
 
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode-default))
 
