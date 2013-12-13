@@ -402,11 +402,10 @@
 ;;==============================================
 ;; indent
 ;;===============================================
-(setq default-tab-width 4)
-(setq tab-width 4)
-(setq indent-tabs-mode t)
-(setq c-basic-offset 4)
-(setq c-default-style "linux")
+(setq-default default-tab-width 4)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode t)
+(setq-default c-basic-offset 4)
 
 ;;=======================================================================
 ;; auto-complete
@@ -783,6 +782,16 @@
   (c-set-offset 'arglist-intro' 0) 
   (c-set-offset 'arglist-cont-nonempty' 2)
   (c-set-offset 'arglist-close' 0)
+  (c-set-offset 'substatement-open 0)
+  (setq c-default-style "linux")
+  (setq c-set-style "linux")
+  (setq c-basic-offset 2)
+  (setq c-basic-indent 2)
+  (setq tab-width 2)
+  (setq standard-indent 2)
+  (setqt indent-tabs-mode t)
+
+
   )
 
 (defun php-mode-space-hook ()
@@ -801,14 +810,9 @@
   (interactive)
   (remove-hook 'php-mode-hook 'php-mode-space-hook)
   (add-hook 'php-mode-hook 'php-mode-default-hook)
-  (setq c-default-style "linux"
-  		c-basic-offset 2)
-  (setq-default c-basic-indent 2)
-  (setq-default tab-width 2)
-  (setq standard-indent 2)
-  (setq-default indent-tabs-mode t)
-  (setq-default php-mode-coding-style nil)
 
+  (setq-default php-mode-coding-style nil)
+  (setq c-default-style '((php-mode . "linux")))
 
   (php-mode)
 
