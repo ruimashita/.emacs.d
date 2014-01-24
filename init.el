@@ -395,8 +395,15 @@
 (require 'foreign-regexp)
 
 (custom-set-variables
-'(foreign-regexp/regexp-type 'ruby) ;; Choose by your preference.
-'(reb-re-syntax 'foreign-regexp)) ;; Tell re-builder to use foreign regexp.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(foreign-regexp/regexp-type (quote ruby))
+ '(reb-re-syntax (quote foreign-regexp))
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-markup-indent-offset 2))
+ ;; Tell re-builder to use foreign regexp.
 
 
 ;;==============================================
@@ -774,22 +781,21 @@
 ;; (setq php-mode-force-pear t)
 
 (defun php-mode-default-hook ()
-  (setq c-comment-indent 2)
-  (setq comment-indent 2)
+
   (setq c-indent-new-comment-line 2)
   (setq c-indent-comment-alist 2)
   (c-set-offset 'case-label' 2) 
-  (c-set-offset 'arglist-intro' 0) 
-  (c-set-offset 'arglist-cont-nonempty' 2)
+  (c-set-offset 'arglist-intro' 2) 
+  (c-set-offset 'arglist-cont-nonempty' 0)
   (c-set-offset 'arglist-close' 0)
   (c-set-offset 'substatement-open 0)
-  (setq c-default-style "linux")
-  (setq c-set-style "linux")
+  (setq c-comment-indent 2)
+  (setq comment-indent 2)
   (setq c-basic-offset 2)
   (setq c-basic-indent 2)
   (setq tab-width 2)
   (setq standard-indent 2)
-  (setqt indent-tabs-mode t)
+  (setq indent-tabs-mode t)
 
 
   )
@@ -810,9 +816,6 @@
   (interactive)
   (remove-hook 'php-mode-hook 'php-mode-space-hook)
   (add-hook 'php-mode-hook 'php-mode-default-hook)
-
-  (setq-default php-mode-coding-style nil)
-  (setq c-default-style '((php-mode . "linux")))
 
   (php-mode)
 
@@ -861,6 +864,10 @@
 			 (setq web-mode-css-indent-offset 4)
 			 (setq web-mode-code-indent-offset 4)
 			 ))
+
+(add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ctp$" . web-mode))
+
 
 
 ;;=========================
