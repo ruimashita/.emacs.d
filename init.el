@@ -801,13 +801,20 @@
   )
 
 (defun php-mode-space-hook ()
-  (setq tab-width 4)
-  (setq c-basic-offset 4)
-  (setq indent-tabs-mode nil)
+  (setq c-indent-new-comment-line 4)
+  (setq c-indent-comment-alist 4)
   (c-set-offset 'case-label' 4) 
   (c-set-offset 'arglist-intro' 4) 
-  (c-set-offset 'arglist-cont-nonempty' 4)
+  (c-set-offset 'arglist-cont-nonempty' 0)
   (c-set-offset 'arglist-close' 0)
+  (c-set-offset 'substatement-open 0)
+  (setq c-comment-indent 4)
+  (setq comment-indent 4)
+  (setq c-basic-offset 4)
+  (setq c-basic-indent 4)
+  (setq tab-width 4)
+  (setq standard-indent 4)
+  (setq indent-tabs-mode nil)
   )
 
 
@@ -816,22 +823,18 @@
   (interactive)
   (remove-hook 'php-mode-hook 'php-mode-space-hook)
   (add-hook 'php-mode-hook 'php-mode-default-hook)
-
   (php-mode)
-
-
   )
 
 (defun php-mode-space ()
   (interactive)
-  (setq php-mode-force-pear t)
   (remove-hook 'php-mode-hook 'php-mode-default-hook)
   (add-hook 'php-mode-hook 'php-mode-space-hook)
   (php-mode)
   )
 
 
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode-default))
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode-space))
 
 ;;=========================
 ;; multi-web-mode
