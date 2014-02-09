@@ -73,3 +73,6 @@
 [submodule "anything-git-files-el"]
 	path = anything-git-files-el
 	url = https://github.com/tarao/anything-git-files-el.git
+[submodule "flymake-phpcs"]
+	path = flymake-phpcs
+	url = https://github.com/senda-akiha/flymake-phpcs.git
