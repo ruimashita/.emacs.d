@@ -76,3 +76,6 @@
 [submodule "flymake-phpcs"]
 	path = flymake-phpcs
 	url = https://github.com/senda-akiha/flymake-phpcs.git
+[submodule "flymake-easy"]
+	path = flymake-easy
+	url = https://github.com/purcell/flymake-easy.git

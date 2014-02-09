@@ -456,6 +456,12 @@
 (yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
 
 
+;;=======================================================================
+;; flymake
+;;=====================================================================
+(require 'flymake)
+(require 'flymake-easy)
+
 
 ;;=========================
 ;; css-mode
@@ -790,9 +796,14 @@
 
 
 (require 'php-mode)
+(require 'flymake-phpcs)
+(custom-set-variables
+ '(flymake-phpcs-standard "PSR2"))
+
 (add-hook 'php-mode-hook
 		  (lambda ()
 			(php-enable-symfony2-coding-style)
+			(flymake-phpcs-load)
 			))
 
 
