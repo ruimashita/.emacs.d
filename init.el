@@ -462,6 +462,14 @@
 (require 'flymake)
 (require 'flymake-easy)
 
+(defun my-flymake-show-next-error()
+  (interactive)
+  (flymake-goto-next-error)
+    (flymake-display-err-menu-for-current-line)
+    )
+
+(global-set-key "\C-c\C-v" 'my-flymake-show-next-error)
+
 
 ;;=========================
 ;; css-mode
@@ -798,7 +806,9 @@
 (require 'php-mode)
 (require 'flymake-phpcs)
 (custom-set-variables
- '(flymake-phpcs-standard "PSR2"))
+ '(flymake-phpcs-standard "PSR2")
+ '(flymake-phpcs-location 'tempdir)
+)
 
 (add-hook 'php-mode-hook
 		  (lambda ()
