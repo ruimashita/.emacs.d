@@ -412,7 +412,7 @@
 ;;===============================================
 (setq-default default-tab-width 4)
 (setq-default tab-width 4)
-(setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
 (setq-default c-basic-offset 4)
 
 ;;=======================================================================
@@ -510,7 +510,7 @@
 (add-hook 'ruby-mode-hook
           (lambda () 
             (setq tab-width 2)
-            (setq indent-tabs-mode t)
+            (setq indent-tabs-mode nil)
 			(setq ruby-insert-encoding-magic-comment nil)
 			(setq ruby-deep-indent-paren-style nil)
             )
@@ -784,7 +784,7 @@
  '(lambda ()
     (setq tab-width 2)
     (setq sgml-indent-step 2)
-    (setq indent-tabs-mode t)
+    (setq indent-tabs-mode nil)
     (setq sgml-basic-offset 2)
     ))
 
