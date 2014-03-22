@@ -811,71 +811,19 @@
  '(flymake-phpcs-location 'tempdir)
 )
 
+(defun php-doc-paragraph-boundaries () 
+  (setq paragraph-separate "^[ \t]*\\(\\(/[/\\*]+\\)\\|\\(\\*+/\\)\\|\\(\\*?\\)\\|\\(\\*?[ \t]*@[[:alpha:]]+\\([ \t]+.*\\)?\\)\\)[ \t]*$")
+  (setq paragraph-start (symbol-value 'paragraph-separate)))
+
+
 (add-hook 'php-mode-hook
 		  (lambda ()
+            (subword-mode 1)
 			(php-enable-symfony2-coding-style)
 			(flymake-phpcs-load)
+            (php-doc-paragraph-boundaries)
 			))
 
-
-;; (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-;; ;; (setq php-mode-force-pear t)
-
-;; (defun php-mode-default-hook ()
-
-;;   (setq c-indent-new-comment-line 2)
-;;   (setq c-indent-comment-alist 2)
-;;   (c-set-offset 'case-label' 2) 
-;;   (c-set-offset 'arglist-intro' 2) 
-;;   (c-set-offset 'arglist-cont-nonempty' 0)
-;;   (c-set-offset 'arglist-close' 0)
-;;   (c-set-offset 'substatement-open 0)
-;;   (setq c-comment-indent 2)
-;;   (setq comment-indent 2)
-;;   (setq c-basic-offset 2)
-;;   (setq c-basic-indent 2)
-;;   (setq tab-width 2)
-;;   (setq standard-indent 2)
-;;   (setq indent-tabs-mode t)
-
-
-;;   )
-
-;; (defun php-mode-space-hook ()
-;;   (setq c-indent-new-comment-line 4)
-;;   (setq c-indent-comment-alist 4)
-;;   (c-set-offset 'case-label' 4) 
-;;   (c-set-offset 'arglist-intro' 4) 
-;;   (c-set-offset 'arglist-cont-nonempty' 0)
-;;   (c-set-offset 'arglist-close' 0)
-;;   (c-set-offset 'substatement-open 0)
-;;   (setq c-comment-indent 4)
-;;   (setq comment-indent 4)
-;;   (setq c-basic-offset 4)
-;;   (setq c-basic-indent 4)
-;;   (setq tab-width 4)
-;;   (setq standard-indent 4)
-;;   (setq indent-tabs-mode nil)
-;;   )
-
-
-
-;; (defun php-mode-default ()
-;;   (interactive)
-;;   (remove-hook 'php-mode-hook 'php-mode-space-hook)
-;;   (add-hook 'php-mode-hook 'php-mode-default-hook)
-;;   (php-mode)
-;;   )
-
-;; (defun php-mode-space ()
-;;   (interactive)
-;;   (remove-hook 'php-mode-hook 'php-mode-default-hook)
-;;   (add-hook 'php-mode-hook 'php-mode-space-hook)
-;;   (php-mode)
-;;   )
-
-
-;; (add-to-list 'auto-mode-alist '("\\.php$" . php-mode-space))
 
 ;;=========================
 ;; multi-web-mode
