@@ -109,6 +109,11 @@
 ;; シンボリックリンクを開いたとき、Lockファイルをつくらない
 (setq create-lockfiles nil)
 
+;;;大文字化[C-x C-u]・小文字化[C-x C-l]の時、問い合わせなしで実行
+;;;http://masao.jpn.org/etc/.emacs.el
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 
 ;; kill all buffers
 (defun kill-all-buffers()
