@@ -577,59 +577,67 @@
 ;;=======================================================================
 ;; python-mode
 ;;=====================================================================
+;;https://github.com/fgallina/python.el
+(require 'python)
 
-;; 改行でインデント
+(require 'flymake-python-pyflakes)
+
 (add-hook 'python-mode-hook 
 		  '(lambda () 
-			 (define-key python-mode-map "\C-m" 'newline-and-indent)
-			 (setq python-indent 4)
-			 (setq indent-tabs-mode nil)
+			 (flymake-python-pyflakes-load)
+             (define-key python-mode-map  "\C-c\C-v" 'my-flymake-show-next-error)
 			 )
 		  )
 
-;; Simple Python Completion Source for Auto-Complete
-;; http://chrispoole.com/project/ac-python/
-;;(require 'ac-python)
+
+;; 改行でインデント
+;; (add-hook 'python-mode-hook 
+;; 		  '(lambda () 
+;; 			 (define-key python-mode-map "\C-m" 'newline-and-indent)
+;; 			 (setq python-indent 4)
+;; 			 (setq indent-tabs-mode nil)
+;; 			 )
+;; 		  )
+
 
 ;; https://code.launchpad.net/~eopadoan/+junk/django-html-mode
-(require 'django-html-mode)
-(add-hook 'django-html-mode-hook 
-		  '(lambda () 
-			 (setq indent-tabs-mode nil)
-			 )
-		  )
+;; (require 'django-html-mode)
+;; (add-hook 'django-html-mode-hook 
+;; 		  '(lambda () 
+;; 			 (setq indent-tabs-mode nil)
+;; 			 )
+;; 		  )
 
-(add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
-
+;; (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
 
 
 ;; http://d.hatena.ne.jp/sou-i/20120531/1338419106
-(defun my-short-buffer-file-coding-system (&optional default-coding)
-  (let ((coding-str (format "%S" buffer-file-coding-system)))
-    (cond ((string-match "shift-jis" coding-str) 'shift_jis)
-          ((string-match "euc-jp" coding-str) 'euc-jp)
-          ((string-match "utf-8" coding-str) 'utf-8)
-          (t (or default-coding 'utf-8)))))
+;; (defun my-short-buffer-file-coding-system (&optional default-coding)
+;;   (let ((coding-str (format "%S" buffer-file-coding-system)))
+;;     (cond ((string-match "shift-jis" coding-str) 'shift_jis)
+;;           ((string-match "euc-jp" coding-str) 'euc-jp)
+;;           ((string-match "utf-8" coding-str) 'utf-8)
+;;           (t (or default-coding 'utf-8)))))
 
-(defun my-insert-file-local-coding ()
-  "ファイルの先頭に `coding:' を自動挿入する"
-  (interactive)
-  (save-excursion
-    (goto-line 2) (end-of-line) ; ２行目の行末の移動
-    (let ((limit (point)))
-      (goto-char (point-min))
-      (unless (search-forward "coding" limit t) ; 2行目以内に `coding:'がない
-        (goto-char (point-min))
-        ;; #!で始まる場合２行目に記述
-        (when (and (< (+ 2 (point-min)) (point-max))
-                   (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
-          (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
-            (insert "\n"))) ; 改行を挿入
-        (let ((st (point)))
-          (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
-          (comment-region st (point)))))))
+;; (defun my-insert-file-local-coding ()
+;;   "ファイルの先頭に `coding:' を自動挿入する"
+;;   (interactive)
+;;   (save-excursion
+;;     (goto-line 2) (end-of-line) ; ２行目の行末の移動
+;;     (let ((limit (point)))
+;;       (goto-char (point-min))
+;;       (unless (search-forward "coding" limit t) ; 2行目以内に `coding:'がない
+;;         (goto-char (point-min))
+;;         ;; #!で始まる場合２行目に記述
+;;         (when (and (< (+ 2 (point-min)) (point-max))
+;;                    (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
+;;           (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
+;;             (insert "\n"))) ; 改行を挿入
+;;         (let ((st (point)))
+;;           (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
+;;           (comment-region st (point)))))))
 
-(add-hook 'python-mode-hook 'my-insert-file-local-coding)
+;; (add-hook 'python-mode-hook 'my-insert-file-local-coding)
 
 
 
