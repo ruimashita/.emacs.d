@@ -109,6 +109,11 @@
 ;; シンボリックリンクを開いたとき、Lockファイルをつくらない
 (setq create-lockfiles nil)
 
+;;;大文字化[C-x C-u]・小文字化[C-x C-l]の時、問い合わせなしで実行
+;;;http://masao.jpn.org/etc/.emacs.el
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 
 ;; kill all buffers
 (defun kill-all-buffers()
@@ -118,8 +123,9 @@
 
 
 ;; 言語・文字コード関連の設定
-(set-language-environment "Japanese")
+(set-language-environment 'utf-8)
 (prefer-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -127,7 +133,7 @@
 (setq default-buffer-file-coding-system 'utf-8)
 (setq file-name-coding-system 'utf-8)
 (setq-default save-buffer-coding-system 'utf-8)
-
+(set-selection-coding-system 'utf-8)
 
 
 ;; =======================================================================
@@ -411,7 +417,7 @@
 ;;===============================================
 (setq-default default-tab-width 4)
 (setq-default tab-width 4)
-(setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
 (setq-default c-basic-offset 4)
 
 ;;=======================================================================
@@ -509,7 +515,7 @@
 (add-hook 'ruby-mode-hook
           (lambda () 
             (setq tab-width 2)
-            (setq indent-tabs-mode t)
+            (setq indent-tabs-mode nil)
 			(setq ruby-insert-encoding-magic-comment nil)
 			(setq ruby-deep-indent-paren-style nil)
             )
@@ -571,59 +577,67 @@
 ;;=======================================================================
 ;; python-mode
 ;;=====================================================================
+;;https://github.com/fgallina/python.el
+(require 'python)
 
-;; 改行でインデント
+(require 'flymake-python-pyflakes)
+
 (add-hook 'python-mode-hook 
 		  '(lambda () 
-			 (define-key python-mode-map "\C-m" 'newline-and-indent)
-			 (setq python-indent 4)
-			 (setq indent-tabs-mode nil)
+			 (flymake-python-pyflakes-load)
+             (define-key python-mode-map  "\C-c\C-v" 'my-flymake-show-next-error)
 			 )
 		  )
 
-;; Simple Python Completion Source for Auto-Complete
-;; http://chrispoole.com/project/ac-python/
-;;(require 'ac-python)
+
+;; 改行でインデント
+;; (add-hook 'python-mode-hook 
+;; 		  '(lambda () 
+;; 			 (define-key python-mode-map "\C-m" 'newline-and-indent)
+;; 			 (setq python-indent 4)
+;; 			 (setq indent-tabs-mode nil)
+;; 			 )
+;; 		  )
+
 
 ;; https://code.launchpad.net/~eopadoan/+junk/django-html-mode
-(require 'django-html-mode)
-(add-hook 'django-html-mode-hook 
-		  '(lambda () 
-			 (setq indent-tabs-mode nil)
-			 )
-		  )
+;; (require 'django-html-mode)
+;; (add-hook 'django-html-mode-hook 
+;; 		  '(lambda () 
+;; 			 (setq indent-tabs-mode nil)
+;; 			 )
+;; 		  )
 
-(add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
-
+;; (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
 
 
 ;; http://d.hatena.ne.jp/sou-i/20120531/1338419106
-(defun my-short-buffer-file-coding-system (&optional default-coding)
-  (let ((coding-str (format "%S" buffer-file-coding-system)))
-    (cond ((string-match "shift-jis" coding-str) 'shift_jis)
-          ((string-match "euc-jp" coding-str) 'euc-jp)
-          ((string-match "utf-8" coding-str) 'utf-8)
-          (t (or default-coding 'utf-8)))))
+;; (defun my-short-buffer-file-coding-system (&optional default-coding)
+;;   (let ((coding-str (format "%S" buffer-file-coding-system)))
+;;     (cond ((string-match "shift-jis" coding-str) 'shift_jis)
+;;           ((string-match "euc-jp" coding-str) 'euc-jp)
+;;           ((string-match "utf-8" coding-str) 'utf-8)
+;;           (t (or default-coding 'utf-8)))))
 
-(defun my-insert-file-local-coding ()
-  "ファイルの先頭に `coding:' を自動挿入する"
-  (interactive)
-  (save-excursion
-    (goto-line 2) (end-of-line) ; ２行目の行末の移動
-    (let ((limit (point)))
-      (goto-char (point-min))
-      (unless (search-forward "coding" limit t) ; 2行目以内に `coding:'がない
-        (goto-char (point-min))
-        ;; #!で始まる場合２行目に記述
-        (when (and (< (+ 2 (point-min)) (point-max))
-                   (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
-          (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
-            (insert "\n"))) ; 改行を挿入
-        (let ((st (point)))
-          (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
-          (comment-region st (point)))))))
+;; (defun my-insert-file-local-coding ()
+;;   "ファイルの先頭に `coding:' を自動挿入する"
+;;   (interactive)
+;;   (save-excursion
+;;     (goto-line 2) (end-of-line) ; ２行目の行末の移動
+;;     (let ((limit (point)))
+;;       (goto-char (point-min))
+;;       (unless (search-forward "coding" limit t) ; 2行目以内に `coding:'がない
+;;         (goto-char (point-min))
+;;         ;; #!で始まる場合２行目に記述
+;;         (when (and (< (+ 2 (point-min)) (point-max))
+;;                    (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
+;;           (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
+;;             (insert "\n"))) ; 改行を挿入
+;;         (let ((st (point)))
+;;           (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
+;;           (comment-region st (point)))))))
 
-(add-hook 'python-mode-hook 'my-insert-file-local-coding)
+;; (add-hook 'python-mode-hook 'my-insert-file-local-coding)
 
 
 
@@ -783,7 +797,7 @@
  '(lambda ()
     (setq tab-width 2)
     (setq sgml-indent-step 2)
-    (setq indent-tabs-mode t)
+    (setq indent-tabs-mode nil)
     (setq sgml-basic-offset 2)
     ))
 
@@ -819,71 +833,19 @@
 	  )
   )
   
+(defun php-doc-paragraph-boundaries () 
+  (setq paragraph-separate "^[ \t]*\\(\\(/[/\\*]+\\)\\|\\(\\*+/\\)\\|\\(\\*?\\)\\|\\(\\*?[ \t]*@[[:alpha:]]+\\([ \t]+.*\\)?\\)\\)[ \t]*$")
+  (setq paragraph-start (symbol-value 'paragraph-separate)))
+
+
 (add-hook 'php-mode-hook
 		  (lambda ()
+            (subword-mode 1)
 			(php-enable-symfony2-coding-style)
 			(flymake-phpcs-load)
+            (php-doc-paragraph-boundaries)
 			))
 
-
-;; (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-;; ;; (setq php-mode-force-pear t)
-
-;; (defun php-mode-default-hook ()
-
-;;   (setq c-indent-new-comment-line 2)
-;;   (setq c-indent-comment-alist 2)
-;;   (c-set-offset 'case-label' 2) 
-;;   (c-set-offset 'arglist-intro' 2) 
-;;   (c-set-offset 'arglist-cont-nonempty' 0)
-;;   (c-set-offset 'arglist-close' 0)
-;;   (c-set-offset 'substatement-open 0)
-;;   (setq c-comment-indent 2)
-;;   (setq comment-indent 2)
-;;   (setq c-basic-offset 2)
-;;   (setq c-basic-indent 2)
-;;   (setq tab-width 2)
-;;   (setq standard-indent 2)
-;;   (setq indent-tabs-mode t)
-
-
-;;   )
-
-;; (defun php-mode-space-hook ()
-;;   (setq c-indent-new-comment-line 4)
-;;   (setq c-indent-comment-alist 4)
-;;   (c-set-offset 'case-label' 4) 
-;;   (c-set-offset 'arglist-intro' 4) 
-;;   (c-set-offset 'arglist-cont-nonempty' 0)
-;;   (c-set-offset 'arglist-close' 0)
-;;   (c-set-offset 'substatement-open 0)
-;;   (setq c-comment-indent 4)
-;;   (setq comment-indent 4)
-;;   (setq c-basic-offset 4)
-;;   (setq c-basic-indent 4)
-;;   (setq tab-width 4)
-;;   (setq standard-indent 4)
-;;   (setq indent-tabs-mode nil)
-;;   )
-
-
-
-;; (defun php-mode-default ()
-;;   (interactive)
-;;   (remove-hook 'php-mode-hook 'php-mode-space-hook)
-;;   (add-hook 'php-mode-hook 'php-mode-default-hook)
-;;   (php-mode)
-;;   )
-
-;; (defun php-mode-space ()
-;;   (interactive)
-;;   (remove-hook 'php-mode-hook 'php-mode-default-hook)
-;;   (add-hook 'php-mode-hook 'php-mode-space-hook)
-;;   (php-mode)
-;;   )
-
-
-;; (add-to-list 'auto-mode-alist '("\\.php$" . php-mode-space))
 
 ;;=========================
 ;; multi-web-mode

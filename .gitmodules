@@ -40,9 +40,6 @@
 [submodule "nginx-mode"]
 	path = nginx-mode
 	url = https://github.com/ajc/nginx-mode.git
-[submodule "pony-mode"]
-	path = pony-mode
-	url = https://github.com/davidmiller/pony-mode.git
 [submodule "less-css-mode"]
 	path = less-css-mode
 	url = https://github.com/purcell/less-css-mode.git
@@ -79,3 +76,9 @@
 [submodule "flymake-easy"]
 	path = flymake-easy
 	url = https://github.com/purcell/flymake-easy.git
+[submodule "python.el"]
+	path = python.el
+	url = https://github.com/fgallina/python.el
+[submodule "flymake-python-pyflakes"]
+	path = flymake-python-pyflakes
+	url = https://github.com/purcell/flymake-python-pyflakes.git
