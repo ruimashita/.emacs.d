@@ -810,6 +810,15 @@
  '(flymake-phpcs-location 'tempdir)
 )
 
+;;  if Mac OS X
+(if (system-type-is-darwin)
+    (progn
+	  (custom-set-variables
+	   '(flymake-phpcs-command "/usr/local/opt/php54/bin/phpcs")
+	   )
+	  )
+  )
+  
 (add-hook 'php-mode-hook
 		  (lambda ()
 			(php-enable-symfony2-coding-style)
