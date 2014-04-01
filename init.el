@@ -813,6 +813,15 @@
  '(flymake-phpcs-location 'tempdir)
 )
 
+;;  if Mac OS X
+(if (system-type-is-darwin)
+    (progn
+	  (custom-set-variables
+	   '(flymake-phpcs-command "/usr/local/opt/php54/bin/phpcs")
+	   )
+	  )
+  )
+  
 (defun php-doc-paragraph-boundaries () 
   (setq paragraph-separate "^[ \t]*\\(\\(/[/\\*]+\\)\\|\\(\\*+/\\)\\|\\(\\*?\\)\\|\\(\\*?[ \t]*@[[:alpha:]]+\\([ \t]+.*\\)?\\)\\)[ \t]*$")
   (setq paragraph-start (symbol-value 'paragraph-separate)))
