@@ -589,17 +589,6 @@
 			 )
 		  )
 
-
-;; 改行でインデント
-;; (add-hook 'python-mode-hook 
-;; 		  '(lambda () 
-;; 			 (define-key python-mode-map "\C-m" 'newline-and-indent)
-;; 			 (setq python-indent 4)
-;; 			 (setq indent-tabs-mode nil)
-;; 			 )
-;; 		  )
-
-
 ;; https://code.launchpad.net/~eopadoan/+junk/django-html-mode
 ;; (require 'django-html-mode)
 ;; (add-hook 'django-html-mode-hook 
