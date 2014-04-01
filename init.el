@@ -794,18 +794,6 @@
 ;;=====================================================
 ;; phpmode
 ;;==============================================
-;; (require 'php+-mode)
-;; (php+-mode-setup)
-;; (add-to-list 'auto-mode-alist '("\\.php$" . php+-mode))
-;; (add-hook 'php+-mode-hook
-;;           (lambda () 
-;; 			(c-set-offset 'arglist-cont-nonempty' 0)
-;; 			(c-set-offset 'arglist-intro' 4) 
-;;             )
-;;           )
-;; (add-to-list 'ac-modes 'php+-mode) ;; auto-complete
-
-
 (require 'php-mode)
 (require 'flymake-phpcs)
 (custom-set-variables
@@ -821,19 +809,13 @@
 	   )
 	  )
   )
-  
-(defun php-doc-paragraph-boundaries () 
-  (setq paragraph-separate "^[ \t]*\\(\\(/[/\\*]+\\)\\|\\(\\*+/\\)\\|\\(\\*?\\)\\|\\(\\*?[ \t]*@[[:alpha:]]+\\([ \t]+.*\\)?\\)\\)[ \t]*$")
-  (setq paragraph-start (symbol-value 'paragraph-separate)))
-
 
 (add-hook 'php-mode-hook
-		  (lambda ()
+          (lambda ()
             (subword-mode 1)
-			(php-enable-symfony2-coding-style)
-			(flymake-phpcs-load)
-            (php-doc-paragraph-boundaries)
-			))
+            (php-enable-symfony2-coding-style)
+            (flymake-phpcs-load)
+            ))
 
 
 ;;=========================
