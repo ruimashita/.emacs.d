@@ -463,6 +463,11 @@
 
 (global-set-key "\C-c\C-v" 'my-flymake-show-next-error)
 
+(if (system-type-is-darwin)
+    (progn
+;;      (setq flymake-log-level 3)
+      (setq temporary-file-directory "/private/tmp/")
+))
 
 ;;=========================
 ;; css-mode
@@ -787,15 +792,6 @@
  '(flymake-phpcs-standard "PSR2")
  '(flymake-phpcs-location 'tempdir)
 )
-
-;;  if Mac OS X
-(if (system-type-is-darwin)
-    (progn
-	  (custom-set-variables
-	   '(flymake-phpcs-command "/usr/local/opt/php54/bin/phpcs")
-	   )
-	  )
-  )
 
 (add-hook 'php-mode-hook
           (lambda ()
