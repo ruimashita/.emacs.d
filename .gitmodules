@@ -82,3 +82,6 @@
 [submodule "flymake-python-pyflakes"]
 	path = flymake-python-pyflakes
 	url = https://github.com/purcell/flymake-python-pyflakes.git
+[submodule "exec-path-from-shell"]
+	path = exec-path-from-shell
+	url = https://github.com/purcell/exec-path-from-shell.git

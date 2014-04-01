@@ -7,24 +7,6 @@
 ;; デバッグ
 (setq debug-on-error nil)
 
-;; PATH の設定 http://sakito.jp/emacs/emacsshell.html#path
-;; より下に記述した物が PATH の先頭に追加されます
-(dolist (dir (list
-              "/sbin"
-              "/usr/sbin"
-              "/bin"
-              "/usr/bin"
-              "/opt/local/bin"
-              "/usr/local/bin"
-              (expand-file-name "~/bin")
-              (expand-file-name "~/.emacs.d/bin")
-              ))
-  ;; PATH と exec-path に同じ物を追加します
-  (when (and (file-exists-p dir) (not (member dir exec-path)))
-	(setenv "PATH" (concat dir ":" (getenv "PATH")))
-	(setq exec-path (append (list dir) exec-path))))
-
-
 ;; for m-x shell-command
 (setq shell-file-name "/bin/zsh")
 ;; for m-x shell
@@ -159,6 +141,11 @@
 ;;=======================================================================
 (if (system-type-is-darwin)
     (progn
+      
+      ;; path を設定
+      (require 'exec-path-from-shell)
+      (exec-path-from-shell-initialize)
+
       ;; Command-Key and Option-Key
       (setq ns-command-modifier (quote meta))
       (setq ns-alternate-modifier (quote super))
