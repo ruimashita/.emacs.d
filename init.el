@@ -101,7 +101,7 @@
 (defun kill-all-buffers()
   (interactive)
   (loop for buffer being the buffers
-     do (kill-buffer buffer)))
+        do (kill-buffer buffer)))
 
 
 ;; 言語・文字コード関連の設定
@@ -180,16 +180,25 @@
       ;; ibus
       ;; Ref: http://www11.atwiki.jp/s-irie/pages/21.html, http://d.hatena.ne.jp/iRiE/20100530/1275212234
       ;;
-      (require 'ibus)
-      (add-hook 'after-init-hook 'ibus-mode-on)
+      ;; (require 'ibus)
+      ;; (add-hook 'after-init-hook 'ibus-mode-on)
+      ;; ;; Toggle input status by alt + SPC
+      ;; (global-set-key "\M- " 'ibus-toggle)
+      ;; ;; すべてのバッファで入力状態を共有
+      ;; (setq ibus-mode-local nil)
+      ;; ;; Busがオンの時のカーソル色
+      ;; (setq ibus-cursor-color "aquamarine")
+      ;; ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
+      ;; (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
+
+      ;; (require 'mozc)   
+      ;; (set-language-environment "Japanese")
+      ;; (setq default-input-method "japanese-mozc")
+      ;; (setq mozc-candidate-style 'echo-area)
+
+      (global-set-key (kbd "M-SPC") nil)
       ;; Toggle input status by alt + SPC
-      (global-set-key "\M- " 'ibus-toggle)
-      ;; すべてのバッファで入力状態を共有
-      (setq ibus-mode-local nil)
-      ;; Busがオンの時のカーソル色
-      (setq ibus-cursor-color "aquamarine")
-      ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
-      (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
+      ;; (global-set-key "\M- " 'toggle-input-method)
 
       )
   )
@@ -396,7 +405,7 @@
  '(reb-re-syntax (quote foreign-regexp))
  '(web-mode-code-indent-offset 2)
  '(web-mode-markup-indent-offset 2))
- ;; Tell re-builder to use foreign regexp.
+;; Tell re-builder to use foreign regexp.
 
 
 ;;==============================================
@@ -432,7 +441,7 @@
 ;; markdown-mode
 ;;=====================================================================
 (autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
+  "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
@@ -458,16 +467,16 @@
 (defun my-flymake-show-next-error()
   (interactive)
   (flymake-goto-next-error)
-    (flymake-display-err-menu-for-current-line)
-    )
+  (flymake-display-err-menu-for-current-line)
+  )
 
 (global-set-key "\C-c\C-v" 'my-flymake-show-next-error)
 
 (if (system-type-is-darwin)
     (progn
-;;      (setq flymake-log-level 3)
+      ;;      (setq flymake-log-level 3)
       (setq temporary-file-directory "/private/tmp/")
-))
+      ))
 
 ;;=========================
 ;; css-mode
@@ -484,12 +493,12 @@
 
 (eval-after-load 'js
   '(progn 
-          (font-lock-add-keywords
-           'js-mode '(("\t" 0 my-face-b-2 append)
-     ("　" 0 my-face-b-1 append)
-     ("[ \t]+$" 0 my-face-u-1 append)
-     )))
-)
+     (font-lock-add-keywords
+      'js-mode '(("\t" 0 my-face-b-2 append)
+                 ("　" 0 my-face-b-1 append)
+                 ("[ \t]+$" 0 my-face-u-1 append)
+                 )))
+  )
 
 
 
@@ -791,7 +800,7 @@
 (custom-set-variables
  '(flymake-phpcs-standard "PSR2")
  '(flymake-phpcs-location 'tempdir)
-)
+ )
 
 (add-hook 'php-mode-hook
           (lambda ()
@@ -821,10 +830,10 @@
 	 (define-key web-mode-map (kbd "C-;") 'anything-filelist+)
 	 (font-lock-add-keywords
 	  'web-mode '(("\t" 0 my-face-b-2 append)
-				 ("　" 0 my-face-b-1 append)
-				 ("[ \t]+$" 0 my-face-u-1 append)
-				 )))
-)
+                  ("　" 0 my-face-b-1 append)
+                  ("[ \t]+$" 0 my-face-u-1 append)
+                  )))
+  )
 (add-hook 'web-mode-hook
 		  '(lambda ()
 			 (setq indent-tabs-mode t)
@@ -835,6 +844,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ctp$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 
 
 
@@ -1246,10 +1256,10 @@
 ;;=======================================================================
 ;; auto-install
 ;;=====================================================================
- (require 'auto-install)
- (setq auto-install-directory "~/.emacs.d/auto-install/")
- (auto-install-update-emacswiki-package-name t)
- (auto-install-compatibility-setup)             ; 互換性確保
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/auto-install/")
+(auto-install-update-emacswiki-package-name t)
+(auto-install-compatibility-setup)             ; 互換性確保
 
 
 (require 'nginx-mode)
