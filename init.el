@@ -809,6 +809,10 @@
             (flymake-phpcs-load)
             ))
 
+;;=====================================================
+;; mustache-mode
+;;==============================================
+;;(require 'mustache-mode)
 
 ;;=========================
 ;; multi-web-mode
@@ -845,7 +849,7 @@
 (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ctp$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
-
+(add-to-list 'auto-mode-alist '("\\.mustache$" . web-mode))
 
 
 ;;=========================
