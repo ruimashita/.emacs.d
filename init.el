@@ -1242,18 +1242,15 @@
 
 
 ;;=======================================================================
-;; font http://d.hatena.ne.jp/kakurasan/20090807/p1
+;; font
 ;;=====================================================================
-;; (if (>= emacs-major-version 23)
-;;     (progn
-;;       (set-default-font "Inconsolata-14")
-;;       (set-fontset-font (frame-parameter nil 'font)
-;;                         'japanese-jisx0208
-;;                         '("Hiragino Kaku Gothic Pro" . "unicode-bmp")))
-;;   )
-
-(set-default-font "Ricty-14")
-
+(create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
+(set-fontset-font "fontset-ricty"
+                  'unicode
+                  (font-spec :family "Ricty" :size 14)
+                  nil
+                  'append)
+(add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 
 
 
