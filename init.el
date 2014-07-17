@@ -583,6 +583,12 @@
 
 (require 'flymake-python-pyflakes)
 
+;; flake8を使う
+(setq flymake-python-pyflakes-executable "flake8")
+
+;; オプションの設定
+;;(setq flymake-python-pyflakes-extra-arguments '("--ignore=W806"))
+
 (add-hook 'python-mode-hook 
 		  '(lambda () 
 			 (flymake-python-pyflakes-load)
