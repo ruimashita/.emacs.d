@@ -1246,13 +1246,25 @@
 ;;=======================================================================
 ;; font
 ;;=====================================================================
-(create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
-(set-fontset-font "fontset-ricty"
-                  'unicode
-                  (font-spec :family "Ricty" :size 14)
-                  nil
-                  'append)
-(add-to-list 'default-frame-alist '(font . "fontset-ricty"))
+;;  if Ubuntu
+(if (system-type-is-gnu)
+    (progn
+
+      (set-default-font "Ricty-14")
+))
+
+;; for osx
+(if (system-type-is-darwin)
+    (progn
+      
+      (create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
+      (set-fontset-font "fontset-ricty"
+                        'unicode
+                        (font-spec :family "Ricty" :size 14)
+                        nil
+                        'append)
+      (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
+))
 
 
 
