@@ -797,6 +797,8 @@
 ;;==============================================
 (require 'php-mode)
 (require 'flymake-phpcs)
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+
 (custom-set-variables
  '(flymake-phpcs-standard "PSR2")
  '(flymake-phpcs-location 'tempdir)
