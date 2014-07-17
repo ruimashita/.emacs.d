@@ -77,13 +77,9 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-
 ;; wdired.el
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-
-;; grep-edit
-(require 'grep-edit)
 
 ;; シンボリックリンクを開いたときの質問を消す
 (setq vc-follow-symlinks nil)
@@ -436,6 +432,23 @@
 ;;=====================================================================
 (load "editorconfig")
 
+
+;;=======================================================================
+;; wgrep
+;;=====================================================================
+(require 'wgrep)
+
+
+;;=======================================================================
+;; ag silver-search
+;;=====================================================================
+(require 'ag)
+(setq ag-highlight-search t)
+(setq ag-reuse-window 't)
+
+;; wgrep
+(autoload 'wgrep-ag-setup "wgrep-ag")
+(add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
 ;;=======================================================================
 ;; markdown-mode

@@ -88,3 +88,9 @@
 [submodule "mustache"]
 	path = mustache
 	url = https://github.com/mustache/emacs.git
+[submodule "Emacs-wgrep"]
+	path = Emacs-wgrep
+	url = https://github.com/mhayashi1120/Emacs-wgrep.git
+[submodule "ag"]
+	path = ag
+	url = https://github.com/Wilfred/ag.el.git
