@@ -399,8 +399,7 @@
  ;; If there is more than one, they won't work right.
  '(foreign-regexp/regexp-type (quote ruby))
  '(reb-re-syntax (quote foreign-regexp))
- '(web-mode-code-indent-offset 2)
- '(web-mode-markup-indent-offset 2))
+)
 ;; Tell re-builder to use foreign regexp.
 
 
@@ -490,6 +489,10 @@
       ;;      (setq flymake-log-level 3)
       (setq temporary-file-directory "/private/tmp/")
       ))
+
+;; 色の設定
+(set-face-attribute 'flymake-errline nil :underline `(:color "#ff3366" :style wave))
+(set-face-attribute 'flymake-warnline nil :underline `(:color "#ffd700" :style wave))
 
 ;;=========================
 ;; css-mode
@@ -600,7 +603,7 @@
 (setq flymake-python-pyflakes-executable "flake8")
 
 ;; オプションの設定
-;;(setq flymake-python-pyflakes-extra-arguments '("--ignore=W806"))
+(setq flymake-python-pyflakes-extra-arguments '("--max-line-length=120"))
 
 (add-hook 'python-mode-hook 
 		  '(lambda () 
@@ -865,19 +868,21 @@
 			 (setq web-mode-markup-indent-offset 4)
 			 (setq web-mode-css-indent-offset 4)
 			 (setq web-mode-code-indent-offset 4)
+             (setq web-mode-script-padding 4)
 			 ))
 
 (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ctp$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
 
 
 ;;=========================
 ;; jinja2-mode
 ;;=================================
 (require 'jinja2-mode) 
-(add-to-list 'auto-mode-alist '("\\.twig$" . jinja2-mode))
 (add-hook 'jinja2-mode-hook
 		  '(lambda ()
 			 (setq tab-width 2)
@@ -1269,19 +1274,20 @@
 (if (system-type-is-gnu)
     (progn
 
-      (set-default-font "Ricty-14")
+      (set-default-font "Ricty-13.5")
+      (add-to-list 'default-frame-alist '(font . "ricty-13.5"))
 ))
 
 ;; for osx
 (if (system-type-is-darwin)
     (progn
       
-      (create-fontset-from-ascii-font "Ricty-14:weight=normal:slant=normal" nil "ricty")
+      (create-fontset-from-ascii-font "Ricty-13.5:weight=normal:slant=normal" nil "ricty")
       (set-fontset-font "fontset-ricty"
                         'unicode
-                        (font-spec :family "Ricty" :size 14)
+                        (font-spec :family "Ricty" :size 13.5)
                         nil
-                        'append)
+                        'append)c
       (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 ))
 
