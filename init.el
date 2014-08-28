@@ -833,10 +833,6 @@
             (flymake-phpcs-load)
             ))
 
-;;=====================================================
-;; mustache-mode
-;;==============================================
-;;(require 'mustache-mode)
 
 ;;=========================
 ;; multi-web-mode
@@ -1287,7 +1283,7 @@
                         'unicode
                         (font-spec :family "Ricty" :size 13.5)
                         nil
-                        'append)c
+                        'append)
       (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
 ))
 

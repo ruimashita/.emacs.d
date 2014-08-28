@@ -85,9 +85,6 @@
 [submodule "exec-path-from-shell"]
 	path = exec-path-from-shell
 	url = https://github.com/purcell/exec-path-from-shell.git
-[submodule "mustache"]
-	path = mustache
-	url = https://github.com/mustache/emacs.git
 [submodule "Emacs-wgrep"]
 	path = Emacs-wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep.git
