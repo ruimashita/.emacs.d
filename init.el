@@ -829,7 +829,7 @@
 (add-hook 'php-mode-hook
           (lambda ()
             (subword-mode 1)
-            (php-enable-symfony2-coding-style)
+            (php-enable-psr2-coding-style)
             (flymake-phpcs-load)
             ))
 
