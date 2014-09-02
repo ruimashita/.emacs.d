@@ -851,12 +851,8 @@
 (require 'web-mode)
 (eval-after-load 'web-mode
   '(progn 
-	 (define-key web-mode-map (kbd "C-;") 'anything-filelist+)
-	 (font-lock-add-keywords
-	  'web-mode '(("\t" 0 my-face-b-2 append)
-                  ("　" 0 my-face-b-1 append)
-                  ("[ \t]+$" 0 my-face-u-1 append)
-                  )))
+     (define-key web-mode-map (kbd "C-;") 'anything-filelist+)
+     )
   )
 (add-hook 'web-mode-hook
 		  '(lambda ()
@@ -874,6 +870,10 @@
 (add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
 
+(setq web-mode-engines-alist
+      '(("django" . "tetote.*?\\.html$") ;; tetoteのhtmlはdjango
+        )
+)
 
 ;;=========================
 ;; jinja2-mode
