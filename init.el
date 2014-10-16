@@ -196,61 +196,58 @@
       ;; Toggle input status by alt + SPC
       ;; (global-set-key "\M- " 'toggle-input-method)
 
-      )
-  )
+      ;;フレームサイズを記憶する
+      (defun my-window-size-save ()
+        (let* ((rlist (frame-parameters (selected-frame)))
+               (ilist initial-frame-alist)
+               (nCHeight (frame-height))
+               (nCWidth (frame-width))
+               (tMargin (if (integerp (cdr (assoc 'top rlist)))
+                            (cdr (assoc 'top rlist)) 0))
+               (lMargin (if (integerp (cdr (assoc 'left rlist)))
+                            (cdr (assoc 'left rlist)) 0))
+               buf
+               (file "~/.emacs.d/.framesize.el"))
+          (if (get-file-buffer (expand-file-name file))
+              (setq buf (get-file-buffer (expand-file-name file)))
+            (setq buf (find-file-noselect file)))
+          (set-buffer buf)
+          (erase-buffer)
+          (insert (concat
+                   ;; 初期値をいじるよりも modify-frame-parameters
+                   ;; で変えるだけの方がいい?
+                   "(delete 'width initial-frame-alist)\n"
+                   "(delete 'height initial-frame-alist)\n"
+                   "(delete 'top initial-frame-alist)\n"
+                   "(delete 'left initial-frame-alist)\n"
+                   "(setq initial-frame-alist (append (list\n"
+                   "'(width . " (int-to-string nCWidth) ")\n"
+                   "'(height . " (int-to-string nCHeight) ")\n"
+                   "'(top . " (int-to-string tMargin) ")\n"
+                   "'(left . " (int-to-string lMargin) "))\n"
+                   "initial-frame-alist))\n"
+                   ;;"(setq default-frame-alist initial-frame-alist)"
+                   ))
+          (save-buffer)
+          ))
+      (defun my-window-size-load ()
+        (let* ((file "~/.emacs.d/.framesize.el"))
+          (if (file-exists-p file)
+              (load file))))
+      (my-window-size-load)
+      ;; Call the function above at C-x C-c.
+      (defadvice save-buffers-kill-emacs
+        (before save-frame-size activate)
+        (my-window-size-save))
+
+
+
+      ))
 
 
 ;;=====================================================
 ;; ウィンドウ設定
 ;;=====================================================
-
-;;(if window-system (progn
-;;   (setq initial-frame-alist '((top .5)(left . 10) (width . 260) (height . 40)))
-;;))
-
-;;フレームサイズを記憶する
-(defun my-window-size-save ()
-  (let* ((rlist (frame-parameters (selected-frame)))
-         (ilist initial-frame-alist)
-         (nCHeight (frame-height))
-         (nCWidth (frame-width))
-         (tMargin (if (integerp (cdr (assoc 'top rlist)))
-                      (cdr (assoc 'top rlist)) 0))
-         (lMargin (if (integerp (cdr (assoc 'left rlist)))
-                      (cdr (assoc 'left rlist)) 0))
-         buf
-         (file "~/.emacs.d/.framesize.el"))
-    (if (get-file-buffer (expand-file-name file))
-        (setq buf (get-file-buffer (expand-file-name file)))
-      (setq buf (find-file-noselect file)))
-    (set-buffer buf)
-    (erase-buffer)
-    (insert (concat
-             ;; 初期値をいじるよりも modify-frame-parameters
-             ;; で変えるだけの方がいい?
-             "(delete 'width initial-frame-alist)\n"
-             "(delete 'height initial-frame-alist)\n"
-             "(delete 'top initial-frame-alist)\n"
-             "(delete 'left initial-frame-alist)\n"
-             "(setq initial-frame-alist (append (list\n"
-             "'(width . " (int-to-string nCWidth) ")\n"
-             "'(height . " (int-to-string nCHeight) ")\n"
-             "'(top . " (int-to-string tMargin) ")\n"
-             "'(left . " (int-to-string lMargin) "))\n"
-             "initial-frame-alist))\n"
-             ;;"(setq default-frame-alist initial-frame-alist)"
-             ))
-    (save-buffer)
-    ))
-(defun my-window-size-load ()
-  (let* ((file "~/.emacs.d/.framesize.el"))
-    (if (file-exists-p file)
-        (load file))))
-(my-window-size-load)
-;; Call the function above at C-x C-c.
-(defadvice save-buffers-kill-emacs
-  (before save-frame-size activate)
-  (my-window-size-save))
 
 ;; ウィンドウを透明化
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
