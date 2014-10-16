@@ -780,7 +780,7 @@
 (add-hook 'scss-mode-hook 'ac-css-mode-setup)
 (add-hook 'scss-mode-hook
           (lambda ()
-            (setq css-indent-offset 2)
+            (setq css-indent-offset 4)
 			(setq scss-compile-at-save nil)
 			))
 (add-to-list 'ac-modes 'scss-mode) ;; auto-complete
