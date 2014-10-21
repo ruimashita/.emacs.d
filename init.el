@@ -292,15 +292,6 @@
              '((regexp-quote (system-name)) "\\`root\\'" nil))
 
 
-;;=======================================================================
-;; multi-term
-;;=====================================================================
-(require 'multi-term)
-(setq multi-term-program "/usr/bin/zsh")
-(global-set-key (kbd "C-c t") '(lambda ()
-								 (interactive)
-								 (multi-term)))
-
 
 ;;=======================================================================
 ;; forward, backward
@@ -768,6 +759,7 @@
 			 (c-set-offset 'case-label '+)
 			 (c-set-offset 'statement-case-open 0)
 			 ))
+
 
 ;;=======================================================================
 ;; scss-mode
