@@ -91,3 +91,9 @@
 [submodule "ag"]
 	path = ag
 	url = https://github.com/Wilfred/ag.el.git
+[submodule "dash"]
+	path = dash
+	url = https://github.com/magnars/dash.el.git
+[submodule "s"]
+	path = s
+	url = https://github.com/magnars/s.el.git
