@@ -19,6 +19,11 @@
 ;;  C-c C-cに割り当てる
 (global-set-key (kbd "C-c C-c") 'server-edit)
 
+;; packageのリポジトを追加
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
 ;; ==============================================
 ;; Misc
 ;; ===============================================
