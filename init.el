@@ -387,7 +387,7 @@
  ;; If there is more than one, they won't work right.
  '(foreign-regexp/regexp-type (quote ruby))
  '(reb-re-syntax (quote foreign-regexp))
-)
+ )
 ;; Tell re-builder to use foreign regexp.
 
 
@@ -521,8 +521,8 @@
           (lambda () 
             (setq tab-width 2)
             (setq indent-tabs-mode nil)
-			(setq ruby-insert-encoding-magic-comment nil)
-			(setq ruby-deep-indent-paren-style nil)
+            (setq ruby-insert-encoding-magic-comment nil)
+            (setq ruby-deep-indent-paren-style nil)
             )
           )
 ;; defadviceで既存のインデント関数ruby-indent-lineに対する追加処理を定義する
@@ -593,20 +593,20 @@
 ;; オプションの設定
 (setq flymake-python-pyflakes-extra-arguments '("--max-line-length=120"))
 
-(add-hook 'python-mode-hook 
-		  '(lambda () 
-			 (flymake-python-pyflakes-load)
+(add-hook 'python-mode-hook
+          '(lambda ()
+             (flymake-python-pyflakes-load)
              (define-key python-mode-map  "\C-c\C-v" 'my-flymake-show-next-error)
-			 )
-		  )
+             )
+          )
 
 ;; https://code.launchpad.net/~eopadoan/+junk/django-html-mode
 ;; (require 'django-html-mode)
 ;; (add-hook 'django-html-mode-hook 
-;; 		  '(lambda () 
-;; 			 (setq indent-tabs-mode nil)
-;; 			 )
-;; 		  )
+;;           '(lambda () 
+;;              (setq indent-tabs-mode nil)
+;;              )
+;;           )
 
 ;; (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
 
@@ -733,9 +733,9 @@
 ;;=====================================================================
 (require 'haml-mode)
 (add-hook 'haml-mode-hook
-		  '(lambda ()
-			 (setq indent-tabs-mode nil)
-			 (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+          '(lambda ()
+             (setq indent-tabs-mode nil)
+             (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 
 
 ;;=======================================================================
@@ -746,19 +746,19 @@
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
 (add-to-list 'ac-modes 'actionscript-mode) ;; auto-complete
 (add-hook 'actionscript-mode-hook
-		  '(lambda ()
-			 (setq tab-width 4)
-			 (setq c-basic-offset 4)
-			 (setq indent-tabs-mode t)
-			 (c-set-offset 'arglist-intro 4)
-			 (c-set-offset 'arglist-close 0)
-			 (c-set-offset 'arglist-cont-nonempty 0)
-			 (c-set-offset 'statement-cont 0)
-			 (c-set-offset 'substatement-open 0)
-			 (c-set-offset 'block-open 0)     
-			 (c-set-offset 'case-label '+)
-			 (c-set-offset 'statement-case-open 0)
-			 ))
+          '(lambda ()
+             (setq tab-width 4)
+             (setq c-basic-offset 4)
+             (setq indent-tabs-mode t)
+             (c-set-offset 'arglist-intro 4)
+             (c-set-offset 'arglist-close 0)
+             (c-set-offset 'arglist-cont-nonempty 0)
+             (c-set-offset 'statement-cont 0)
+             (c-set-offset 'substatement-open 0)
+             (c-set-offset 'block-open 0)     
+             (c-set-offset 'case-label '+)
+             (c-set-offset 'statement-case-open 0)
+             ))
 
 
 ;;=======================================================================
@@ -773,8 +773,8 @@
 (add-hook 'scss-mode-hook
           (lambda ()
             (setq css-indent-offset 4)
-			(setq scss-compile-at-save nil)
-			))
+            (setq scss-compile-at-save nil)
+            ))
 (add-to-list 'ac-modes 'scss-mode) ;; auto-complete
 
 
@@ -846,11 +846,11 @@
 (add-hook 'web-mode-hook
           '(lambda ()
              (setq indent-tabs-mode t)
-			 (setq web-mode-markup-indent-offset 4)
-			 (setq web-mode-css-indent-offset 4)
-			 (setq web-mode-code-indent-offset 4)
+             (setq web-mode-markup-indent-offset 4)
+             (setq web-mode-css-indent-offset 4)
+             (setq web-mode-code-indent-offset 4)
              (setq web-mode-script-padding 4)
-			 ))
+             ))
 
 (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.ctp$" . web-mode))
@@ -862,7 +862,7 @@
 (setq web-mode-engines-alist
       '(("django" . "tetote.*?\\.html$") ;; tetoteのhtmlはdjango
         )
-)
+      )
 
 (add-to-list 'ac-modes 'web-mode)
 ;;=========================
@@ -870,12 +870,12 @@
 ;;=================================
 (require 'jinja2-mode) 
 (add-hook 'jinja2-mode-hook
-		  '(lambda ()
-			 (setq tab-width 2)
-			 (setq sgml-indent-step 2)
-			 (setq indent-tabs-mode nil)
-			 (setq sgml-basic-offset 2)
-			 ))
+          '(lambda ()
+             (setq tab-width 2)
+             (setq sgml-indent-step 2)
+             (setq indent-tabs-mode nil)
+             (setq sgml-basic-offset 2)
+             ))
 
 ;;=======================================================================
 ;; color
@@ -887,10 +887,10 @@
   (message "%s" (get-char-property (point) 'face)))
 
 
-(require 'color-theme)								;; ウィンドウカラーテーマ
+(require 'color-theme)                                ;; ウィンドウカラーテーマ
 ;;(color-theme-initialize)
 ;;(color-theme-charcoal-black)
-(set-face-background 'region "#192C35")					;; リージョンの背景色
+(set-face-background 'region "#192C35")                    ;; リージョンの背景色
 
 (defun my-color-theme ()
   "Color theme by mikio, created 2010-04-26."
@@ -949,7 +949,7 @@
      (cperl-array-face ((t (:bold t :foreground "light salmon" :weight bold))))
      (cperl-hash-face ((t (:italic t :bold t :foreground "beige" :slant italic :weight bold))))
      (cperl-nonoverridable-face ((t (:foreground "aquamarine"))))
-	 (css-property ((t (:bold t :foreground "pale turquoise" :weight bold))))           	 (css-selector ((t (:bold t :foreground "turquoise" :weight bold))))
+     (css-property ((t (:bold t :foreground "pale turquoise" :weight bold))))                (css-selector ((t (:bold t :foreground "turquoise" :weight bold))))
      (cursor ((t (:background "Grey"))))
      (custom-button-face ((t (:foreground "gainsboro"))))
      (custom-button-pressed-face ((t (:background "lightgrey" :foreground "black" :box (:line-width 2 :style pressed-button)))))
@@ -1262,7 +1262,7 @@
 
       (set-default-font "Ricty-13.5")
       (add-to-list 'default-frame-alist '(font . "ricty-13.5"))
-))
+      ))
 
 ;; for osx
 (if (system-type-is-darwin)
@@ -1275,7 +1275,7 @@
                         nil
                         'append)
       (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
-))
+      ))
 
 
 
@@ -1341,7 +1341,7 @@
     (candidates . recentf-list)
     (keymap . ,anything-generic-files-map)
     (help-message . anything-generic-file-help-message)
-	(candidate-number-limit . ,recentf-max-saved-items) ; 標準定義にこれを追加した
+    (candidate-number-limit . ,recentf-max-saved-items) ; 標準定義にこれを追加した
     (mode-line . anything-generic-file-mode-line-string)
     (match anything-c-match-on-basename)
     (type . file))
@@ -1351,9 +1351,9 @@ Set `recentf-max-saved-items' to a bigger value if default is too small.")
 
 (defun anything-git-files:root-1 ()
   (ignore-errors
-	(file-name-as-directory
-	 (anything-git-files:chomp
-	  (anything-git-files:command-to-string "rev-parse" "--show-toplevel"))))
+    (file-name-as-directory
+     (anything-git-files:chomp
+      (anything-git-files:command-to-string "rev-parse" "--show-toplevel"))))
   )
 
 (defun anything-filelist+ ()
@@ -1364,15 +1364,15 @@ See `anything-c-filelist-file-name' docstring for usage."
   (interactive)
   (anything-other-buffer
    '(anything-c-source-ffap-line
-	 anything-c-source-ffap-guesser
-	 anything-c-source-buffers-list
-	 anything-git-files:modified-source
-	 anything-git-files:untracked-source
-	 anything-git-files:all-source
-	 anything-c-source-recentf
-	 anything-c-source-bookmarks
-	 anything-c-source-file-cache
-	 anything-c-source-filelist)
+     anything-c-source-ffap-guesser
+     anything-c-source-buffers-list
+     anything-git-files:modified-source
+     anything-git-files:untracked-source
+     anything-git-files:all-source
+     anything-c-source-recentf
+     anything-c-source-bookmarks
+     anything-c-source-file-cache
+     anything-c-source-filelist)
    "*anything file list*"))
 
 
