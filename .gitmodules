@@ -1,9 +1,6 @@
 [submodule "rinari"]
 	path = rinari
 	url = git://github.com/eschulte/rinari.git
-[submodule "auto-complete"]
-	path = auto-complete
-	url = git://github.com/auto-complete/auto-complete.git
 [submodule "auto-complete-acr.el"]
 	path = auto-complete-acr
 	url = git://github.com/myuhe/auto-complete-acr.el.git
@@ -19,18 +16,12 @@
 [submodule "haml-mode"]
 	path = haml-mode
 	url = https://github.com/nex3/haml-mode.git
-[submodule "sass-mode"]
-	path = sass-mode
-	url = https://github.com/nex3/sass-mode.git
 [submodule "actionscript-mode"]
 	path = actionscript-mode
 	url = https://github.com/austinhaas/actionscript-mode.git
 [submodule "anything-config"]
 	path = anything-config
 	url = git://repo.or.cz/anything-config.git
-[submodule "nginx-mode"]
-	path = nginx-mode
-	url = https://github.com/ajc/nginx-mode.git
 [submodule "less-css-mode"]
 	path = less-css-mode
 	url = https://github.com/purcell/less-css-mode.git
@@ -49,36 +40,18 @@
 [submodule "foreign-regexp"]
 	path = foreign-regexp
 	url = https://github.com/k-talo/foreign-regexp.el.git
-[submodule "web-mode"]
-	path = web-mode
-	url = https://github.com/fxbois/web-mode.git
 [submodule "editorconfig-emacs"]
 	path = editorconfig-emacs
 	url = https://github.com/editorconfig/editorconfig-emacs.git
-[submodule "markdown-mode"]
-	path = markdown-mode
-	url = git://jblevins.org/git/markdown-mode.git
 [submodule "anything-git-files-el"]
 	path = anything-git-files-el
 	url = https://github.com/tarao/anything-git-files-el.git
 [submodule "flymake-phpcs"]
 	path = flymake-phpcs
 	url = https://github.com/senda-akiha/flymake-phpcs.git
-[submodule "flymake-easy"]
-	path = flymake-easy
-	url = https://github.com/purcell/flymake-easy.git
-[submodule "python.el"]
-	path = python.el
-	url = https://github.com/fgallina/python.el
-[submodule "flymake-python-pyflakes"]
-	path = flymake-python-pyflakes
-	url = https://github.com/purcell/flymake-python-pyflakes.git
 [submodule "exec-path-from-shell"]
 	path = exec-path-from-shell
 	url = https://github.com/purcell/exec-path-from-shell.git
 [submodule "Emacs-wgrep"]
 	path = Emacs-wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep.git
-[submodule "yasnippet"]
-	path = yasnippet
-	url = https://github.com/capitaomorte/yasnippet.git

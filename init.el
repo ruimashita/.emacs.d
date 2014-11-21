@@ -23,18 +23,25 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
-;; (package-initialize)
 
 ;; package auto install
 (require 'cl)
+(package-initialize)
 (defvar installing-package-list
   '(
     ;; ここに使っているパッケージを書く。
     ag
+    auto-complete
     coffee-mode
+    flymake-easy
+    flymake-python-pyflakes
     markdown-mode
+    nginx-mode
     php-mode
+    python
     scss-mode
+    web-mode
+    yasnippet
     ))
 
 (let ((not-installed (loop for x in installing-package-list
