@@ -97,3 +97,6 @@
 [submodule "s"]
 	path = s
 	url = https://github.com/magnars/s.el.git
+[submodule "yasnippet"]
+	path = yasnippet
+	url = https://github.com/capitaomorte/yasnippet.git

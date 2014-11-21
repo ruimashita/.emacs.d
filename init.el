@@ -458,9 +458,7 @@
 ;; yasnippet
 ;;=====================================================================
 (require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/yasnippets-rails/rails-snippets")
-(yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets/text-mode")
+(yas-global-mode 1)
 
 
 ;;=======================================================================
@@ -1281,16 +1279,6 @@
                         'append)
       (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
       ))
-
-
-
-;;=======================================================================
-;; auto-install
-;;=====================================================================
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/auto-install/")
-(auto-install-update-emacswiki-package-name t)
-(auto-install-compatibility-setup)             ; 互換性確保
 
 
 ;;=======================================================================
