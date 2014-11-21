@@ -37,7 +37,9 @@
     apache-mode
     auto-complete
     coffee-mode
+    color-theme
     editorconfig
+    elscreen
     flymake-easy
     flymake-phpcs
     flymake-python-pyflakes
@@ -325,6 +327,7 @@
 ;;=====================================================================
 (setq elscreen-prefix-key "\C-t") 
 (require 'elscreen)
+(elscreen-start)
 (global-set-key "\C-t" 'elscreen-clone)
 ;;(global-set-key "\C-zk" 'elscreen-kill)
 (global-set-key [(C-tab)] 'elscreen-next)
