@@ -23,15 +23,17 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
-(package-initialize)
+;; (package-initialize)
 
 ;; package auto install
 (require 'cl)
 (defvar installing-package-list
   '(
     ;; ここに使っているパッケージを書く。
-    php-mode
+    ag
+    coffee-mode
     markdown-mode
+    php-mode
     scss-mode
     ))
 
