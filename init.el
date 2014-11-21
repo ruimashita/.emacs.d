@@ -23,6 +23,26 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+(package-initialize)
+
+;; package auto install
+(require 'cl)
+(defvar installing-package-list
+  '(
+    ;; ここに使っているパッケージを書く。
+    php-mode
+    markdown-mode
+    scss-mode
+    ))
+
+(let ((not-installed (loop for x in installing-package-list
+                           when (not (package-installed-p x))
+                          collect x)))
+  (when not-installed
+    (package-refresh-contents)
+    (dolist (pkg not-installed)
+      (package-install pkg))))
+
 
 ;; ==============================================
 ;; Misc

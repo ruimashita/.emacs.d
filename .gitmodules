@@ -25,15 +25,9 @@
 [submodule "sass-mode"]
 	path = sass-mode
 	url = https://github.com/nex3/sass-mode.git
-[submodule "scss-mode"]
-	path = scss-mode
-	url = https://github.com/antonj/scss-mode.git
 [submodule "actionscript-mode"]
 	path = actionscript-mode
 	url = https://github.com/austinhaas/actionscript-mode.git
-[submodule "php-mode"]
-	path = php-mode
-	url = git://github.com/ejmr/php-mode.git
 [submodule "anything-config"]
 	path = anything-config
 	url = git://repo.or.cz/anything-config.git
@@ -88,15 +82,6 @@
 [submodule "Emacs-wgrep"]
 	path = Emacs-wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep.git
-[submodule "ag"]
-	path = ag
-	url = https://github.com/Wilfred/ag.el.git
-[submodule "dash"]
-	path = dash
-	url = https://github.com/magnars/dash.el.git
-[submodule "s"]
-	path = s
-	url = https://github.com/magnars/s.el.git
 [submodule "yasnippet"]
 	path = yasnippet
 	url = https://github.com/capitaomorte/yasnippet.git
