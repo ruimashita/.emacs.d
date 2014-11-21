@@ -4,39 +4,15 @@
 [submodule "auto-complete-acr.el"]
 	path = auto-complete-acr
 	url = git://github.com/myuhe/auto-complete-acr.el.git
-[submodule "rvm.el"]
-	path = rvm
-	url = git://github.com/senny/rvm.el.git
 [submodule "yasnippets-rails"]
 	path = yasnippets-rails
 	url = https://github.com/eschulte/yasnippets-rails.git
-[submodule "rhtml"]
-	path = rhtml
-	url = https://github.com/eschulte/rhtml.git
-[submodule "haml-mode"]
-	path = haml-mode
-	url = https://github.com/nex3/haml-mode.git
 [submodule "actionscript-mode"]
 	path = actionscript-mode
 	url = https://github.com/austinhaas/actionscript-mode.git
 [submodule "anything-config"]
 	path = anything-config
 	url = git://repo.or.cz/anything-config.git
-[submodule "less-css-mode"]
-	path = less-css-mode
-	url = https://github.com/purcell/less-css-mode.git
-[submodule "popup-el"]
-	path = popup-el
-	url = git://github.com/auto-complete/popup-el.git
-[submodule "popwin-el"]
-	path = popwin-el
-	url = git://github.com/m2ym/popwin-el.git
-[submodule "multi-web-mode"]
-	path = multi-web-mode
-	url = https://github.com/fgallina/multi-web-mode.git
-[submodule "jinja2-mode"]
-	path = jinja2-mode
-	url = https://github.com/paradoxxxzero/jinja2-mode.git
 [submodule "foreign-regexp"]
 	path = foreign-regexp
 	url = https://github.com/k-talo/foreign-regexp.el.git

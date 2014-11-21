@@ -35,10 +35,16 @@
     coffee-mode
     flymake-easy
     flymake-python-pyflakes
+    haml-mode
+    less-css-mode
     markdown-mode
     nginx-mode
     php-mode
+    popup
+    popwin
     python
+    rhtml-mode
+    rvm
     scss-mode
     web-mode
     yasnippet
@@ -797,8 +803,6 @@
 ;; scss-mode
 ;;=====================================================================
 (require 'scss-mode)
-(setq exec-path (cons (expand-file-name "~/.rvm/gems/ruby-1.9.3-head
-/bin") exec-path))
 (autoload 'scss-mode "scss-mode")
 (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
 (add-hook 'scss-mode-hook 'ac-css-mode-setup)
@@ -897,6 +901,8 @@
       )
 
 (add-to-list 'ac-modes 'web-mode)
+
+
 ;;=========================
 ;; jinja2-mode
 ;;=================================
