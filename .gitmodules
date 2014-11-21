@@ -10,24 +10,9 @@
 [submodule "actionscript-mode"]
 	path = actionscript-mode
 	url = https://github.com/austinhaas/actionscript-mode.git
-[submodule "anything-config"]
-	path = anything-config
-	url = git://repo.or.cz/anything-config.git
-[submodule "foreign-regexp"]
-	path = foreign-regexp
-	url = https://github.com/k-talo/foreign-regexp.el.git
-[submodule "editorconfig-emacs"]
-	path = editorconfig-emacs
-	url = https://github.com/editorconfig/editorconfig-emacs.git
-[submodule "anything-git-files-el"]
-	path = anything-git-files-el
-	url = https://github.com/tarao/anything-git-files-el.git
 [submodule "flymake-phpcs"]
 	path = flymake-phpcs
 	url = https://github.com/senda-akiha/flymake-phpcs.git
 [submodule "exec-path-from-shell"]
 	path = exec-path-from-shell
 	url = https://github.com/purcell/exec-path-from-shell.git
-[submodule "Emacs-wgrep"]
-	path = Emacs-wgrep
-	url = https://github.com/mhayashi1120/Emacs-wgrep.git
