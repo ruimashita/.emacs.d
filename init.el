@@ -1,9 +1,4 @@
-;; .emacs.d を再帰的に読み込み
-(let ((default-directory "~/.emacs.d"))
-  (setq load-path (cons default-directory load-path))
-  (normal-top-level-add-subdirs-to-load-path))
 
-;;(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
 ;; デバッグ
 (setq debug-on-error nil)
 
@@ -862,6 +857,7 @@
              (setq web-mode-css-indent-offset 4)
              (setq web-mode-code-indent-offset 4)
              (setq web-mode-script-padding 4)
+             (setq web-mode-disable-auto-pairing nil)
              ))
 
 (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
@@ -872,7 +868,9 @@
 (add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
 
 (setq web-mode-engines-alist
-      '(("django" . "tetote.*?\\.html$") ;; tetoteのhtmlはdjango
+      '(
+        ("django" . "tetote.*?\\.html$") ;; tetoteのhtmlはdjango
+        ("django" . "DOLSTA.*?\\.html$") ;; DOLSTAのhtmlはdjango
         )
       )
 
