@@ -35,6 +35,7 @@
     color-theme
     editorconfig
     elscreen
+    exec-path-from-shell
     flymake-easy
     flymake-phpcs
     flymake-python-pyflakes
