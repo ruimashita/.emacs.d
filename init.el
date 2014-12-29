@@ -483,7 +483,7 @@
 ;;=====================================================================
 (require 'ag)
 (setq ag-highlight-search t)
-(setq ag-reuse-window 't)
+(setq ag-reuse-window 'nil)
 
 ;; wgrep
 (autoload 'wgrep-ag-setup "wgrep-ag")
