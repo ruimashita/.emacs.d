@@ -640,7 +640,7 @@
 (setq flymake-python-pyflakes-executable "flake8")
 
 ;; オプションの設定
-(setq flymake-python-pyflakes-extra-arguments '("--max-line-length=120"))
+(setq flymake-python-pyflakes-extra-arguments '("--max-line-length=99"))
 
 (add-hook 'python-mode-hook
           '(lambda ()
