@@ -72,6 +72,9 @@
 ;; ==============================================
 ;; Misc
 ;; ===============================================
+;; yes or no を y or n に
+(fset 'yes-or-no-p 'y-or-n-p)
+
 ;; スタートアップページを表示しない
 (setq inhibit-startup-message t)
 
@@ -80,7 +83,6 @@
 
 ;;; .#* とかのバックアップファイルを作らない
 (setq auto-save-default nil)
-
 
 ;; メニューバーを表示しない
 (setq menu-bar-mode nil)
