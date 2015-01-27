@@ -189,7 +189,7 @@
 ;;=======================================================================
 (if (system-type-is-darwin)
     (progn
-      
+
       ;; path を設定
       (require 'exec-path-from-shell)
       (exec-path-from-shell-initialize)
@@ -239,7 +239,7 @@
       ;; ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
       ;; (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
 
-      ;; (require 'mozc)   
+      ;; (require 'mozc)
       ;; (set-language-environment "Japanese")
       ;; (setq default-input-method "japanese-mozc")
       ;; (setq mozc-candidate-style 'echo-area)
@@ -305,9 +305,9 @@
 (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
 
 ;; popwin
-(require 'popwin) 
+(require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
-(setq anything-samewindow nil) 
+(setq anything-samewindow nil)
 (push '("*anything*" :height 30) popwin:special-display-config)
 (push '("*grep*" :noselect nil) popwin:special-display-config)
 
@@ -323,7 +323,7 @@
 ;;=======================================================================
 ;; elscreen
 ;;=====================================================================
-(setq elscreen-prefix-key "\C-t") 
+(setq elscreen-prefix-key "\C-t")
 (require 'elscreen)
 (elscreen-start)
 (global-set-key "\C-t" 'elscreen-clone)
@@ -434,14 +434,9 @@
 (require 'foreign-regexp)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(foreign-regexp/regexp-type (quote ruby))
  '(reb-re-syntax (quote foreign-regexp))
- )
-;; Tell re-builder to use foreign regexp.
+)
 
 
 ;;==============================================
@@ -549,7 +544,7 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
 (eval-after-load 'js
-  '(progn 
+  '(progn
      (font-lock-add-keywords
       'js-mode '(("\t" 0 my-face-b-2 append)
                  ("　" 0 my-face-b-1 append)
@@ -562,7 +557,7 @@
 ;;=================================================
 ;; ruby-mode
 ;;
-;; 
+;;
 ;;=====================================================
 (autoload 'ruby-mode "ruby-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
@@ -571,7 +566,7 @@
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Guardfile$" . ruby-mode))
 (add-hook 'ruby-mode-hook
-          (lambda () 
+          (lambda ()
             (setq tab-width 2)
             (setq indent-tabs-mode nil)
             (setq ruby-insert-encoding-magic-comment nil)
@@ -767,7 +762,7 @@
              (c-set-offset 'arglist-cont-nonempty 0)
              (c-set-offset 'statement-cont 0)
              (c-set-offset 'substatement-open 0)
-             (c-set-offset 'block-open 0)     
+             (c-set-offset 'block-open 0)
              (c-set-offset 'case-label '+)
              (c-set-offset 'statement-case-open 0)
              ))
@@ -850,7 +845,7 @@
 ;;=================================
 (require 'web-mode)
 (eval-after-load 'web-mode
-  '(progn 
+  '(progn
      (define-key web-mode-map (kbd "C-;") 'anything-filelist+)
      )
   )
@@ -884,7 +879,7 @@
 ;;=========================
 ;; jinja2-mode
 ;;=================================
-(require 'jinja2-mode) 
+(require 'jinja2-mode)
 (add-hook 'jinja2-mode-hook
           '(lambda ()
              (setq tab-width 2)
@@ -1224,7 +1219,6 @@
      (tabbar-unselected-face ((t (:background "gray72" :foreground "gray60" :box (:line-width 2 :color "white" :style pressed-button) :height 0.8))))
      (tool-bar ((t (:background "grey75" :foreground "black" :box (:line-width 1 :style released-button)))))
      (tooltip ((t (:background "lightyellow" :foreground "black"))))
-     (trailing-whitespace ((t (:background "red"))))
      (underline ((t (:underline t))))
      (variable-pitch ((t (:family "Sans Serif"))))
      (vertical-border ((t (nil))))
@@ -1246,27 +1240,21 @@
 (my-color-theme)
 
 
-
 ;; =======================================================================
-;; 全角 TAB に色をつける
+;; whitespace mode
 ;; =======================================================================
-(defface my-face-b-1 '((t (:background "gray40"))) nil)
-(defface my-face-b-2 '((t (:background "gray15"))) nil)
-(defface my-face-u-1 '((t (:foreground "SteelBlue" :underline t))) nil)
-(defvar my-face-b-1 'my-face-b-1)
-(defvar my-face-b-2 'my-face-b-2)
-(defvar my-face-u-1 'my-face-u-1)
+(require 'whitespace)
+(setq whitespace-style
+      '(face
+        trailing
+        tabs
+        tab-mark
+        spaces
+        ))
 
-(defadvice font-lock-mode (before my-font-lock-mode ())
-  (font-lock-add-keywords
-   nil
-   '(("\t" 0 my-face-b-2 append)
-     ("　" 0 my-face-b-1 append)
-     ("[ \t]+$" 0 my-face-u-1 append)
-     )))
-(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
-(ad-activate 'font-lock-mode)
-
+;; スペースは全角のみ
+(setq whitespace-space-regexp "\\(　+\\)")
+(global-whitespace-mode t)
 
 ;;=======================================================================
 ;; font
@@ -1282,7 +1270,7 @@
 ;; for osx
 (if (system-type-is-darwin)
     (progn
-      
+
       (create-fontset-from-ascii-font "Ricty-13.5:weight=normal:slant=normal" nil "ricty")
       (set-fontset-font "fontset-ricty"
                         'unicode
@@ -1291,6 +1279,20 @@
                         'append)
       (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
       ))
+
+
+;;=======================================================================
+;; custom-set-faces
+;;=====================================================================
+(custom-set-faces
+
+ ;; whitespace-mode
+ '(whitespace-trailing ((t (:foreground "SteelBlue" :underline t :weight bold))))
+ '(whitespace-tab ((t (:background "gray15"))))
+ '(whitespace-space ((t (:background "gray40"))))
+
+
+)
 
 
 ;;=======================================================================
@@ -1362,5 +1364,3 @@ See `anything-c-filelist-file-name' docstring for usage."
      anything-c-source-file-cache
      anything-c-source-filelist)
    "*anything file list*"))
-
-
