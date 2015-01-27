@@ -434,9 +434,12 @@
 (require 'foreign-regexp)
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(foreign-regexp/regexp-type (quote ruby))
- '(reb-re-syntax (quote foreign-regexp))
-)
+ '(reb-re-syntax (quote foreign-regexp)))
 
 
 ;;==============================================
@@ -816,10 +819,8 @@
 (require 'flymake-phpcs)
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
-(custom-set-variables
- '(flymake-phpcs-standard "PSR2")
- '(flymake-phpcs-location 'tempdir)
- )
+(setq flymake-phpcs-standard "PSR2")
+(setq flymake-phpcs-location 'tempdir)
 
 (add-hook 'php-mode-hook
           (lambda ()
@@ -1285,14 +1286,13 @@
 ;; custom-set-faces
 ;;=====================================================================
 (custom-set-faces
-
- ;; whitespace-mode
- '(whitespace-trailing ((t (:foreground "SteelBlue" :underline t :weight bold))))
- '(whitespace-tab ((t (:background "gray15"))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(whitespace-space ((t (:background "gray40"))))
-
-
-)
+ '(whitespace-tab ((t (:background "gray15" :foreground "black"))))
+ '(whitespace-trailing ((t (:foreground "SteelBlue" :underline t :weight bold)))))
 
 
 ;;=======================================================================
