@@ -1,4 +1,3 @@
-
 ;; デバッグ
 (setq debug-on-error nil)
 
@@ -27,8 +26,6 @@
     ;; ここに使っているパッケージを書く。
     actionscript-mode
     ag
-    anything
-    anything-git-files
     apache-mode
     auto-complete
     coffee-mode
@@ -36,6 +33,8 @@
     editorconfig
     elscreen
     exec-path-from-shell
+    helm
+    ;; helm-ls-git
     flymake-easy
     flymake-phpcs
     flymake-python-pyflakes
@@ -307,8 +306,9 @@
 ;; popwin
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
-(setq anything-samewindow nil)
-(push '("*anything*" :height 30) popwin:special-display-config)
+
+(push '("*helm for files*" :height 30) popwin:special-display-config)
+(push '("*helm M-x*" :height 20) popwin:special-display-config)
 (push '("*grep*" :noselect nil) popwin:special-display-config)
 
 ;; other-window
@@ -845,11 +845,6 @@
 ;; web-mode
 ;;=================================
 (require 'web-mode)
-(eval-after-load 'web-mode
-  '(progn
-     (define-key web-mode-map (kbd "C-;") 'anything-filelist+)
-     )
-  )
 (add-hook 'web-mode-hook
           '(lambda ()
              (setq indent-tabs-mode t)
@@ -1308,59 +1303,24 @@
 
 
 ;;=======================================================================
-;; anything
+;; helm
 ;;=====================================================================
-(require 'anything-startup)
-(require 'anything-grep)
-(require 'anything-git-files)
+(require 'helm-config)
+;; (require 'helm-ls-git)
+(helm-mode t)
 
-;; キーバインド
-(global-set-key "\C-x\ b" 'anything-buffers-list)
-(global-set-key (kbd "C-;") 'anything-filelist+)
-(define-key global-map (kbd "M-y") 'anything-show-kill-ring)
+(define-key global-map (kbd "M-x") 'helm-M-x)
+(define-key global-map (kbd "C-x b") 'helm-buffers-list)
+(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+(define-key global-map (kbd "C-;") 'helm-for-files)
 
-(setq anything-c-filelist-file-name "/tmp/all.filelist")
-(setq anything-grep-candidates-fast-directory-regexp "^/tmp")
-
-
-(defadvice agp-command-line (after insert-LANG=C-into-agp-command-line)
-  (while (string-match "\\(^\\|| \\)\\(grep -ih\\)" ad-return-value)
-    (setq ad-return-value (replace-match "LANG=C \\2" t nil ad-return-value 2))))
-
-
-(defadvice agp-command-line (after insert-Redirection-of-STDERR-into-agp-command-line)
-  (when (string-match "| head -n" ad-return-value)
-    (setq ad-return-value (replace-match "2>/dev/null \\&" t nil ad-return-value nil))))
-
-(ad-activate 'agp-command-line)
-
-;; http://d.hatena.ne.jp/akisute3/20120409/1333899842
-;;; recentf の表示数を 100 まで拡張
-(setq recentf-max-saved-items 100)
-
-
-(defun anything-git-files:root-1 ()
-  (ignore-errors
-    (file-name-as-directory
-     (anything-git-files:chomp
-      (anything-git-files:command-to-string "rev-parse" "--show-toplevel"))))
-  )
-
-(defun anything-filelist+ ()
-  "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-
-This is a replacement for `anything-for-files'.
-See `anything-c-filelist-file-name' docstring for usage."
-  (interactive)
-  (anything-other-buffer
-   '(anything-c-source-ffap-line
-     anything-c-source-ffap-guesser
-     anything-c-source-buffers-list
-     anything-git-files:modified-source
-     anything-git-files:untracked-source
-     anything-git-files:all-source
-     anything-c-source-recentf
-     anything-c-source-bookmarks
-     anything-c-source-file-cache
-     anything-c-source-filelist)
-   "*anything file list*"))
+(setq helm-for-files-preferred-list
+      '(helm-source-buffers-list
+        helm-source-recentf
+        ;;helm-source-ls-git-status
+        ;;helm-source-ls-git
+        helm-source-bookmarks
+        helm-source-file-cache
+        helm-source-files-in-current-dir
+        helm-source-locate)
+)
