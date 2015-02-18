@@ -313,13 +313,24 @@
 (push '("*helm M-x*" :height 20) popwin:special-display-config)
 (push '("*grep*" :noselect nil) popwin:special-display-config)
 
+;; 反対側のウィンドウにいけるように
+(setq windmove-wrap-around t)
+
+;;; windmove
+;; (windmove-default-keybindings) ; 引数なしの場合は Shift
+;; Alt + 矢印でウィンドウを移動する
+(windmove-default-keybindings 'meta) ; Alt の場合は meta を指定
+;; Mac の Command + 矢印でウィンドウを移動する
+;; (windmove-default-keybindings 'super) ; Macの人はこちらをオススメ
+
+
 ;; other-window
-(defun other-window-or-split ()
-  (interactive)
-  (when (one-window-p)
-    (split-window-horizontally))
-  (other-window 1))
-(global-set-key (kbd "C-z") 'other-window-or-split)
+;; (defun other-window-or-split ()
+;;   (interactive)
+;;   (when (one-window-p)
+;;     (split-window-horizontally))
+;;   (other-window 1))
+;; (global-set-key (kbd "C-z") 'other-window-or-split)
 
 
 ;;=======================================================================
