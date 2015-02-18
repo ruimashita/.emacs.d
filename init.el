@@ -838,7 +838,8 @@
 (require 'flymake-phpcs)
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
-(setq flymake-phpcs-standard "PSR2 --encoding=utf-8")
+(setq flymake-phpcs-standard "PSR2")
+(setq flymake-phpcs-options "--encoding=utf8")
 (setq flymake-phpcs-location 'tempdir)
 
 (add-hook 'php-mode-hook
