@@ -20,6 +20,7 @@
 
 ;; package auto install
 (require 'cl)
+(require 'eieio)
 (package-initialize)
 (defvar installing-package-list
   '(
@@ -34,7 +35,7 @@
     elscreen
     exec-path-from-shell
     helm
-    ;; helm-ls-git
+    helm-ls-git
     flymake-easy
     flymake-phpcs
     flymake-python-pyflakes
@@ -1313,7 +1314,7 @@
 ;; helm
 ;;=====================================================================
 (require 'helm-config)
-;; (require 'helm-ls-git)
+(require 'helm-ls-git)
 (helm-mode t)
 
 (define-key global-map (kbd "M-x") 'helm-M-x)
@@ -1324,8 +1325,8 @@
 (setq helm-for-files-preferred-list
       '(helm-source-buffers-list
         helm-source-recentf
-        ;;helm-source-ls-git-status
-        ;;helm-source-ls-git
+        helm-source-ls-git-status
+        helm-source-ls-git
         helm-source-bookmarks
         helm-source-file-cache
         helm-source-files-in-current-dir
