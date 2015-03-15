@@ -36,14 +36,15 @@
     exec-path-from-shell
     helm
     helm-ls-git
+    hiwin
     flymake-easy
     flymake-phpcs
     flymake-python-pyflakes
-    foreign-regexp
     haml-mode
     jinja2-mode
     less-css-mode
     markdown-mode
+    multiple-cursors
     nginx-mode
     php-mode
     popup
@@ -324,13 +325,9 @@
 ;; (windmove-default-keybindings 'super) ; Macの人はこちらをオススメ
 
 
-;; other-window
-;; (defun other-window-or-split ()
-;;   (interactive)
-;;   (when (one-window-p)
-;;     (split-window-horizontally))
-;;   (other-window 1))
-;; (global-set-key (kbd "C-z") 'other-window-or-split)
+;; hiwin
+(hiwin-activate)
+(set-face-background 'hiwin-face "gray10") ;; 非アクティブウィンドウの背景色を設定
 
 
 ;;=======================================================================
@@ -362,6 +359,7 @@
 ;;=======================================================================
 ;; forward, backward
 ;;=====================================================================
+;; 漢字/ひらがな/カタカナを分けてforward, backwardする
 ;; http://d.hatena.ne.jp/khiker/20090604/forward_word
 (defun my-forward-word (arg)
   (interactive "p")
@@ -448,17 +446,13 @@
 
 
 ;;==============================================
-;; foreign-regexp
+;; multiple-cursors
 ;;===============================================
-(require 'foreign-regexp)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(foreign-regexp/regexp-type (quote ruby))
- '(reb-re-syntax (quote foreign-regexp)))
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
 ;;==============================================
