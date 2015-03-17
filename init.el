@@ -41,6 +41,7 @@
     flymake-easy
     flymake-phpcs
     flymake-python-pyflakes
+    go-mode
     haml-mode
     jinja2-mode
     less-css-mode
