@@ -31,6 +31,7 @@
     auto-complete
     coffee-mode
     color-theme
+    dockerfile-mode
     editorconfig
     elscreen
     exec-path-from-shell
@@ -1314,6 +1315,13 @@
 ;; nginx-mode
 ;;=====================================================================
 (require 'nginx-mode)
+
+
+;;=======================================================================
+;; dockerfile-mode
+;;=====================================================================
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 
 ;;=======================================================================
