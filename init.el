@@ -53,6 +53,7 @@
     popwin
     psgml
     python
+    rainbow-mode
     rhtml-mode
     rvm
     scss-mode
@@ -899,6 +900,17 @@
              (setq indent-tabs-mode nil)
              (setq sgml-basic-offset 2)
              ))
+
+
+;;=========================
+;; rainbow-mode
+;;=================================
+(require 'rainbow-mode)
+(add-hook 'css-mode-hook 'rainbow-mode)
+(add-hook 'scss-mode-hook 'rainbow-mode)
+(add-hook 'less-css-mode-hook 'rainbow-mode)
+
+
 
 ;;=======================================================================
 ;; color
