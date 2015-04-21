@@ -38,9 +38,9 @@
     helm
     helm-git-files
     hiwin
-    flymake-easy
-    flymake-phpcs
-    flymake-python-pyflakes
+    flycheck
+    flycheck-pos-tip
+    flycheck-color-mode-line
     go-mode
     haml-mode
     jinja2-mode
@@ -526,28 +526,30 @@
 
 
 ;;=======================================================================
-;; flymake
+;; flycheck
 ;;=====================================================================
-(require 'flymake)
-(require 'flymake-easy)
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
-(defun my-flymake-show-next-error()
-  (interactive)
-  (flymake-goto-next-error)
-  (flymake-display-err-menu-for-current-line)
-  )
+(setq flycheck-highlighting-mode 'lines)
 
-(global-set-key "\C-c\C-v" 'my-flymake-show-next-error)
+(require 'flycheck-pos-tip)
+(eval-after-load 'flycheck
+  '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)
+)
 
-(if (system-type-is-darwin)
-    (progn
-      ;;      (setq flymake-log-level 3)
-      (setq temporary-file-directory "/private/tmp/")
-      ))
+(require 'flycheck-color-mode-line)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+)
 
-;; 色の設定
-(set-face-attribute 'flymake-errline nil :underline `(:color "#ff3366" :style wave))
-(set-face-attribute 'flymake-warnline nil :underline `(:color "#ffd700" :style wave))
+(set-face-attribute 'flycheck-error nil 
+                    :underline `(:color "pink" :style wave))
+(set-face-attribute 'flycheck-color-mode-line-warning-face nil
+                    :inherit 'flycheck-fringe-warning :background "dark orange" :foreground "black" :weight 'normal)
+(set-face-attribute 'flycheck-color-mode-line-error-face nil
+                    :inherit 'flycheck-fringe-error :background "pink" :foreground "black" :weight 'normal)
+
 
 ;;=========================
 ;; css-mode
@@ -561,17 +563,6 @@
 ;;=====================================================
 (autoload 'js-mode "js-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-
-(eval-after-load 'js
-  '(progn
-     (font-lock-add-keywords
-      'js-mode '(("\t" 0 my-face-b-2 append)
-                 ("　" 0 my-face-b-1 append)
-                 ("[ \t]+$" 0 my-face-u-1 append)
-                 )))
-  )
-
-
 
 ;;=================================================
 ;; ruby-mode
@@ -650,21 +641,11 @@
 ;;https://github.com/fgallina/python.el
 (require 'python)
 
-(require 'flymake-python-pyflakes)
+;; プロジェクトのトップディレクトリに .dir-locals.elを置く
+;; flyacheckでsetup.cfgを使う設定
 
-;; flake8を使う
-(setq flymake-python-pyflakes-executable "flake8")
-
-;; オプションの設定
-(setq flymake-python-pyflakes-extra-arguments '("--max-line-length=99"))
-
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (flymake-python-pyflakes-load)
-             (define-key python-mode-map  "\C-c\C-v" 'my-flymake-show-next-error)
-             )
-          )
-
+;; ((python-mode
+;;   (flycheck-flake8rc . "/home/takuya/Sites/tetote/setup.cfg")))
 
 
 ;;=======================================================================
@@ -832,18 +813,21 @@
 ;; phpmode
 ;;==============================================
 (require 'php-mode)
-(require 'flymake-phpcs)
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
-(setq flymake-phpcs-standard "PSR2")
-(setq flymake-phpcs-options "--encoding=utf8")
-(setq flymake-phpcs-location 'tempdir)
+(setq flycheck-phpcs-standard "PSR2")
+
+;;(setq flycheck-phpcs-args "--encoding=utf8")
+;;
+;; :command ("phpcs" "--report=checkstyle"
+;;           (option "--standard=" flycheck-phpcs-standard concat)
+;;           (eval flycheck-phpcs-args)
+;;           source)
 
 (add-hook 'php-mode-hook
           (lambda ()
             (subword-mode 1)
             (php-enable-psr2-coding-style)
-            (flymake-phpcs-load)
             ))
 
 
