@@ -311,7 +311,7 @@
 
 ;; popwin
 (require 'popwin)
-(setq display-buffer-function 'popwin:display-buffer)
+(popwin-mode 1)
 
 (push '("*helm for files*" :height 30) popwin:special-display-config)
 (push '("*helm M-x*" :height 20) popwin:special-display-config)
