@@ -36,7 +36,7 @@
     elscreen
     exec-path-from-shell
     helm
-    helm-ls-git
+    helm-git-files
     hiwin
     flymake-easy
     flymake-phpcs
@@ -1341,7 +1341,7 @@
 ;; helm
 ;;=====================================================================
 (require 'helm-config)
-(require 'helm-ls-git)
+(require 'helm-git-files)
 (helm-mode t)
 
 (define-key global-map (kbd "M-x") 'helm-M-x)
@@ -1349,13 +1349,20 @@
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 (define-key global-map (kbd "C-;") 'helm-for-files)
 
+;; タブ補完
+(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
+
+
 (setq helm-for-files-preferred-list
       '(helm-source-buffers-list
         helm-source-recentf
-        helm-source-ls-git-status
-        helm-source-ls-git
+        helm-git-files:modified-source
+        helm-git-files:untracked-source
+        helm-git-files:all-source
         helm-source-bookmarks
         helm-source-file-cache
         helm-source-files-in-current-dir
-        helm-source-locate)
+        helm-source-locate
+        )
 )
