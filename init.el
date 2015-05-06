@@ -32,11 +32,12 @@
     coffee-mode
     color-theme
     dockerfile-mode
-    editorconfig
+    ;; editorconfig
     elscreen
     exec-path-from-shell
     helm
     helm-git-files
+    helm-ag
     hiwin
     flycheck
     flycheck-pos-tip
@@ -62,7 +63,7 @@
     wgrep
     wgrep-ag
     yaml-mode
-    yasnippet
+    ;; yasnippet
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -486,7 +487,7 @@
 ;;=======================================================================
 ;; editorconfig
 ;;=====================================================================
-(load "editorconfig")
+;; (load "editorconfig")
 
 
 ;;=======================================================================
@@ -1349,4 +1350,4 @@
         helm-source-files-in-current-dir
         helm-source-locate
         )
-)
+      )
