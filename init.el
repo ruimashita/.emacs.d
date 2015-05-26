@@ -307,8 +307,11 @@
 ;; ウィンドウ設定
 ;;=====================================================
 
-;; ウィンドウを透明化
-(add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
+;; ウィンドウを透明化 (Ubuntuの時だけ)
+(if (system-type-is-gnu)
+    (progn
+      (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
+      ))
 
 ;; popwin
 (require 'popwin)
