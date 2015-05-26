@@ -567,6 +567,11 @@
 ;;=====================================================
 (autoload 'js-mode "js-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(add-hook 'js-mode-hook
+          (lambda ()
+            (setq js-indent-level 4)
+            )
+)
 
 ;;=================================================
 ;; ruby-mode
