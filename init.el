@@ -32,7 +32,7 @@
     coffee-mode
     color-theme
     dockerfile-mode
-    ;; editorconfig
+    editorconfig
     elscreen
     exec-path-from-shell
     helm
@@ -490,7 +490,7 @@
 ;;=======================================================================
 ;; editorconfig
 ;;=====================================================================
-;; (load "editorconfig")
+(load "editorconfig")
 
 
 ;;=======================================================================
