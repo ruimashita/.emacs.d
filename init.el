@@ -572,6 +572,12 @@
             )
 )
 
+;; プロジェクトのトップディレクトリに .dir-locals.elを置く
+;; flyacheckでeslintを使う設定
+;; ((js-mode
+;;  (flycheck-checker . javascript-eslint)
+;;  ))
+
 ;;=================================================
 ;; ruby-mode
 ;;
