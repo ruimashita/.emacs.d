@@ -171,6 +171,9 @@
 (setq-default save-buffer-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 
+;; path を設定
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
 
 ;; =======================================================================
 ;;  OSX or Ubunt
@@ -195,10 +198,6 @@
 ;;=======================================================================
 (if (system-type-is-darwin)
     (progn
-
-      ;; path を設定
-      (require 'exec-path-from-shell)
-      (exec-path-from-shell-initialize)
 
       ;; Command-Key and Option-Key
       (setq ns-command-modifier (quote meta))
@@ -572,6 +571,12 @@
             (setq js-indent-level 4)
             )
 )
+
+;; プロジェクトのトップディレクトリに .dir-locals.elを置く
+;; flyacheckでeslintを使う設定
+;; ((js-mode
+;;  (flycheck-checker . javascript-eslint)
+;;  ))
 
 ;;=================================================
 ;; ruby-mode
