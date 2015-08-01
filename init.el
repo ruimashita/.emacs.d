@@ -175,6 +175,10 @@
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
+;; major-modeを変更したあとも、.dir-locals.elの値を有効にする
+(add-hook 'after-change-major-mode-hook 'hack-local-variables)
+
+
 ;; =======================================================================
 ;;  OSX or Ubunt
 ;; =======================================================================
