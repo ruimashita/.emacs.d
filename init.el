@@ -518,8 +518,8 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 ;; (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-(setq markdown-css-path "/home/takuya/local/bootstrap/dist/css/bootstrap.min.css")
-;;(setq markdown-xhtml-header-content " <link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"/home/takuya/local/bootstrap/dist/css/bootstrap.min.css\" /> ")
+(setq markdown-xhtml-header-content "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\" /> ")
+
 
 ;;=======================================================================
 ;; yasnippet
