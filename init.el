@@ -34,6 +34,7 @@
     dockerfile-mode
     editorconfig
     elscreen
+    ess
     exec-path-from-shell
     helm
     helm-git-files
@@ -50,6 +51,7 @@
     multiple-cursors
     nginx-mode
     php-mode
+    polymode
     popup
     popwin
     psgml
@@ -556,6 +558,50 @@
                     :inherit 'flycheck-fringe-warning :background "dark orange" :foreground "black" :weight 'normal)
 (set-face-attribute 'flycheck-color-mode-line-error-face nil
                     :inherit 'flycheck-fringe-error :background "pink" :foreground "black" :weight 'normal)
+
+
+;;=========================
+;; ess-site(r-mode)
+;;=================================
+(require 'ess-site)
+
+
+;;=========================
+;; poly-rmarkdown-mode
+;;=================================
+(require 'poly-R)
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+
+(defun rmarkdown-new-chunk (name)
+  "Insert a new R chunk."
+  (interactive "sChunk name: ")
+  (insert "\n```{r " name "}\n")
+  (save-excursion
+    (newline)
+    (insert "```\n")
+    (previous-line)))
+
+(defun rmarkdown-weave-file ()
+  "Run knitr on the current file and weave it as MD and HTML."
+  (interactive)
+  (shell-command 
+   (format "knitr.sh -c %s" 
+       (shell-quote-argument (buffer-file-name)))))
+
+(defun rmarkdown-tangle-file ()
+  "Run knitr on the current file and tangle its R code."
+  (interactive)
+  (shell-command 
+   (format "knitr.sh -t %s" 
+       (shell-quote-argument (buffer-file-name)))))
+
+(defun rmarkdown-preview-file ()
+  "Run knitr on the current file and display output in a browser."
+  (interactive)
+  (shell-command 
+   (format "knitr.sh -b %s" 
+       (shell-quote-argument (buffer-file-name)))))
 
 
 ;;=========================
