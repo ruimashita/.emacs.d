@@ -573,35 +573,31 @@
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
 
-(defun rmarkdown-new-chunk (name)
-  "Insert a new R chunk."
-  (interactive "sChunk name: ")
-  (insert "\n```{r " name "}\n")
-  (save-excursion
-    (newline)
-    (insert "```\n")
-    (previous-line)))
+;; (require 'ess-R-object-popup)
+;; (define-key ess-mode-map "\C-c\C-g" 'ess-R-object-popup)
 
-(defun rmarkdown-weave-file ()
-  "Run knitr on the current file and weave it as MD and HTML."
+(defun ess-rmarkdown-preview ()
   (interactive)
-  (shell-command 
-   (format "knitr.sh -c %s" 
-       (shell-quote-argument (buffer-file-name)))))
+  "Compile R markdown (.Rmd). Should work for any output type."
+  "http://delhey.info/inc/ess-rmarkdown.pdf"
+  (condition-case nil
+      (ess-get-process)
+    (error
+     (ess-switch-process)))
+  (let* ((rmd-buf (current-buffer)))
+    (save-excursion
+      (let* ((sprocess (ess-get-process ess-current-process-name))
+             (sbuffer (process-buffer sprocess))
+             (buf-coding (symbol-name buffer-file-coding-system))
+             (R-cmd
+              (format "library (rmarkdown); rmarkdown::render (\"%s\"); browseURL(\"%s.html\")"
+                      buffer-file-name (file-name-base buffer-file-name))))
+        (message "Running rmarkdown on %s" buffer-file-name)
+        (ess-execute R-cmd 'buffer nil nil)
+        (switch-to-buffer rmd-buf)
+        (ess-show-buffer (buffer-name sbuffer) nil)))))
 
-(defun rmarkdown-tangle-file ()
-  "Run knitr on the current file and tangle its R code."
-  (interactive)
-  (shell-command 
-   (format "knitr.sh -t %s" 
-       (shell-quote-argument (buffer-file-name)))))
-
-(defun rmarkdown-preview-file ()
-  "Run knitr on the current file and display output in a browser."
-  (interactive)
-  (shell-command 
-   (format "knitr.sh -b %s" 
-       (shell-quote-argument (buffer-file-name)))))
+(define-key polymode-mode-map "\M-ns" 'ess-rmarkdown-preview)
 
 
 ;;=========================
