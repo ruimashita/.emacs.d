@@ -563,8 +563,14 @@
 ;;=========================
 ;; ess-site(r-mode)
 ;;=================================
-(require 'ess-site)
 
+(require 'ess-site)
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (setq ess-tab-always-indent t)
+            (setq ess-indent-with-fancy-comments nil)
+            )
+          )
 
 ;;=========================
 ;; poly-rmarkdown-mode
