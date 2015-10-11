@@ -1,6 +1,30 @@
 ;; デバッグ
 (setq debug-on-error nil)
 
+
+;; .dir-locals.elの設定例
+;; プロジェクトのトップディレクトリに .dir-locals.elを置く
+;; (
+;;  (nil . (
+;;          (indent-tabs-mode . t)
+;;          (tab-width . 4)
+
+;;          ;; quickrunでRmdファイルをrmd/dockerと紐付ける
+;;          (eval . (eval-after-load "quickrun"
+;;                    '(add-to-list 
+;;                      'quickrun-file-alist '("\\.Rmd$" . "rmd/docker")
+;;                      )
+;;                    ))
+;;          ))
+
+;;  ;; flake8rcの設定
+;;  (python-mode . (
+;;                  (flycheck-flake8rc . "/home/takuya/Sites/tetote/setup.cfg")
+;;                  ))
+;; )
+
+
+
 ;; for m-x shell-command
 (setq shell-file-name "/bin/zsh")
 ;; for m-x shell
@@ -56,6 +80,7 @@
     popwin
     psgml
     python
+    quickrun
     rainbow-mode
     rhtml-mode
     rvm
@@ -560,6 +585,25 @@
                     :inherit 'flycheck-fringe-error :background "pink" :foreground "black" :weight 'normal)
 
 
+;;=======================================================================
+;; quickrun
+;;=====================================================================
+(require 'quickrun)
+(setq quickrun-debug t)
+
+(global-set-key (kbd "<f5>") 'quickrun)
+(global-set-key (kbd "M-<f5>") 'quickrun-compile-only)
+
+(push '("*quickrun*") popwin:special-display-config)
+
+;; rmdをdockerで実行して、output.htmlを吐き出し、ブラウザでみる。
+(quickrun-add-command "rmd/docker"
+                      '(
+                        (:command . "docker-compose run r Rscript")
+                        (:exec    . "%c -e 'library (rmarkdown); rmarkdown::render (\"%s\", output_file=\"output.html\" );'")
+                        (:outputter . (lambda () (browse-url "output.html")))
+                        ))
+
 ;;=========================
 ;; ess-site(r-mode)
 ;;=================================
@@ -578,32 +622,6 @@
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
-
-;; (require 'ess-R-object-popup)
-;; (define-key ess-mode-map "\C-c\C-g" 'ess-R-object-popup)
-
-(defun ess-rmarkdown-preview ()
-  (interactive)
-  "Compile R markdown (.Rmd). Should work for any output type."
-  "http://delhey.info/inc/ess-rmarkdown.pdf"
-  (condition-case nil
-      (ess-get-process)
-    (error
-     (ess-switch-process)))
-  (let* ((rmd-buf (current-buffer)))
-    (save-excursion
-      (let* ((sprocess (ess-get-process ess-current-process-name))
-             (sbuffer (process-buffer sprocess))
-             (buf-coding (symbol-name buffer-file-coding-system))
-             (R-cmd
-              (format "library (rmarkdown); rmarkdown::render (\"%s\"); browseURL(\"%s.html\")"
-                      buffer-file-name (file-name-base buffer-file-name))))
-        (message "Running rmarkdown on %s" buffer-file-name)
-        (ess-execute R-cmd 'buffer nil nil)
-        (switch-to-buffer rmd-buf)
-        (ess-show-buffer (buffer-name sbuffer) nil)))))
-
-(define-key polymode-mode-map "\M-ns" 'ess-rmarkdown-preview)
 
 
 ;;=========================
@@ -706,12 +724,6 @@
 ;;=====================================================================
 ;;https://github.com/fgallina/python.el
 (require 'python)
-
-;; プロジェクトのトップディレクトリに .dir-locals.elを置く
-;; flyacheckでsetup.cfgを使う設定
-
-;; ((python-mode
-;;   (flycheck-flake8rc . "/home/takuya/Sites/tetote/setup.cfg")))
 
 
 ;;=======================================================================
