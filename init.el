@@ -243,6 +243,9 @@
       (define-key function-key-map [67109029] [?\C-\\])
       (define-key function-key-map [134217893] [?\M-\\])
       (define-key function-key-map [201326757] [?\C-\M-\\])
+
+      ;; browserのコマンドをopenにする
+      (setq browse-url-generic-program "open")
       )
   )
 
