@@ -1432,6 +1432,8 @@
 (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
 
 
+(add-to-list 'helm-completing-read-handlers-alist '(write-file . nil))
+
 (setq helm-for-files-preferred-list
       '(helm-source-buffers-list
         helm-source-recentf
