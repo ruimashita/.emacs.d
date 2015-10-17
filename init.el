@@ -63,7 +63,6 @@
     helm
     helm-git-files
     helm-ag
-    hiwin
     flycheck
     flycheck-pos-tip
     flycheck-color-mode-line
@@ -365,9 +364,6 @@
 ;; (windmove-default-keybindings 'super) ; Macの人はこちらをオススメ
 
 
-;; hiwin
-(hiwin-activate)
-(set-face-background 'hiwin-face "gray10") ;; 非アクティブウィンドウの背景色を設定
 
 
 ;;=======================================================================
