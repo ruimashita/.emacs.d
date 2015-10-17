@@ -61,8 +61,9 @@
     ess
     exec-path-from-shell
     helm
-    helm-git-files
     helm-ag
+    helm-git-files
+    helm-projectile
     flycheck
     flycheck-pos-tip
     flycheck-color-mode-line
@@ -77,6 +78,7 @@
     polymode
     popup
     popwin
+    projectile
     psgml
     python
     quickrun
@@ -1421,11 +1423,18 @@
 
 
 ;;=======================================================================
+;; projectile
+;;=====================================================================
+(projectile-global-mode)
+
+
+;;=======================================================================
 ;; helm
 ;;=====================================================================
 (require 'helm-config)
 (require 'helm-git-files)
 (helm-mode t)
+(require 'helm-projectile)
 
 (define-key global-map (kbd "M-x") 'helm-M-x)
 (define-key global-map (kbd "C-x b") 'helm-buffers-list)
@@ -1436,11 +1445,13 @@
 (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
 (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
 
-
 (add-to-list 'helm-completing-read-handlers-alist '(write-file . nil))
 
 (setq helm-for-files-preferred-list
-      '(helm-source-buffers-list
+      '(helm-source-projectile-buffers-list
+        helm-source-projectile-files-list
+        helm-source-projectile-projects
+        helm-source-buffers-list
         helm-source-recentf
         helm-git-files:modified-source
         helm-git-files:untracked-source
