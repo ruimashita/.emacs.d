@@ -84,6 +84,7 @@
     rhtml-mode
     rvm
     scss-mode
+    undo-tree
     visual-regexp
     web-mode
     wgrep
@@ -538,6 +539,14 @@
 ;; wgrep
 (autoload 'wgrep-ag-setup "wgrep-ag")
 (add-hook 'ag-mode-hook 'wgrep-ag-setup)
+
+
+;;=======================================================================
+;; undo-tree
+;;=====================================================================
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 
 ;;=======================================================================
 ;; markdown-mode
