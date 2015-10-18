@@ -1448,11 +1448,12 @@
 (add-to-list 'helm-completing-read-handlers-alist '(write-file . nil))
 
 (setq helm-for-files-preferred-list
-      '(helm-source-projectile-buffers-list
-        helm-source-projectile-files-list
-        helm-source-projectile-projects
+      '(
         helm-source-buffers-list
         helm-source-recentf
+        helm-source-projectile-buffers-list
+        helm-source-projectile-files-list
+        helm-source-projectile-projects
         helm-git-files:modified-source
         helm-git-files:untracked-source
         helm-git-files:all-source
