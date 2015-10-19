@@ -618,9 +618,12 @@
 ;; ess-site(r-mode)
 ;;=================================
 
-(require 'ess-site)
+(autoload 'R-mode "ess-site" "Emacs Speaks Statistics mode" t)
+(add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
+
 (add-hook 'ess-mode-hook
           (lambda ()
+            (setq ess-ask-for-ess-directory nil)
             (setq ess-tab-always-indent t)
             (setq ess-indent-with-fancy-comments nil)
             )
