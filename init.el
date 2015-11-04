@@ -394,6 +394,10 @@
              '((regexp-quote (system-name)) "\\`root\\'" nil))
 
 
+;; ssh1, ssh2を削除する
+(delete '("ssh1" (tramp-login-program "ssh") (tramp-login-args (("-l" "%u") ("-p" "%p") ("-1") ("-e" "none") ("%h"))) (tramp-async-args (("-q"))) (tramp-remote-shell "/bin/sh") (tramp-remote-shell-args ("-c")) (tramp-gw-args (("-o" "GlobalKnownHostsFile=/dev/null") ("-o" "UserKnownHostsFile=/dev/null") ("-o" "StrictHostKeyChecking=no"))) (tramp-default-port 22)) tramp-methods)
+
+(delete '("ssh2" (tramp-login-program "ssh") (tramp-login-args (("-l" "%u") ("-p" "%p") ("-2") ("-e" "none") ("%h"))) (tramp-async-args (("-q"))) (tramp-remote-shell "/bin/sh") (tramp-remote-shell-args ("-c")) (tramp-gw-args (("-o" "GlobalKnownHostsFile=/dev/null") ("-o" "UserKnownHostsFile=/dev/null") ("-o" "StrictHostKeyChecking=no"))) (tramp-default-port 22)) tramp-methods)
 
 ;;=======================================================================
 ;; forward, backward
