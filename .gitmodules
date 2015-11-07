@@ -1,9 +1,0 @@
-[submodule "auto-complete-acr.el"]
-	path = auto-complete-acr
-	url = git://github.com/myuhe/auto-complete-acr.el.git
-[submodule "yasnippets-rails"]
-	path = yasnippets-rails
-	url = https://github.com/eschulte/yasnippets-rails.git
-[submodule "actionscript-mode"]
-	path = actionscript-mode
-	url = https://github.com/austinhaas/actionscript-mode.git
