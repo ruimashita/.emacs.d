@@ -1,8 +1,9 @@
-auto-save-list
-.framesize.el
-tramp
-.DS_Store
-session.*
-ac-comphist.dat
 *.elc
-elpa
+/auto-save-list
+/.framesize.el
+/tramp
+.DS_Store
+/session.*
+/ac-comphist.dat
+/elpa
+/projectile-bookmarks.eld
