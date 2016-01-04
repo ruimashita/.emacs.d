@@ -88,6 +88,7 @@
     scss-mode
     undo-tree
     visual-regexp
+    wakatime-mode
     web-mode
     wgrep
     wgrep-ag
@@ -553,6 +554,13 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 
+
+;;=======================================================================
+;; wakatime
+;;=====================================================================
+(setq wakatime-api-key "1cb650c2-1e58-455b-8d90-e57409653e44")
+(setq wakatime-cli-path "/usr/local/bin/wakatime")
+(global-wakatime-mode)
 
 ;;=======================================================================
 ;; markdown-mode
