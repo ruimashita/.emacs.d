@@ -604,6 +604,7 @@
 ;;=====================================================================
 (require 'quickrun)
 (setq quickrun-debug t)
+(setq quickrun-timeout-seconds 60)
 
 (global-set-key (kbd "<f5>") 'quickrun)
 (global-set-key (kbd "M-<f5>") 'quickrun-compile-only)
