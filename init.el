@@ -558,7 +558,7 @@
 ;;=======================================================================
 ;; wakatime
 ;;=====================================================================
-(setq wakatime-api-key "1cb650c2-1e58-455b-8d90-e57409653e44")
+;; (setq wakatime-api-key "")
 (setq wakatime-cli-path "/usr/local/bin/wakatime")
 (global-wakatime-mode)
 
