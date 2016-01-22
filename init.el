@@ -63,7 +63,6 @@
     helm
     helm-ag
     helm-git-files
-    helm-projectile
     flycheck
     flycheck-pos-tip
     flycheck-color-mode-line
@@ -78,7 +77,6 @@
     polymode
     popup
     popwin
-    projectile
     psgml
     python
     quickrun
@@ -1439,19 +1437,11 @@
 
 
 ;;=======================================================================
-;; projectile
-;;=====================================================================
-(setq projectile-enable-caching t)
-(projectile-global-mode)
-
-
-;;=======================================================================
 ;; helm
 ;;=====================================================================
 (require 'helm-config)
 (require 'helm-git-files)
 (helm-mode t)
-(require 'helm-projectile)
 
 (define-key global-map (kbd "M-x") 'helm-M-x)
 (define-key global-map (kbd "C-x b") 'helm-buffers-list)
@@ -1468,9 +1458,6 @@
       '(
         helm-source-buffers-list
         helm-source-recentf
-        helm-source-projectile-buffers-list
-        helm-source-projectile-files-list
-        helm-source-projectile-projects
         helm-git-files:modified-source
         helm-git-files:untracked-source
         helm-git-files:all-source
