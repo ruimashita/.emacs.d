@@ -60,6 +60,7 @@
     elscreen
     ess
     exec-path-from-shell
+    expand-region
     helm
     helm-ag
     helm-git-files
@@ -621,6 +622,15 @@
                         (:exec    . "%c -e 'library (rmarkdown); rmarkdown::render (\"%s\", output_file=\"output.html\" );'")
                         (:outputter . (lambda () (browse-url "output.html")))
                         ))
+
+
+;;=======================================================================
+;; expand-region
+;;=====================================================================
+(require 'expand-region)
+(global-set-key (kbd "C-@") 'er/expand-region)
+(global-set-key (kbd "C-M-@") 'er/contract-region) ;; リージョンを狭める
+
 
 ;;=========================
 ;; ess-site(r-mode)
