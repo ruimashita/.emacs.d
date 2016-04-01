@@ -68,7 +68,6 @@
     flycheck-color-mode-line
     go-mode
     haml-mode
-    jinja2-mode
     less-css-mode
     markdown-mode
     multiple-cursors
@@ -77,11 +76,9 @@
     polymode
     popup
     popwin
-    psgml
     python
     quickrun
     rainbow-mode
-    rhtml-mode
     rvm
     scss-mode
     undo-tree
@@ -728,21 +725,6 @@
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 
-;;=================================================
-;; rhtml-mode
-;;=====================================================
-(require 'rhtml-mode)
-(setq auto-mode-alist (cons '("\\.erb$" . rhtml-mode) auto-mode-alist))
-(add-hook 'rhtml-mode-hook
-          (lambda () (rinari-launch)
-            (setq tab-width 2)
-            (setq sgml-indent-step 2)
-            (setq indent-tabs-mode nil)
-            (setq sgml-basic-offset 2)
-            )
-          )
-
-
 ;;=======================================================================
 ;; python-mode
 ;;=====================================================================
@@ -895,22 +877,6 @@
 (add-to-list 'ac-modes 'less-css-mode) ;; auto-complete
 
 
-;;===========================================================
-;; sgml-mode
-;;=========================================================
-(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
-(autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
-(setq auto-mode-alist (cons '("\\.tpl$" . sgml-mode) auto-mode-alist))
-(add-hook
- 'sgml-mode-hook
- '(lambda ()
-    (setq tab-width 2)
-    (setq sgml-indent-step 2)
-    (setq indent-tabs-mode nil)
-    (setq sgml-basic-offset 2)
-    ))
-
-
 ;;=====================================================
 ;; phpmode
 ;;==============================================
@@ -932,17 +898,6 @@
             (php-enable-psr2-coding-style)
             ))
 
-
-;;=========================
-;; multi-web-mode
-;;=================================
-;; (require 'multi-web-mode)
-;; (setq mweb-default-major-mode 'sgml-mode)
-;; (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-;;                   (js-mode "<script[^>]*>" "</script>")
-;;                   (css-mode "<style[^>]*>" "</style>")))
-;; (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-;; (multi-web-global-mode 1)
 
 ;;=========================
 ;; web-mode
@@ -973,19 +928,6 @@
       )
 
 (add-to-list 'ac-modes 'web-mode)
-
-
-;;=========================
-;; jinja2-mode
-;;=================================
-(require 'jinja2-mode)
-(add-hook 'jinja2-mode-hook
-          '(lambda ()
-             (setq tab-width 2)
-             (setq sgml-indent-step 2)
-             (setq indent-tabs-mode nil)
-             (setq sgml-basic-offset 2)
-             ))
 
 
 ;;=========================
