@@ -919,6 +919,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 
 (setq web-mode-engines-alist
       '(
