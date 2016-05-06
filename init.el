@@ -61,14 +61,16 @@
     ess
     exec-path-from-shell
     expand-region
-    helm
-    helm-ag
-    helm-git-files
     flycheck
     flycheck-pos-tip
     flycheck-color-mode-line
     go-mode
     haml-mode
+    helm
+    helm-ag
+    helm-git-files
+    helm-ls-git
+    julia-mode 
     less-css-mode
     markdown-mode
     multiple-cursors
