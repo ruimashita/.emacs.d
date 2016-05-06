@@ -69,7 +69,6 @@
     helm
     helm-ag
     helm-git-files
-    helm-ls-git
     julia-mode 
     less-css-mode
     markdown-mode
@@ -1414,9 +1413,9 @@
       '(
         helm-source-buffers-list
         helm-source-recentf
-        helm-git-files:modified-source
-        helm-git-files:untracked-source
-        helm-git-files:all-source
+        ;; helm-git-files:modified-source
+        ;; helm-git-files:untracked-source
+        ;; helm-git-files:all-source
         helm-source-bookmarks
         helm-source-file-cache
         helm-source-files-in-current-dir
