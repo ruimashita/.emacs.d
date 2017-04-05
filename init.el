@@ -71,6 +71,7 @@
     helm-git-files
     julia-mode 
     less-css-mode
+    lua-mode
     markdown-mode
     multiple-cursors
     nginx-mode
@@ -909,6 +910,13 @@
             (subword-mode 1)
             (php-enable-psr2-coding-style)
             ))
+
+;;=====================================================
+;; lua-mode
+;;==============================================
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
 
 ;;=========================
