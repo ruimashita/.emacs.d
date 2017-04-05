@@ -584,6 +584,23 @@
 ;; flycheck
 ;;=====================================================================
 (require 'flycheck)
+
+
+(defun flycheck-may-enable-mode ()
+  "tramp経由で開いたファイルで、flycheckが有効になるように、overrideする"
+  (and (pcase flycheck-global-modes
+         ;; Whether `major-mode' is disallowed by `flycheck-global-modes'
+         (`t t)
+         (`(not . ,modes) (not (memq major-mode modes)))
+         (modes (memq major-mode modes)))
+       (not (or (minibufferp)
+                (eq major-mode 'fundamental-mode)
+                (eq (get major-mode 'mode-class) 'special)
+                (flycheck-ephemeral-buffer-p)
+                (flycheck-encrypted-buffer-p)
+                ))))
+
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (setq flycheck-highlighting-mode 'lines)
