@@ -68,6 +68,7 @@
     haml-mode
     helm
     helm-ag
+    helm-c-yasnippet
     helm-git-files
     julia-mode 
     less-css-mode
@@ -91,7 +92,7 @@
     wgrep
     wgrep-ag
     yaml-mode
-    ;; yasnippet
+    yasnippet
     ))
 
 (let ((not-installed (loop for x in installing-package-list
@@ -576,8 +577,8 @@
 ;;=======================================================================
 ;; yasnippet
 ;;=====================================================================
-;;(require 'yasnippet)
-;;(yas-global-mode 1)
+(require 'yasnippet)
+(yas-global-mode 1)
 
 
 ;;=======================================================================
@@ -1447,3 +1448,7 @@
         helm-source-locate
         )
       )
+
+(require 'helm-c-yasnippet)
+(setq helm-yas-space-match-any-greedy t)
+(global-set-key (kbd "C-c y") 'helm-yas-complete)
