@@ -248,6 +248,9 @@
 
       ;; browserのコマンドをopenにする
       (setq browse-url-generic-program "open")
+
+      ;; fix locale warning. http://qiita.com/ShingoFukuyama/items/cdfa516011171d6aad4a
+      (setenv "LANG" "en_US.UTF-8")
       )
   )
 
