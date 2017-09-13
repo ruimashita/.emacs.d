@@ -70,6 +70,7 @@
     helm-ag
     helm-c-yasnippet
     helm-git-files
+    jedi
     julia-mode 
     less-css-mode
     lua-mode
@@ -766,6 +767,13 @@
 ;;https://github.com/fgallina/python.el
 (require 'python)
 
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+;; (add-hook 'python-mode-hook 'jedi:ac-setup)
+
+(setq jedi:complete-on-dot t)
+
+(setq jedi:get-in-function-call-delay 300)
 
 ;;=======================================================================
 ;; rvm
