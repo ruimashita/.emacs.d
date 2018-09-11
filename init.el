@@ -23,6 +23,9 @@
 ;;                  ))
 ;; )
 
+;; ;; flycheck cpp 
+;; ((c++-mode . ((flycheck-gcc-include-path . ("/home/<user>/<project>/include" "/home/<user>/<project>/include2")))))
+;;
 
 
 ;; for m-x shell-command
@@ -36,6 +39,12 @@
   (server-start))
 ;;  C-c C-cに割り当てる
 (global-set-key (kbd "C-c C-c") 'server-edit)
+
+;; ~/.emacs.d/submodules を再帰的に読み込み
+(let ((default-directory "~/.emacs.d/submodules"))
+  (setq load-path (cons default-directory load-path))
+  (normal-top-level-add-subdirs-to-load-path))
+
 
 ;; packageのリポジトを追加
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -65,6 +74,7 @@
     flycheck-pos-tip
     flycheck-color-mode-line
     go-mode
+    google-c-style 
     haml-mode
     helm
     helm-ag
@@ -919,6 +929,33 @@
 (autoload 'less-css-mode "less-css-mode")
 (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 (add-to-list 'ac-modes 'less-css-mode) ;; auto-complete
+
+
+;;=====================================================
+;; cpp mode
+;;==============================================
+
+; Disable clang check, gcc check works better
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(c/c++-clang)))
+
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+
+(eval-after-load 'flycheck
+  '(progn
+     (require 'flycheck-google-cpplint)
+     ;; Add Google C++ Style checker.
+     ;; In default, syntax checked by Clang and Cppcheck.
+     (flycheck-add-next-checker 'c/c++-gcc
+                           '(warning . c/c++-googlelint))
+     ))
+
+(custom-set-variables
+ '(flycheck-c/c++-googlelint-executable "~/.pyenv/shims/cpplint"))
 
 
 ;;=====================================================
