@@ -89,6 +89,7 @@
     nginx-mode
     php-mode
     polymode
+    poly-R
     popup
     popwin
     python
