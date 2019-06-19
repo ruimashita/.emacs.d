@@ -936,6 +936,11 @@
 ;; cpp mode
 ;;==============================================
 
+(require 'clang-format)
+(global-set-key (kbd "C-c i") 'clang-format-region)
+(global-set-key (kbd "C-c u") 'clang-format-buffer)
+
+
 ; Disable clang check, gcc check works better
 (setq-default flycheck-disabled-checkers
               (append flycheck-disabled-checkers
