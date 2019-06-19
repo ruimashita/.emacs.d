@@ -950,10 +950,8 @@
   '(progn
      (require 'flycheck-google-cpplint)
      ;; Add Google C++ Style checker.
-     ;; In default, syntax checked by Clang and Cppcheck.
-     (flycheck-add-next-checker 'c/c++-gcc
-                           '(warning . c/c++-googlelint))
-     ))
+    (flycheck-add-next-checker 'c/c++-gcc
+                               '(warning . c/c++-googlelint))))
 
 (custom-set-variables
  '(flycheck-c/c++-googlelint-executable "~/.pyenv/shims/cpplint"))
