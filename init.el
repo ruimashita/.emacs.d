@@ -370,12 +370,12 @@
       ))
 
 ;; popwin
-;; (require 'popwin)
-;; (popwin-mode 1)
+(require 'popwin)
+(popwin-mode 1)
 
-;; (push '("*helm for files*" :height 30) popwin:special-display-config)
-;; (push '("*helm M-x*" :height 20) popwin:special-display-config)
-;; (push '("*grep*" :noselect nil) popwin:special-display-config)
+(push '("*helm for files*" :height 30) popwin:special-display-config)
+(push '("*helm M-x*" :height 20) popwin:special-display-config)
+(push '("*grep*" :noselect nil) popwin:special-display-config)
 
 ;; 反対側のウィンドウにいけるように
 (setq windmove-wrap-around t)
