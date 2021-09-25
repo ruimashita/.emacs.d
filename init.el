@@ -64,14 +64,19 @@
   '(
     ;; ここに使っているパッケージを書く。
     actionscript-mode
+    affe
     ag
     apache-mode
     auto-complete
+    clang-format
     coffee-mode
     color-theme-modern
+    consult
     dockerfile-mode
     editorconfig
     elscreen
+    embark
+    embark-consult
     ess
     exec-path-from-shell
     expand-region
@@ -90,8 +95,10 @@
     less-css-mode
     lua-mode
     markdown-mode
+    marginalia
     multiple-cursors
     nginx-mode
+    orderless
     php-mode
     polymode
     poly-R
@@ -103,6 +110,7 @@
     rvm
     scss-mode
     undo-tree
+    vertico
     visual-regexp
     wakatime-mode
     web-mode
