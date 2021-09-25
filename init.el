@@ -205,14 +205,6 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-
-;; kill all buffers
-(defun kill-all-buffers()
-  (interactive)
-  (loop for buffer being the buffers
-        do (kill-buffer buffer)))
-
-
 ;; 言語・文字コード関連の設定
 (set-language-environment 'utf-8)
 (prefer-coding-system 'utf-8)
