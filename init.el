@@ -1084,7 +1084,7 @@
 (if (system-type-is-gnu)
     (progn
 
-      (set-default-font "Ricty-13.5")
+      (set-frame-font "Ricty-13.5")
       (add-to-list 'default-frame-alist '(font . "ricty-13.5"))
       ))
 
