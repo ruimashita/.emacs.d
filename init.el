@@ -280,31 +280,11 @@
 
       ;; gnome clipboard
       (cond (window-system
-             (setq x-select-enable-clipboard t)
+             (setq select-enable-clipboard t)
              ))
 
-      ;; ibus
-      ;; Ref: http://www11.atwiki.jp/s-irie/pages/21.html, http://d.hatena.ne.jp/iRiE/20100530/1275212234
-      ;;
-      ;; (require 'ibus)
-      ;; (add-hook 'after-init-hook 'ibus-mode-on)
-      ;; ;; Toggle input status by alt + SPC
-      ;; (global-set-key "\M- " 'ibus-toggle)
-      ;; ;; すべてのバッファで入力状態を共有
-      ;; (setq ibus-mode-local nil)
-      ;; ;; Busがオンの時のカーソル色
-      ;; (setq ibus-cursor-color "aquamarine")
-      ;; ;; C-SPC は Set Mark , C-/ は Undo に使う. C-zも消す
-      ;; (ibus-define-common-key [?\C-\  ?\C-/ ?\C-z]  nil)
-
-      ;; (require 'mozc)
-      ;; (set-language-environment "Japanese")
-      ;; (setq default-input-method "japanese-mozc")
-      ;; (setq mozc-candidate-style 'echo-area)
-
+      ;; For ubuntu input toggle by Alt + SPC
       (global-set-key (kbd "M-SPC") nil)
-      ;; Toggle input status by alt + SPC
-      ;; (global-set-key "\M- " 'toggle-input-method)
 
       ;;フレームサイズを記憶する
       (defun my-window-size-save ()
@@ -1077,7 +1057,7 @@
 (if (system-type-is-gnu)
     (progn
 
-      (set-default-font "Ricty-13.5")
+      (set-frame-font "Ricty-13.5")
       (add-to-list 'default-frame-alist '(font . "ricty-13.5"))
       ))
 
