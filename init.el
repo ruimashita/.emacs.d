@@ -169,9 +169,6 @@
 ;; スクロールバーを右に表示
 (set-scroll-bar-mode 'right)
 
-;;buffer-menuのキーバインドを設定
-(global-set-key "\C-x\C-b" 'buffer-menu)
-
 ;;ピープ音を消す
 ;;(setq visible-bell t)
 (setq ring-bell-function 'ignore)
