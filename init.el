@@ -369,8 +369,6 @@
 (require 'popwin)
 (popwin-mode 1)
 
-(push '("*helm for files*" :height 30) popwin:special-display-config)
-(push '("*helm M-x*" :height 20) popwin:special-display-config)
 (push '("*grep*" :noselect nil) popwin:special-display-config)
 
 ;; 反対側のウィンドウにいけるように
@@ -1146,35 +1144,161 @@
 ;;=======================================================================
 ;; helm
 ;;=====================================================================
-(require 'helm-config)
-(require 'helm-git-files)
-(helm-mode t)
+;; (require 'helm-config)
+;; (require 'helm-git-files)
+;; (helm-mode t)
 
-(define-key global-map (kbd "M-x") 'helm-M-x)
-(define-key global-map (kbd "C-x b") 'helm-buffers-list)
-(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
-(define-key global-map (kbd "C-;") 'helm-for-files)
+;; (define-key global-map (kbd "M-x") 'helm-M-x)
+;; (define-key global-map (kbd "C-x b") 'helm-buffers-list)
+;; (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+;; (define-key global-map (kbd "C-;") 'helm-for-files)
 
-;; タブ補完
-(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
-(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
+;; ;; タブ補完
+;; (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
+;; (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
 
-(add-to-list 'helm-completing-read-handlers-alist '(write-file . nil))
+;; (add-to-list 'helm-completing-read-handlers-alist '(write-file . nil))
 
-(setq helm-for-files-preferred-list
-      '(
-        helm-source-buffers-list
-        helm-source-recentf
-        ;; helm-git-files:modified-source
-        ;; helm-git-files:untracked-source
-        ;; helm-git-files:all-source
-        helm-source-bookmarks
-        helm-source-file-cache
-        helm-source-files-in-current-dir
-        helm-source-locate
-        )
+;; (setq helm-for-files-preferred-list
+;;       '(
+;;         helm-source-buffers-list
+;;         helm-source-recentf
+;;         ;; helm-git-files:modified-source
+;;         ;; helm-git-files:untracked-source
+;;         ;; helm-git-files:all-source
+;;         helm-source-bookmarks
+;;         helm-source-file-cache
+;;         helm-source-files-in-current-dir
+;;         helm-source-locate
+;;         )
+;;       )
+
+;; (require 'helm-c-yasnippet)
+;; (setq helm-yas-space-match-any-greedy t)
+;; (global-set-key (kbd "C-c y") 'helm-yas-complete)
+
+
+;;=====================================================================
+;; consult
+;;
+;; Consulting completion
+;; https://github.com/minad/consult
+;;=====================================================================
+(require 'consult)
+
+; `consult--source-file` requires recentf-mode
+(setq recentf-max-saved-items 200)
+(recentf-mode t)
+
+(global-set-key (kbd "C-;") 'consult-buffer)
+(global-set-key (kbd "M-y") 'consult-yank-from-kill-ring)
+;; M-s bindings (search-map)
+;; (global-set-key (kbd "M-s g") 'consult-ripgrep)
+;; (global-set-key (kbd "M-s f") 'consult-find)
+
+(defcustom consult-buffer-sources
+  '(consult--source-hidden-buffer
+    consult--source-buffer
+    consult--source-file
+    consult--source-bookmark
+    consult--source-project-buffer
+    consult--source-project-file)
+  "Sources used by `consult-buffer'.
+See `consult--multi' for a description of the source values."
+  :type '(repeat symbol))
+
+
+(setq consult-project-root-function (lambda () (locate-dominating-file default-directory ".git")))
+;; (setq consult-project-root-function
+;;       (lambda ()
+;;         (when-let (project (project-current))
+;;           (car (project-roots project)))))
+
+
+(defcustom consult-locate-args
+  "locate "
+  "Command line arguments for locate, see `consult-locate'.
+The dynamically computed arguments are appended."
+  :type 'string)
+
+
+;;=====================================================================
+;; vertico
+;;
+;; VERTical Interactive COmpletion
+;; https://github.com/minad/vertico
+;;=====================================================================
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(savehist-mode t)
+(require 'vertico)
+(vertico-mode t)
+
+(setq enable-recursive-minibuffers t)
+
+;; 補完候補を最大20行まで表示する
+(setq vertico-count 20)
+
+
+;;=====================================================================
+;; orderless
+;;
+;; orderless completion style.
+;; https://github.com/minad/marginalia
+;;=====================================================================
+(require 'orderless)
+(setq completion-styles '(orderless)
+      completion-category-defaults nil
+      completion-category-overrides '((file (styles partial-completion)))
       )
 
-(require 'helm-c-yasnippet)
-(setq helm-yas-space-match-any-greedy t)
-(global-set-key (kbd "C-c y") 'helm-yas-complete)
+(defun basic-remote-try-completion (string table pred point)
+  (and (vertico--remote-p string)
+       (completion-basic-try-completion string table pred point)))
+(defun basic-remote-all-completions (string table pred point)
+  (and (vertico--remote-p string)
+       (completion-basic-all-completions string table pred point)))
+(add-to-list
+ 'completion-styles-alist
+ '(basic-remote basic-remote-try-completion basic-remote-all-completions nil))
+(setq completion-styles '(orderless)
+      completion-category-overrides '((file (styles basic-remote partial-completion))))
+
+
+;;=====================================================================
+;; marginalia
+;;
+;; annotations of minibuffer.
+;; https://github.com/minad/marginalia
+;;=====================================================================
+(require 'marginalia)
+(marginalia-mode t)
+
+
+;;=====================================================================
+;; embark
+;;
+;; https://github.com/oantolin/embark
+;;=====================================================================
+(require 'embark)
+(global-set-key (kbd "C-.") 'embark-act)
+
+(require 'embark-consult)
+
+
+;;=====================================================================
+;; affe
+;;
+;; https://github.com/minad/affe
+;;=====================================================================
+(require 'affe)
+
+;; M-s bindings (search-map)
+(global-set-key (kbd "M-s g") 'affe-grep)
+(global-set-key (kbd "M-s f") 'affe-find)
+
+
+
+(if (system-type-is-darwin)
+    (progn
+      (setq affe-find-command "gfind -not ( -wholename */.* -prune ) -type f")
+      ))
