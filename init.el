@@ -792,8 +792,6 @@
 (setq jedi:complete-on-dot t)
 ;; (add-hook 'python-mode-hook 'jedi:ac-setup)
 
-(setq jedi:complete-on-dot t)
-
 (setq jedi:get-in-function-call-delay 300)
 
 ;;=======================================================================
