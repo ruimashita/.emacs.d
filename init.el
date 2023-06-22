@@ -91,10 +91,6 @@
     go-mode
     google-c-style 
     haml-mode
-    helm
-    helm-ag
-    helm-c-yasnippet
-    helm-git-files
     jedi
     julia-mode 
     less-css-mode
@@ -1123,43 +1119,6 @@
 ;;=====================================================================
 (require 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
-
-
-;;=======================================================================
-;; helm
-;;=====================================================================
-;; (require 'helm-config)
-;; (require 'helm-git-files)
-;; (helm-mode t)
-
-;; (define-key global-map (kbd "M-x") 'helm-M-x)
-;; (define-key global-map (kbd "C-x b") 'helm-buffers-list)
-;; (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
-;; (define-key global-map (kbd "C-;") 'helm-for-files)
-
-;; ;; タブ補完
-;; (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
-;; (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
-
-;; (add-to-list 'helm-completing-read-handlers-alist '(write-file . nil))
-
-;; (setq helm-for-files-preferred-list
-;;       '(
-;;         helm-source-buffers-list
-;;         helm-source-recentf
-;;         ;; helm-git-files:modified-source
-;;         ;; helm-git-files:untracked-source
-;;         ;; helm-git-files:all-source
-;;         helm-source-bookmarks
-;;         helm-source-file-cache
-;;         helm-source-files-in-current-dir
-;;         helm-source-locate
-;;         )
-;;       )
-
-;; (require 'helm-c-yasnippet)
-;; (setq helm-yas-space-match-any-greedy t)
-;; (global-set-key (kbd "C-c y") 'helm-yas-complete)
 
 
 ;;=====================================================================
