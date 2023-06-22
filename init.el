@@ -28,6 +28,12 @@
 ;;
 
 
+;; Don't assign Ctrl+Wheel to change font size. 
+(global-set-key (kbd "C-<wheel-down>") 'mwheel-scroll)
+(global-set-key (kbd "C-<wheel-up>") 'mwheel-scroll)
+
+
+
 ;; for m-x shell-command
 (setq shell-file-name "/bin/zsh")
 ;; for m-x shell
