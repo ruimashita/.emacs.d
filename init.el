@@ -1135,9 +1135,10 @@
 
 (global-set-key (kbd "C-;") 'consult-buffer)
 (global-set-key (kbd "M-y") 'consult-yank-from-kill-ring)
+
 ;; M-s bindings (search-map)
-;; (global-set-key (kbd "M-s g") 'consult-ripgrep)
-;; (global-set-key (kbd "M-s f") 'consult-find)
+(global-set-key (kbd "M-s g") 'consult-ripgrep)
+(global-set-key (kbd "M-s f") 'consult-find)
 
 (defcustom consult-buffer-sources
   '(consult--source-hidden-buffer
@@ -1236,8 +1237,12 @@ The dynamically computed arguments are appended."
 (require 'affe)
 
 ;; M-s bindings (search-map)
-(global-set-key (kbd "M-s g") 'affe-grep)
-(global-set-key (kbd "M-s f") 'affe-find)
+;; (global-set-key (kbd "M-s g") 'affe-grep)
+;; (global-set-key (kbd "M-s f") 'affe-find)
+
+
+
+
 
 
 
