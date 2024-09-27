@@ -79,7 +79,6 @@
     consult
     dockerfile-mode
     editorconfig
-    elscreen
     embark
     embark-consult
     ess
@@ -369,15 +368,13 @@
 
 
 ;;=======================================================================
-;; elscreen
+;; tab-bar-mode
 ;;=====================================================================
-(setq elscreen-prefix-key "\C-t")
-(require 'elscreen)
-(elscreen-start)
-(global-set-key "\C-t" 'elscreen-clone)
-;;(global-set-key "\C-zk" 'elscreen-kill)
-(global-set-key [(C-tab)] 'elscreen-next)
-(global-set-key [(C-S-iso-lefttab)] 'elscreen-previous)
+(use-package tab-bar
+  :ensure t
+  :bind
+  ("C-t" . tab-bar-new-tab)
+)
 
 
 ;;=======================================================================
