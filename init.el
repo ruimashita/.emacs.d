@@ -94,6 +94,7 @@
     jedi
     julia-mode 
     less-css-mode
+    lsp-mode
     lua-mode
     markdown-mode
     marginalia
@@ -650,6 +651,15 @@
 (require 'expand-region)
 (global-set-key (kbd "C-@") 'er/expand-region)
 (global-set-key (kbd "C-M-@") 'er/contract-region) ;; リージョンを狭める
+
+
+;; =======================================================================
+;; lsp-mode
+;; =======================================================================
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (typescript-mode . lsp-deferred))
 
 
 ;;=========================
