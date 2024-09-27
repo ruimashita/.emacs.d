@@ -110,6 +110,7 @@
     rainbow-mode
     rvm
     scss-mode
+    use-package
     undo-tree
     vertico
     visual-regexp
@@ -707,6 +708,15 @@
 ;; ((js-mode
 ;;  (flycheck-checker . javascript-eslint)
 ;;  ))
+
+
+;;=================================================
+;; typescript-mode
+;;=====================================================
+(use-package typescript-mode
+             :config
+             (setq typescript-indent-level 2)
+             )
 
 ;;=================================================
 ;; ruby-mode
