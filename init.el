@@ -104,7 +104,6 @@
     polymode
     poly-R
     popup
-    popwin
     python
     quickrun
     rainbow-mode
@@ -348,11 +347,6 @@
       (add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
       ))
 
-;; popwin
-(require 'popwin)
-(popwin-mode 1)
-
-(push '("*grep*" :noselect nil) popwin:special-display-config)
 
 ;; 反対側のウィンドウにいけるように
 (setq windmove-wrap-around t)
@@ -631,7 +625,6 @@
 (global-set-key (kbd "<f5>") 'quickrun)
 (global-set-key (kbd "M-<f5>") 'quickrun-compile-only)
 
-(push '("*quickrun*") popwin:special-display-config)
 
 ;; rmdをdockerで実行して、output.htmlを吐き出し、ブラウザでみる。
 (quickrun-add-command "rmd/docker"
