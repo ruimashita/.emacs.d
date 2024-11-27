@@ -1078,25 +1078,17 @@
     (progn
 
       (set-face-attribute 'default nil
-                          :family "Ricty"
-                          :height 135)
+                          :family "HackGen Console NF"
+                          :height 140)
       (set-fontset-font (frame-parameter nil 'font)
                         'japanese-jisx0208
-                        (cons "Ricty" "iso10646-1"))
+                        (cons "HackGen Console NF" "iso10646-1"))
       (set-fontset-font (frame-parameter nil 'font)
                         'japanese-jisx0212
-                        (cons "Ricty" "iso10646-1"))
+                        (cons "HackGen Console NF" "iso10646-1"))
       (set-fontset-font (frame-parameter nil 'font)
                         'katakana-jisx0201
-                        (cons "Ricty" "iso10646-1"))
-
-      ;; (create-fontset-from-ascii-font "Ricty-13.5:weight=normal:slant=normal" nil "ricty")
-      ;; (set-fontset-font "fontset-ricty"
-      ;;                   'unicode
-      ;;                   (font-spec :family "Ricty" :size 13.5)
-      ;;                   nil
-      ;;                   'append)
-      ;; (add-to-list 'default-frame-alist '(font . "fontset-ricty"))
+                        (cons "HackGen Console NF" "iso10646-1"))
       ))
 
 ;;=======================================================================
