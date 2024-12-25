@@ -109,6 +109,7 @@
     rainbow-mode
     rvm
     scss-mode
+    typescript-mode
     use-package
     undo-tree
     vertico
