@@ -62,7 +62,7 @@
 
 
 ;; package auto install
-(require 'cl)
+(require 'cl-lib)
 (require 'eieio)
 (package-initialize)
 (defvar installing-package-list
@@ -123,9 +123,9 @@
     yasnippet-snippets
     ))
 
-(let ((not-installed (loop for x in installing-package-list
-                           when (not (package-installed-p x))
-                          collect x)))
+(let ((not-installed (cl-loop for x in installing-package-list
+                              when (not (package-installed-p x))
+                              collect x)))
   (when not-installed
     (package-refresh-contents)
     (dolist (pkg not-installed)
