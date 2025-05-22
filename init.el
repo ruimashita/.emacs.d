@@ -107,6 +107,7 @@
     python
     quickrun
     rainbow-mode
+    ruff-format
     rvm
     scss-mode
     typescript-mode
@@ -781,11 +782,15 @@
 ;;https://github.com/fgallina/python.el
 (require 'python)
 
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
 ;; (add-hook 'python-mode-hook 'jedi:ac-setup)
 
-(setq jedi:get-in-function-call-delay 300)
+;; (setq jedi:get-in-function-call-delay 300)
+
+;; auto Ruff format
+ (require 'ruff-format)
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 
 ;;=======================================================================
 ;; rvm
