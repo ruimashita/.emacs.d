@@ -107,8 +107,8 @@
     python
     quickrun
     rainbow-mode
+    ruff-format
     rvm
-    scss-mode
     typescript-mode
     use-package
     undo-tree
@@ -658,8 +658,8 @@
 ;;=================================
 (add-hook 'sh-mode-hook
           (lambda ()
-            (setq sh-basic-offset 2)
-            (setq sh-indentation 2)
+            (setq sh-basic-offset 4)
+            (setq sh-indentation 4)
             )
           )
 
@@ -781,11 +781,15 @@
 ;;https://github.com/fgallina/python.el
 (require 'python)
 
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
 ;; (add-hook 'python-mode-hook 'jedi:ac-setup)
 
-(setq jedi:get-in-function-call-delay 300)
+;; (setq jedi:get-in-function-call-delay 300)
+
+;; auto Ruff format
+ (require 'ruff-format)
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 
 ;;=======================================================================
 ;; rvm
@@ -908,22 +912,6 @@
 
 
 ;;=======================================================================
-;; scss-mode
-;;=====================================================================
-(require 'scss-mode)
-(autoload 'scss-mode "scss-mode")
-(add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
-(add-hook 'scss-mode-hook 'ac-css-mode-setup)
-(add-hook 'scss-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode t)
-            (setq css-indent-offset 4)
-            (setq scss-compile-at-save nil)
-            ))
-(add-to-list 'ac-modes 'scss-mode) ;; auto-complete
-
-
-;;=======================================================================
 ;; less-css-mode
 ;;=====================================================================
 (require 'less-css-mode)
@@ -1028,7 +1016,6 @@
 ;;=================================
 (require 'rainbow-mode)
 (add-hook 'css-mode-hook 'rainbow-mode)
-(add-hook 'scss-mode-hook 'rainbow-mode)
 (add-hook 'less-css-mode-hook 'rainbow-mode)
 
 
