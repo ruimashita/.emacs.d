@@ -2,6 +2,7 @@
 (setq debug-on-error nil)
 
 
+
 ;; .dir-locals.elの設定例
 ;; プロジェクトのトップディレクトリに .dir-locals.elを置く
 ;; (
@@ -16,12 +17,6 @@
 ;;                      )
 ;;                    ))
 ;;          ))
-
-;;  ;; flake8rcの設定
-;;  (python-mode . (
-;;                  (flycheck-flake8rc . "/home/takuya/Sites/tetote/setup.cfg")
-;;                  ))
-;; )
 
 ;; ;; flycheck cpp 
 ;; ((c++-mode . ((flycheck-gcc-include-path . ("/home/<user>/<project>/include" "/home/<user>/<project>/include2")))))
@@ -781,15 +776,22 @@
 ;;https://github.com/fgallina/python.el
 (require 'python)
 
-;; (add-hook 'python-mode-hook 'jedi:setup)
-;; (setq jedi:complete-on-dot t)
-;; (add-hook 'python-mode-hook 'jedi:ac-setup)
-
-;; (setq jedi:get-in-function-call-delay 300)
-
 ;; auto Ruff format
- (require 'ruff-format)
+(require 'ruff-format)
 (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+
+
+;; LSP が有効になった後に Flycheck の設定
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'python-mode)
+              ;; LSP を最初のチェッカーに設定
+              (setq-local flycheck-checker 'lsp)
+              ;; LSP -> ruff -> mypy の順に設定
+              (flycheck-add-next-checker 'lsp 'python-ruff)
+              (flycheck-add-next-checker 'python-ruff 'python-mypy)
+)))
+
 
 ;;=======================================================================
 ;; rvm
