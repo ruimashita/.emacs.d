@@ -67,11 +67,11 @@
     affe
     ag
     apache-mode
-    auto-complete
     clang-format
     coffee-mode
     color-theme-modern
     consult
+    corfu
     dockerfile-mode
     editorconfig
     embark
@@ -492,22 +492,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default c-basic-offset 4)
 
-;;=======================================================================
-;; auto-complete
-;;=====================================================================
-;;(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
-
-;; 補完メニュー表示時のキーマップを有効にする
-(setq ac-use-menu-map t)
-
-;; (global-auto-complete-mode t)
-(ac-set-trigger-key "TAB")
-
-;; 大文字小文字を区別しない
-(setq ac-ignore-case t)
-(put 'downcase-region 'disabled nil)
 
 ;;=======================================================================
 ;; editorconfig
@@ -639,14 +623,110 @@
 (global-set-key (kbd "C-M-@") 'er/contract-region) ;; リージョンを狭める
 
 
+;;=====================================================================
+;; cape
+;;
+;; https://github.com/minad/cape
+;;=====================================================================
+(use-package cape
+  :init
+  ;; (add-hook 'completion-at-point-functions #'cape-abbrev)
+  ;; (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-emoji)
+  ;; (add-hook 'completion-at-point-functions #'cape-line)
+  ;; (add-hook 'completion-at-point-functions #'cape-keyword)
+  ;; (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  ;; (add-hook 'completion-at-point-functions #'cape-history)
+  ;;
+  ;; Ref: https://qiita.com/nobuyuki86/items/122e85b470b361ded0b4#cape
+  ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-buster)
+  ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-nonexclusive)
+  ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-noninterruptible)
+  )
+
+
+;;=====================================================================
+;; corfu
+;;
+;; https://github.com/minad/corfu
+;;=====================================================================
+(use-package corfu
+  ;; Optional customizations
+  :custom
+  (corfu-cycle t)                   ;; Enable cycling for `corfu-next/previous'
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  (corfu-preselect 'prompt)         ;; Preselect the prompt. 明示的に候補を選択して補完する
+  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  (corfu-auto t)
+  (corfu-auto-delay  0) ;; 文字列入力してから補完候補が表示されるまでのディレイ
+  (corfu-popupinfo-delay 5) ;; 補完候補の関数名の横に、さらに説明文がポップアップされるまでのディレイ
+  (corfu-auto-prefix 1) ;; 文字列入力の何文字目から補完候補を表示するか
+
+  ;; TAB-and-Go customizations
+  ;; Use TAB for cycling, default is `corfu-complete'.
+  :bind
+  (:map corfu-map
+        ("SPC" . corfu-insert-separator) ;; 補完時に SPC をセパレータとして orderless 補完できる。
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+
+  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  :init
+
+  ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
+  ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
+  ;; variable `global-corfu-modes' to exclude certain modes.
+  (global-corfu-mode)
+
+  ;; Enable optional extension modes:
+  (corfu-history-mode)
+  (corfu-popupinfo-mode)
+  )
+
+
+;; A few more useful configurations...
+(use-package emacs
+  :custom
+  ;; TAB cycle if there are only few candidates
+  ;; (completion-cycle-threshold 3)
+
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (tab-always-indent 'complete)
+
+  ;; Emacs 30 and newer: Disable Ispell completion function.
+  ;; Try `cape-dict' as an alternative.
+  (text-mode-ispell-word-completion nil)
+
+  ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+  ;; commands are hidden, since they are not used via M-x. This setting is
+  ;; useful beyond Corfu.
+  ;; (read-extended-command-predicate #'command-completion-default-include-p)
+
+
+  )
+
+
 ;; =======================================================================
 ;; lsp-mode
 ;; =======================================================================
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
-  :hook (typescript-mode . lsp-deferred))
-
+  :hook (
+         (typescript-mode . lsp-deferred)
+         (python-mode . lsp-deferred)
+         )
+)
 
 ;;=========================
 ;; shell
@@ -879,7 +959,6 @@
       (indent-line-to (- (current-indentation) coffee-tab-width)))))
 
 
-(add-to-list 'ac-modes 'coffee-mode)
 ;;=======================================================================
 ;; haml-mode
 ;;=====================================================================
@@ -896,7 +975,6 @@
 ;;(require 'actionscript-mode)
 (autoload 'actionscript-mode "actionscript-mode" "Major mode for actionscript." t)
 (add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
-(add-to-list 'ac-modes 'actionscript-mode) ;; auto-complete
 (add-hook 'actionscript-mode-hook
           '(lambda ()
              (setq tab-width 4)
@@ -919,7 +997,6 @@
 (require 'less-css-mode)
 (autoload 'less-css-mode "less-css-mode")
 (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
-(add-to-list 'ac-modes 'less-css-mode) ;; auto-complete
 
 
 ;;=====================================================
@@ -947,9 +1024,6 @@
      ;; Add Google C++ Style checker.
     (flycheck-add-next-checker 'c/c++-gcc
                                '(warning . c/c++-googlelint))))
-
-(custom-set-variables
- '(flycheck-c/c++-googlelint-executable "~/.pyenv/shims/cpplint"))
 
 
 ;;=====================================================
@@ -987,7 +1061,7 @@
 (require 'web-mode)
 (add-hook 'web-mode-hook
           '(lambda ()
-             (setq indent-tabs-mode t)
+             (setq indent-tabs-mode nil)
              (setq web-mode-markup-indent-offset 4)
              (setq web-mode-css-indent-offset 4)
              (setq web-mode-code-indent-offset 4)
@@ -1009,8 +1083,6 @@
         ("django" . "DOLSTA.*?\\.html$") ;; DOLSTAのhtmlはdjango
         )
       )
-
-(add-to-list 'ac-modes 'web-mode)
 
 
 ;;=========================
