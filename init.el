@@ -782,7 +782,33 @@
           (lambda ()
             (setq js-indent-level 4)
             )
-)
+          )
+;; https://qiita.com/ybiquitous/items/4387bba133180bcfdb69
+(defun my/find-npm-command (command)
+  (let* ((dirname "node_modules")
+          (root (locate-dominating-file default-directory dirname)))
+    (if root (concat
+               (file-name-as-directory root)
+               (file-name-as-directory dirname)
+               (file-name-as-directory ".bin")
+               command))))
+
+(defun my/executable-find (command)
+  (let* ((file-path (my/find-npm-command command)))
+    (if (and file-path (file-executable-p file-path))
+      file-path (executable-find command))))
+
+(setq flycheck-executable-find #'my/executable-find)
+
+;; LSP が有効になった後に Flycheck の設定
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'js-mode)
+              ;; LSP を最初のチェッカーに設定
+              (setq-local flycheck-checker 'lsp)
+              ;; LSP -> eslint の順に設定
+              (flycheck-add-next-checker 'lsp 'javascript-eslint)
+              )))
 
 ;; プロジェクトのトップディレクトリに .dir-locals.elを置く
 ;; flyacheckでeslintを使う設定
