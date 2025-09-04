@@ -67,6 +67,7 @@
     affe
     ag
     apache-mode
+    cape
     clang-format
     coffee-mode
     color-theme-modern
