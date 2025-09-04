@@ -631,11 +631,11 @@
 (use-package cape
   :init
   ;; (add-hook 'completion-at-point-functions #'cape-abbrev)
-  ;; (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  ;; (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-emoji)
   ;; (add-hook 'completion-at-point-functions #'cape-line)
-  ;; (add-hook 'completion-at-point-functions #'cape-keyword)
+  (add-hook 'completion-at-point-functions #'cape-keyword)
   ;; (add-hook 'completion-at-point-functions #'cape-elisp-block)
   ;; (add-hook 'completion-at-point-functions #'cape-history)
   ;;
@@ -644,6 +644,7 @@
   ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-nonexclusive)
   ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-noninterruptible)
   )
+
 
 
 ;;=====================================================================
@@ -662,7 +663,7 @@
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   (corfu-auto t)
   (corfu-auto-delay  0) ;; 文字列入力してから補完候補が表示されるまでのディレイ
-  (corfu-popupinfo-delay 5) ;; 補完候補の関数名の横に、さらに説明文がポップアップされるまでのディレイ
+  (corfu-popupinfo-delay 1) ;; 補完候補の関数名の横に、さらに説明文がポップアップされるまでのディレイ
   (corfu-auto-prefix 1) ;; 文字列入力の何文字目から補完候補を表示するか
 
   ;; TAB-and-Go customizations
@@ -679,9 +680,7 @@
   ;; :hook ((prog-mode . corfu-mode)
   ;;        (shell-mode . corfu-mode)
   ;;        (eshell-mode . corfu-mode))
-
   :init
-
   ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
   ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
   ;; variable `global-corfu-modes' to exclude certain modes.
@@ -711,8 +710,6 @@
   ;; commands are hidden, since they are not used via M-x. This setting is
   ;; useful beyond Corfu.
   ;; (read-extended-command-predicate #'command-completion-default-include-p)
-
-
   )
 
 
@@ -722,10 +719,18 @@
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
-  :hook (
-         (typescript-mode . lsp-deferred)
-         (python-mode . lsp-deferred)
-         )
+  ;; Settings from https://github.com/minad/corfu/wiki
+  :custom
+  (lsp-completion-provider :none) ;; we use Corfu!
+  :init
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))) ;; Configure orderless for Corfu
+  :hook
+  (typescript-mode . lsp-deferred)
+  (python-mode . lsp-deferred)
+  (js-mode . lsp-deferred)
+  (lsp-completion-mode . my/lsp-mode-setup-completion)
 )
 
 ;;=========================
