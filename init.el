@@ -535,14 +535,19 @@
 ;;=======================================================================
 ;; markdown-mode
 ;;=====================================================================
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-;; (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-(setq markdown-xhtml-header-content "<meta charset=\"utf-8\" />
-<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\" /> ")
+(use-package markdown-mode
+  :ensure t
+  :mode
+  ("README\\.md\\'" . gfm-mode)
+  ("\\.text\\'" . markdown-mode)
+  :init
+  ;; need to `brew install comrak`
+  (setq markdown-command "comrak")
+  :custom
+  ;; markdown-preview (C-c C-C p)
+  (markdown-xhtml-header-content "<meta charset=\"utf-8\" />
+  <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB\" crossorigin=\"anonymous\">")
+  )
 
 
 ;;=======================================================================
