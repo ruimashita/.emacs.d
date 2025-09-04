@@ -1256,13 +1256,11 @@ The dynamically computed arguments are appended."
 ;; orderless
 ;;
 ;; orderless completion style.
-;; https://github.com/minad/marginalia
+;; https://github.com/oantolin/orderless
 ;;=====================================================================
 (require 'orderless)
-(setq completion-styles '(orderless)
-      completion-category-defaults nil
-      completion-category-overrides '((file (styles partial-completion)))
-      )
+(setq completion-styles '(orderless basic)
+      completion-category-overrides '((file (styles basic partial-completion))))
 
 (defun basic-remote-try-completion (string table pred point)
   (and (vertico--remote-p string)
