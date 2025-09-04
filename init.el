@@ -891,24 +891,23 @@
 ;; python-mode
 ;;=====================================================================
 ;;https://github.com/fgallina/python.el
-(require 'python)
+(use-package python
+  :hook
+  ;; LSP が有効になった後に Flycheck の設定
+  (lsp-managed-mode . (lambda ()
+                        (when (derived-mode-p 'python-mode)
+                          ;; LSP を最初のチェッカーに設定
+                          (setq-local flycheck-checker 'lsp)
+                          ;; LSP -> ruff -> mypy の順に設定
+                          (flycheck-add-next-checker 'lsp 'python-ruff)
+                          (flycheck-add-next-checker 'python-ruff 'python-mypy))))
+  )
 
 ;; auto Ruff format
-(require 'ruff-format)
-(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
-
-
-;; LSP が有効になった後に Flycheck の設定
-(add-hook 'lsp-managed-mode-hook
-          (lambda ()
-            (when (derived-mode-p 'python-mode)
-              ;; LSP を最初のチェッカーに設定
-              (setq-local flycheck-checker 'lsp)
-              ;; LSP -> ruff -> mypy の順に設定
-              (flycheck-add-next-checker 'lsp 'python-ruff)
-              (flycheck-add-next-checker 'python-ruff 'python-mypy)
-)))
-
+(use-package ruff-format
+  :hook
+  (python-mode . ruff-format-on-save-mode)
+  )
 
 ;;=======================================================================
 ;; rvm
