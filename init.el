@@ -732,11 +732,12 @@
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
           '(orderless))) ;; Configure orderless for Corfu
-  :hook
-  (typescript-mode . lsp-deferred)
-  (python-mode . lsp-deferred)
-  (js-mode . lsp-deferred)
-  (lsp-completion-mode . my/lsp-mode-setup-completion)
+  :hook (
+         (typescript-mode . lsp-deferred)
+         (python-mode . lsp-deferred)
+         (js-mode . lsp-deferred)
+         (lsp-completion-mode . my/lsp-mode-setup-completion)
+         )
 )
 
 ;;=========================
