@@ -1235,23 +1235,29 @@
 (recentf-mode t)
 
 (global-set-key (kbd "C-;") 'consult-buffer)
-(global-set-key (kbd "M-y") 'consult-yank-from-kill-ring)
+;; (global-set-key (kbd "M-y") 'consult-yank-from-kill-ring)
 
 ;; M-s bindings (search-map)
 (global-set-key (kbd "M-s g") 'consult-ripgrep)
 (global-set-key (kbd "M-s f") 'consult-find)
 
-(defcustom consult-buffer-sources
-  '(consult--source-hidden-buffer
-    consult--source-buffer
-    consult--source-file
-    consult--source-bookmark
-    consult--source-project-buffer
-    consult--source-project-file)
-  "Sources used by `consult-buffer'.
-See `consult--multi' for a description of the source values."
-  :type '(repeat symbol))
-
+;; https://qiita.com/__hage/items/b1d99b139e3ffe7456c3
+(defvar my-consult--source-project-file
+  `(:name "Project Whole File"
+          :narrow   (?p . "Project")
+          :category file
+          :face     consult-file
+          :history  file-name-history
+          :state    ,#'consult--file-state
+          :new      ,#'consult--file-action
+          :items
+          ,(lambda ()
+             (let ((current-project (project-current)))
+               (if current-project
+                   (project-files current-project)
+                 nil))))
+  "Project file candidate source for `project-files'.")
+(add-to-list 'consult-buffer-sources 'my-consult--source-project-file t)
 
 (setq consult-project-root-function (lambda () (locate-dominating-file default-directory ".git")))
 ;; (setq consult-project-root-function
@@ -1260,11 +1266,7 @@ See `consult--multi' for a description of the source values."
 ;;           (car (project-roots project)))))
 
 
-(defcustom consult-locate-args
-  "locate "
-  "Command line arguments for locate, see `consult-locate'.
-The dynamically computed arguments are appended."
-  :type 'string)
+(setq consult-locate-args "locate")
 
 
 ;;=====================================================================
