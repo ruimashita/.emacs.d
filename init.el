@@ -110,6 +110,7 @@
     undo-tree
     vertico
     visual-regexp
+    vterm
     wakatime-mode
     web-mode
     wgrep
