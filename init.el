@@ -1178,17 +1178,17 @@
     (progn
 
       (set-face-attribute 'default nil
-                          :family "HackGen Console NF"
+                          :family "PlemolJP Console NF"
                           :height 140)
       (set-fontset-font (frame-parameter nil 'font)
                         'japanese-jisx0208
-                        (cons "HackGen Console NF" "iso10646-1"))
+                        (cons "PlemolJP Console NF" "iso10646-1"))
       (set-fontset-font (frame-parameter nil 'font)
                         'japanese-jisx0212
-                        (cons "HackGen Console NF" "iso10646-1"))
+                        (cons "PlemolJP Console NF" "iso10646-1"))
       (set-fontset-font (frame-parameter nil 'font)
                         'katakana-jisx0201
-                        (cons "HackGen Console NF" "iso10646-1"))
+                        (cons "PlemolJP Console NF" "iso10646-1"))
       ))
 
 ;;=======================================================================
