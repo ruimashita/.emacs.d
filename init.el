@@ -90,6 +90,7 @@
     julia-mode 
     less-css-mode
     lsp-mode
+    lsp-pyright
     lua-mode
     markdown-mode
     marginalia
@@ -735,7 +736,7 @@
           '(orderless))) ;; Configure orderless for Corfu
   :hook (
          (typescript-mode . lsp-deferred)
-         (python-mode . lsp-deferred)
+         ;; (python-mode . lsp-deferred) 別途 lsp-pyright で設定
          (js-mode . lsp-deferred)
          (lsp-completion-mode . my/lsp-mode-setup-completion)
          )
@@ -910,6 +911,13 @@
   :hook
   (python-mode . ruff-format-on-save-mode)
   )
+
+;; lsp-pyright
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp-deferred))))
 
 ;;=======================================================================
 ;; rvm
