@@ -738,6 +738,7 @@
          (typescript-mode . lsp-deferred)
          ;; (python-mode . lsp-deferred) 別途 lsp-pyright で設定
          (js-mode . lsp-deferred)
+         (ruby-mode . lsp-deferred)
          (lsp-completion-mode . my/lsp-mode-setup-completion)
          )
 )
