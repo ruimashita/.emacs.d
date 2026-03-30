@@ -730,6 +730,7 @@
   ;; Settings from https://github.com/minad/corfu/wiki
   :custom
   (lsp-completion-provider :none) ;; we use Corfu!
+  (lsp-disabled-clients '(rubocop-ls)) ;; ruby-lsp がインストールされていても rubocop が優先されてしまうので、無効にします
   :init
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
