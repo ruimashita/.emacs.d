@@ -908,6 +908,9 @@
   ;; LSP が有効になった後に Flycheck の設定
   (lsp-managed-mode . (lambda ()
                         (when (derived-mode-p 'python-mode)
+                          ;; mypy でも Pyright が検出したプロジェクトの Python 環境を使う
+                          (setq-local flycheck-python-mypy-python-executable
+                                      (lsp-pyright-locate-python))
                           ;; LSP を最初のチェッカーに設定
                           (setq-local flycheck-checker 'lsp)
                           ;; LSP -> ruff -> mypy の順に設定
