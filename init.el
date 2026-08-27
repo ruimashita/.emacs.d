@@ -86,7 +86,6 @@
     go-mode
     google-c-style 
     haml-mode
-    jedi
     julia-mode 
     less-css-mode
     lsp-mode
