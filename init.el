@@ -459,21 +459,22 @@
 
 
 ;;=======================================================================
-;; session
+;; savehist
 ;;=====================================================================
-;; kill-ringやミニバッファで過去に開いたファイルなどの履歴を保存する
-(when (require 'session nil t)
-  (setq session-initialize '(de-saveplace session keys menus places)
-        session-globals-include '((kill-ring 50)
-                                  (session-file-alist 500 t)
-                                  (file-name-history 10000)))
-  ;; これがないと file-name-history に500個保存する前に max-string に達する
-  (setq session-globals-max-string 100000000)
-  ;; デフォルトでは30!
-  (setq history-length t)
-  (add-hook 'after-init-hook 'session-initialize)
-  ;; 前回閉じたときの位置にカーソルを復帰
-  (setq session-undo-check -1))
+;; kill-ring の直近50件をセッション間で保存する
+(setq savehist-additional-variables '((kill-ring . 50)))
+;; ファイル名の入力履歴を最大10000件保存する
+(put 'file-name-history 'history-length 10000)
+;; ミニバッファ履歴と追加指定した kill-ring の保存を有効にする
+(savehist-mode t)
+
+;;=======================================================================
+;; save-place
+;;=====================================================================
+;; カーソル位置を保存するファイル数を最大500件にする
+(setq save-place-limit 500)
+;; ファイルを開いたときに前回のカーソル位置を復元する
+(save-place-mode t)
 
 
 ;;==============================================
@@ -1295,8 +1296,6 @@
 ;; VERTical Interactive COmpletion
 ;; https://github.com/minad/vertico
 ;;=====================================================================
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(savehist-mode t)
 (require 'vertico)
 (vertico-mode t)
 
