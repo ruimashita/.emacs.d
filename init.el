@@ -1075,13 +1075,14 @@
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
-
-(eval-after-load 'flycheck
-  '(progn
-     (require 'flycheck-google-cpplint)
-     ;; Add Google C++ Style checker.
-    (flycheck-add-next-checker 'c/c++-gcc
-                               '(warning . c/c++-googlelint))))
+; Need `pipx install cpplint`
+(use-package flycheck-google-cpplint
+  :ensure t
+  :after flycheck
+  :config
+  ;; Add Google C++ Style checker.
+  (flycheck-add-next-checker 'c/c++-gcc
+                             '(warning . c/c++-googlelint)))
 
 
 ;;=====================================================
