@@ -1317,20 +1317,11 @@
 ;; https://github.com/oantolin/orderless
 ;;=====================================================================
 (require 'orderless)
-(setq completion-styles '(orderless basic)
-      completion-category-overrides '((file (styles basic partial-completion))))
 
-(defun basic-remote-try-completion (string table pred point)
-  (and (vertico--remote-p string)
-       (completion-basic-try-completion string table pred point)))
-(defun basic-remote-all-completions (string table pred point)
-  (and (vertico--remote-p string)
-       (completion-basic-all-completions string table pred point)))
-(add-to-list
- 'completion-styles-alist
- '(basic-remote basic-remote-try-completion basic-remote-all-completions nil))
-(setq completion-styles '(orderless)
-      completion-category-overrides '((file (styles basic-remote partial-completion))))
+;; 通常の補完は orderless、候補がなければ basic を使う。
+;; ファイル補完は orderless → basic → partial-completion の順に試す。
+(setq completion-styles '(orderless basic)
+      completion-category-overrides '((file (styles orderless basic partial-completion))))
 
 
 ;;=====================================================================
