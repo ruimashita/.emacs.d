@@ -545,7 +545,10 @@
   ("\\.text\\'" . markdown-mode)
   :init
   ;; need to `brew install comrak`
-  (setq markdown-command "comrak")
+  ;; 表・取り消し線・自動リンク・タスクリスト・数式を有効にする。
+  ;; ハイライト時も Mermaid の言語クラスを残すため、--gfm は使わず個別指定する。
+  (setq markdown-command
+        "comrak -e table,strikethrough,autolink,tasklist,math-dollars")
   :custom
   ;; markdown-preview (C-c C-C p)
   (markdown-xhtml-header-content "
@@ -553,7 +556,24 @@
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
 <link
   rel=\"stylesheet\"
-  href=\"https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css\" >"
+  href=\"https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css\" >
+<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css\" >
+<script type=\"module\">
+  // comrak が出力した数式 `<span data-math-style=...>` を KaTeX で描画する。
+  import katex from 'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.mjs';
+  for (const math of document.querySelectorAll('[data-math-style]')) {
+    katex.render(math.textContent, math, {
+      displayMode: math.dataset.mathStyle === 'display'
+    });
+  }
+</script>
+<script type=\"module\">
+  // Mermaid のコードブロック ```mermaid ... ``` を図に変換する。
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  const diagrams = document.querySelectorAll('code.language-mermaid');
+  mermaid.initialize({ startOnLoad: false });
+  await mermaid.run({ nodes: diagrams });
+</script>"
                                  )
   (markdown-xhtml-body-preamble "<main class=\"container\">")
   (markdown-xhtml-body-epilogue "</main>")
