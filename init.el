@@ -74,7 +74,6 @@
     consult
     corfu
     dockerfile-mode
-    editorconfig
     embark
     embark-consult
     ess
@@ -500,8 +499,10 @@
 ;;=======================================================================
 ;; editorconfig
 ;;=====================================================================
-(require 'editorconfig)
-(editorconfig-mode 1)
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
 
 ;;=======================================================================
