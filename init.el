@@ -1285,12 +1285,9 @@
   "Project file candidate source for `project-files'.")
 (add-to-list 'consult-buffer-sources 'my-consult--source-project-file t)
 
-(setq consult-project-root-function (lambda () (locate-dominating-file default-directory ".git")))
-;; (setq consult-project-root-function
-;;       (lambda ()
-;;         (when-let (project (project-current))
-;;           (car (project-roots project)))))
-
+;; 現在のディレクトリから親をたどり、.git があるディレクトリを Consult のプロジェクトルートにする。
+(setq consult-project-function
+      (lambda (_) (locate-dominating-file default-directory ".git")))
 
 (setq consult-locate-args "locate")
 
