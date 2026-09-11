@@ -78,7 +78,6 @@
     embark
     embark-consult
     ess
-    exec-path-from-shell
     expand-region
     flycheck
     flycheck-pos-tip
@@ -215,8 +214,10 @@
 (set-selection-coding-system 'utf-8)
 
 ;; path を設定
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 ;; major-modeを変更したあとも、.dir-locals.elの値を有効にする
 (add-hook 'after-change-major-mode-hook 'hack-local-variables)
