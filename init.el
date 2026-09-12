@@ -103,7 +103,6 @@
     vterm
     wakatime-mode
     web-mode
-    wgrep-ag
     yaml-mode
     yasnippet
     yasnippet-snippets
@@ -515,9 +514,10 @@
   ;; 検索結果からファイルを開く際、同じウィンドウを使う。
   (setq ag-reuse-window t))
 
-;; wgrep
-(autoload 'wgrep-ag-setup "wgrep-ag")
-(add-hook 'ag-mode-hook 'wgrep-ag-setup)
+(use-package wgrep-ag
+  :ensure t
+  ;; ag の検索結果を編集できるようにする。
+  :hook (ag-mode . wgrep-ag-setup))
 
 
 ;;=======================================================================
