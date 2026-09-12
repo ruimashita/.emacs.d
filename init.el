@@ -97,7 +97,6 @@
     rvm
     typescript-mode
     use-package
-    undo-tree
     vertico
     visual-regexp
     vterm
@@ -523,8 +522,11 @@
 ;;=======================================================================
 ;; undo-tree
 ;;=====================================================================
-(require 'undo-tree)
-(global-undo-tree-mode)
+(use-package undo-tree
+  :ensure t
+  :config
+  ;; 各バッファで undo-tree を有効にする。
+  (global-undo-tree-mode))
 
 
 ;;=======================================================================
