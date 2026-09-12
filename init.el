@@ -59,7 +59,6 @@
     ;; ここに使っているパッケージを書く。
     actionscript-mode
     affe
-    ag
     apache-mode
     cape
     clang-format
@@ -508,9 +507,13 @@
 ;;=======================================================================
 ;; ag silver-search
 ;;=====================================================================
-(require 'ag)
-(setq ag-highlight-search t)
-(setq ag-reuse-window 'nil)
+(use-package ag
+  :ensure t
+  :config
+  ;; 検索結果で検索語を強調表示する。
+  (setq ag-highlight-search t)
+  ;; 検索結果からファイルを開く際、同じウィンドウを使う。
+  (setq ag-reuse-window t))
 
 ;; wgrep
 (autoload 'wgrep-ag-setup "wgrep-ag")
