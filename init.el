@@ -41,12 +41,6 @@
 ;;  C-c C-cに割り当てる
 (global-set-key (kbd "C-c C-c") 'server-edit)
 
-;; ~/.emacs.d/submodules を再帰的に読み込み
-(let ((default-directory "~/.emacs.d/submodules"))
-  (setq load-path (cons default-directory load-path))
-  (normal-top-level-add-subdirs-to-load-path))
-
-
 ;; Add package repo
 (require 'package)
 (add-to-list 'package-archives
