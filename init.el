@@ -100,7 +100,6 @@
     vertico
     visual-regexp
     vterm
-    wakatime-mode
     web-mode
     yaml-mode
     yasnippet
@@ -532,9 +531,13 @@
 ;;=======================================================================
 ;; wakatime
 ;;=====================================================================
-;; (setq wakatime-api-key "")
-;; (setq wakatime-cli-path "/usr/local/bin/wakatime")
-;; (global-wakatime-mode)
+(use-package wakatime-mode
+  :ensure t
+  :config
+  ;; (setq wakatime-api-key "")
+  ;; (setq wakatime-cli-path "/usr/local/bin/wakatime")
+  ;; (global-wakatime-mode)
+  )
 
 ;;=======================================================================
 ;; markdown-mode
