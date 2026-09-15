@@ -82,7 +82,6 @@
     lsp-mode
     lsp-pyright
     lua-mode
-    markdown-mode
     marginalia
     nginx-mode
     orderless
@@ -544,9 +543,8 @@
 ;;=====================================================================
 (use-package markdown-mode
   :ensure t
-  :mode
-  ("README\\.md\\'" . gfm-mode)
-  ("\\.text\\'" . markdown-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.text\\'" . markdown-mode))
   :init
   ;; need to `brew install comrak`
   ;; 表・取り消し線・自動リンク・タスクリスト・数式を有効にする。
@@ -577,11 +575,9 @@
   const diagrams = document.querySelectorAll('code.language-mermaid');
   mermaid.initialize({ startOnLoad: false });
   await mermaid.run({ nodes: diagrams });
-</script>"
-                                 )
+</script>")
   (markdown-xhtml-body-preamble "<main class=\"container\">")
-  (markdown-xhtml-body-epilogue "</main>")
-  )
+  (markdown-xhtml-body-epilogue "</main>"))
 
 
 ;;=======================================================================
