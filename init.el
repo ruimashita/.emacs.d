@@ -71,7 +71,6 @@
     embark-consult
     ess
     expand-region
-    flycheck-color-mode-line
     go-mode
     google-c-style 
     haml-mode
@@ -604,15 +603,17 @@
                       :underline `(:color "pink" :style wave))
   )
 
-(require 'flycheck-color-mode-line)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
-)
-
-(set-face-attribute 'flycheck-color-mode-line-warning-face nil
-                    :inherit 'flycheck-fringe-warning :background "dark orange" :foreground "black" :weight 'normal)
-(set-face-attribute 'flycheck-color-mode-line-error-face nil
-                    :inherit 'flycheck-fringe-error :background "pink" :foreground "black" :weight 'normal)
+(use-package flycheck-color-mode-line
+  :ensure t
+  :config
+  ;; Flycheck の状態に合わせてモードラインの色を変える。
+  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+  ;; 警告時: 文字色 DarkOrange から、背景色 dark orange・文字色 black にする。
+  (set-face-attribute 'flycheck-color-mode-line-warning-face nil
+                      :inherit 'flycheck-fringe-warning :background "dark orange" :foreground "black" :weight 'normal)
+  ;; エラー時: 文字色 Pink から、背景色 pink・文字色 black にする。
+  (set-face-attribute 'flycheck-color-mode-line-error-face nil
+                      :inherit 'flycheck-fringe-error :background "pink" :foreground "black" :weight 'normal))
 
 
 ;;=======================================================================
