@@ -71,8 +71,6 @@
     embark-consult
     ess
     expand-region
-    flycheck
-    flycheck-pos-tip
     flycheck-color-mode-line
     go-mode
     google-c-style 
@@ -592,24 +590,25 @@
 ;;=======================================================================
 ;; flycheck
 ;;=====================================================================
-(require 'flycheck)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-(setq flycheck-highlighting-mode 'lines)
-
-(require 'flycheck-pos-tip)
-(eval-after-load 'flycheck
-  '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)
-)
+(use-package flycheck
+  :ensure t
+  :config
+  ;; 起動後に全バッファでFlycheckを有効にする。
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  ;; エラー内容をソース行の末尾に表示する。
+  (add-hook 'after-init-hook #'global-flycheck-annotate-mode)
+  ;; エラー箇所を行単位で強調表示する。
+  (setq flycheck-highlighting-mode 'lines)
+  ;; エラーの下線を既定の赤からピンクの波線に変更する。
+  (set-face-attribute 'flycheck-error nil
+                      :underline `(:color "pink" :style wave))
+  )
 
 (require 'flycheck-color-mode-line)
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
 )
 
-(set-face-attribute 'flycheck-error nil 
-                    :underline `(:color "pink" :style wave))
 (set-face-attribute 'flycheck-color-mode-line-warning-face nil
                     :inherit 'flycheck-fringe-warning :background "dark orange" :foreground "black" :weight 'normal)
 (set-face-attribute 'flycheck-color-mode-line-error-face nil
