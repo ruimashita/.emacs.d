@@ -70,7 +70,6 @@
     embark
     embark-consult
     ess
-    expand-region
     go-mode
     google-c-style 
     haml-mode
@@ -640,9 +639,13 @@
 ;;=======================================================================
 ;; expand-region
 ;;=====================================================================
-(require 'expand-region)
-(global-set-key (kbd "C-@") 'er/expand-region)
-(global-set-key (kbd "C-M-@") 'er/contract-region) ;; リージョンを狭める
+(use-package expand-region
+  :ensure t
+  :bind
+  ;; C-@ で選択範囲を段階的に広げる。
+  (("C-@" . er/expand-region)
+   ;; C-M-@ で選択範囲を一段階戻す。
+   ("C-M-@" . er/contract-region)))
 
 
 ;;=====================================================================
