@@ -87,7 +87,6 @@
     poly-R
     popup
     python
-    quickrun
     rainbow-mode
     ruff-format
     rvm
@@ -619,21 +618,23 @@
 ;;=======================================================================
 ;; quickrun
 ;;=====================================================================
-(require 'quickrun)
-(setq quickrun-debug t)
-(setq quickrun-timeout-seconds 60)
-
-(global-set-key (kbd "<f5>") 'quickrun)
-(global-set-key (kbd "M-<f5>") 'quickrun-compile-only)
-
-
-;; rmdをdockerで実行して、output.htmlを吐き出し、ブラウザでみる。
-(quickrun-add-command "rmd/docker"
-                      '(
-                        (:command . "docker-compose run r Rscript")
-                        (:exec    . "%c -e 'library (rmarkdown); rmarkdown::render (\"%s\", output_file=\"output.html\" );'")
-                        (:outputter . (lambda () (browse-url "output.html")))
-                        ))
+(use-package quickrun
+  :ensure t
+  :bind
+  ;; F5 で実行し、M-F5 でコンパイルだけ行う。
+  (("<f5>" . quickrun)
+   ("M-<f5>" . quickrun-compile-only))
+  :init
+  ;; 実行コマンドなどのデバッグ情報を表示する。
+  (setq quickrun-debug t)
+  ;; 実行の制限時間を60秒にする。
+  (setq quickrun-timeout-seconds 60)
+  :config
+  ;; R Markdown を Docker で実行し、output.html をブラウザで開く。
+  (quickrun-add-command "rmd/docker"
+                        '((:command . "docker-compose run r Rscript")
+                          (:exec . "%c -e 'library (rmarkdown); rmarkdown::render (\"%s\", output_file=\"output.html\" );'")
+                          (:outputter . (lambda () (browse-url "output.html"))))))
 
 
 ;;=======================================================================
