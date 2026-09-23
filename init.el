@@ -60,7 +60,6 @@
     actionscript-mode
     affe
     apache-mode
-    cape
     clang-format
     coffee-mode
     color-theme-modern
@@ -654,19 +653,31 @@
 ;; https://github.com/minad/cape
 ;;=====================================================================
 (use-package cape
+  :ensure t
   :init
+  ;; Abbrev に登録した略語を補完する。
   ;; (add-hook 'completion-at-point-functions #'cape-abbrev)
+  ;; バッファ内の単語を補完候補にする。
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  ;; ファイルやディレクトリのパスを補完する。
   (add-hook 'completion-at-point-functions #'cape-file)
+  ;; 絵文字の名前を補完する。
   (add-hook 'completion-at-point-functions #'cape-emoji)
+  ;; 他の行を候補にして、現在の行を補完する。
   ;; (add-hook 'completion-at-point-functions #'cape-line)
+  ;; 言語のキーワードを補完する。
   (add-hook 'completion-at-point-functions #'cape-keyword)
+  ;; Org や Markdown のコードブロック内で Emacs Lisp を補完する。
   ;; (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  ;; Eshell・Comint・ミニバッファの入力履歴から補完する。
   ;; (add-hook 'completion-at-point-functions #'cape-history)
   ;;
   ;; Ref: https://qiita.com/nobuyuki86/items/122e85b470b361ded0b4#cape
+  ;; 入力が変わるたびに LSP の補完キャッシュを更新する。
   ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-buster)
+  ;; LSP に一致する候補がない場合、他の補完関数も試す。
   ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-nonexclusive)
+  ;; キー入力による LSP の補完処理の中断を抑える。
   ;; (advice-add 'lsp-completion-at-point :around #'cape-wrap-noninterruptible)
   )
 
