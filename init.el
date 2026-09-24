@@ -64,7 +64,6 @@
     coffee-mode
     color-theme-modern
     consult
-    corfu
     dockerfile-mode
     embark
     embark-consult
@@ -689,43 +688,49 @@
 ;; https://github.com/minad/corfu
 ;;=====================================================================
 (use-package corfu
-  ;; Optional customizations
+  :ensure t
   :custom
-  (corfu-cycle t)                   ;; Enable cycling for `corfu-next/previous'
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  (corfu-preselect 'prompt)         ;; Preselect the prompt. 明示的に候補を選択して補完する
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  ;; 候補の末尾・先頭で移動を循環させる。
+  (corfu-cycle t)
+  ;; 補完範囲の境界に達しても補完を終了しない。
+  ;; (corfu-quit-at-boundary nil)
+  ;; 一致する候補がなくても補完を終了しない。
+  ;; (corfu-quit-no-match nil)
+  ;; 選択中の候補をバッファ内にプレビュー表示しない。
+  ;; (corfu-preview-current nil)
+  ;; 候補を自動選択せず、明示的に選択して補完する。
+  (corfu-preselect 'prompt)
+  ;; 入力が候補と完全一致しても、自動で補完を終了しない。
+  ;; (corfu-on-exact-match nil)
+  ;; 入力に応じて補完候補を自動表示する。
   (corfu-auto t)
-  (corfu-auto-delay  0) ;; 文字列入力してから補完候補が表示されるまでのディレイ
-  (corfu-popupinfo-delay 1) ;; 補完候補の関数名の横に、さらに説明文がポップアップされるまでのディレイ
-  (corfu-auto-prefix 1) ;; 文字列入力の何文字目から補完候補を表示するか
-
-  ;; TAB-and-Go customizations
-  ;; Use TAB for cycling, default is `corfu-complete'.
+  ;; 入力後の補完候補の表示待ち時間を0秒にする。
+  (corfu-auto-delay 0)
+  ;; 候補の説明を1秒後にポップアップ表示する。
+  (corfu-popupinfo-delay 1)
+  ;; 1文字入力したら補完候補を表示する。
+  (corfu-auto-prefix 1)
   :bind
   (:map corfu-map
-        ("SPC" . corfu-insert-separator) ;; 補完時に SPC をセパレータとして orderless 補完できる。
+        ;; SPC で Orderless 補完の検索語を区切る。
+        ("SPC" . corfu-insert-separator)
+        ;; TAB で次の候補に移動する。
         ("TAB" . corfu-next)
         ([tab] . corfu-next)
+        ;; Shift-TAB で前の候補に移動する。
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
-
-  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
+  ;; 全体での有効化の代わりに、コード編集・Shell・Eshell で有効にする設定例。
   ;; :hook ((prog-mode . corfu-mode)
   ;;        (shell-mode . corfu-mode)
   ;;        (eshell-mode . corfu-mode))
   :init
-  ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
-  ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
-  ;; variable `global-corfu-modes' to exclude certain modes.
-  (global-corfu-mode)
-
-  ;; Enable optional extension modes:
-  (corfu-history-mode)
-  (corfu-popupinfo-mode)
-  )
+  ;; 対象となるバッファ全体で Corfu を有効にする。
+  (global-corfu-mode 1)
+  ;; 選択履歴を使って補完候補の並び順を調整する。
+  (corfu-history-mode 1)
+  ;; 補完候補の説明をポップアップ表示する。
+  (corfu-popupinfo-mode 1))
 
 
 ;; A few more useful configurations...
