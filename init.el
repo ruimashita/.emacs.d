@@ -73,7 +73,6 @@
     haml-mode
     julia-mode 
     less-css-mode
-    lsp-mode
     lsp-pyright
     lua-mode
     marginalia
@@ -762,20 +761,26 @@
   :commands (lsp lsp-deferred)
   ;; Settings from https://github.com/minad/corfu/wiki
   :custom
-  (lsp-completion-provider :none) ;; we use Corfu!
-  (lsp-disabled-clients '(rubocop-ls)) ;; ruby-lsp がインストールされていても rubocop が優先されてしまうので、無効にします
+  ;; Corfu を使うため、Company との自動連携を無効にする。
+  (lsp-completion-provider :none)
+  ;; ruby-lsp を使うため、優先されてしまう rubocop-ls を無効にする。
+  (lsp-disabled-clients '(rubocop-ls))
   :init
+  ;; LSP の補完候補を Orderless で絞り込む。
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))) ;; Configure orderless for Corfu
-  :hook (
-         (typescript-mode . lsp-deferred)
-         ;; (python-mode . lsp-deferred) 別途 lsp-pyright で設定
-         (js-mode . lsp-deferred)
-         (ruby-mode . lsp-deferred)
-         (lsp-completion-mode . my/lsp-mode-setup-completion)
-         )
-)
+          '(orderless)))
+  :hook
+  ;; TypeScript の編集時に LSP を遅延起動する。
+  ((typescript-mode . lsp-deferred)
+   ;; Python の起動設定は別途 lsp-pyright で行う。
+   ;; (python-mode . lsp-deferred)
+   ;; JavaScript の編集時に LSP を遅延起動する。
+   (js-mode . lsp-deferred)
+   ;; Ruby の編集時に LSP を遅延起動する。
+   (ruby-mode . lsp-deferred)
+   ;; LSP の補完を有効にするときに Orderless を設定する。
+   (lsp-completion-mode . my/lsp-mode-setup-completion)))
 
 ;;=========================
 ;; shell
