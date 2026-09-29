@@ -783,14 +783,15 @@
    (lsp-completion-mode . my/lsp-mode-setup-completion)))
 
 ;;=========================
-;; shell
+;; sh-mode
 ;;=================================
-(add-hook 'sh-mode-hook
-          (lambda ()
-            (setq sh-basic-offset 4)
-            (setq sh-indentation 4)
-            )
-          )
+(use-package sh-script
+  ;; Emacs 標準添付なので、パッケージの自動インストールは行わない。
+  :ensure nil
+  :hook
+  (sh-mode . (lambda ()
+               ;; シェルスクリプトのインデントの基本幅を4桁にする。
+               (setq sh-basic-offset 4))))
 
 ;;=========================
 ;; ess-site(r-mode)
