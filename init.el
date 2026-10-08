@@ -67,7 +67,6 @@
     dockerfile-mode
     embark
     embark-consult
-    ess
     go-mode
     google-c-style 
     haml-mode
@@ -797,16 +796,19 @@
 ;; ess-site(r-mode)
 ;;=================================
 
-(autoload 'R-mode "ess-site" "Emacs Speaks Statistics mode" t)
-(add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
-
-(add-hook 'ess-mode-hook
-          (lambda ()
-            (setq ess-ask-for-ess-directory nil)
-            (setq ess-tab-always-indent t)
-            (setq ess-indent-with-fancy-comments nil)
-            )
-          )
+(use-package ess-site
+  :ensure ess
+  ;; .R ファイルを R-mode で開く。
+  :mode ("\\.R$" . R-mode)
+  :hook
+  (ess-mode . (lambda ()
+                ;; R などのプロセス起動時に作業ディレクトリを尋ねない。
+                (setq ess-ask-for-ess-directory nil)
+                ;; TAB はカーソル位置によらずインデントに使う。
+                (setq ess-tab-always-indent t)
+                ;; # の数によるコメントの特別な字下げを無効にする。
+                ;; ただし、後から ESS のスタイル設定で上書きされる場合がある。
+                (setq ess-indent-with-fancy-comments nil))))
 
 ;;=========================
 ;; poly-rmarkdown-mode
