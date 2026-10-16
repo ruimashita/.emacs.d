@@ -451,12 +451,14 @@
 ;;=======================================================================
 ;; savehist
 ;;=====================================================================
-;; kill-ring の直近50件をセッション間で保存する
-(setq savehist-additional-variables '((kill-ring . 50)))
-;; ファイル名の入力履歴を最大10000件保存する
-(put 'file-name-history 'history-length 10000)
-;; ミニバッファ履歴と追加指定した kill-ring の保存を有効にする
-(savehist-mode t)
+(use-package savehist
+  :config
+  ;; kill-ring の直近50件をセッション間で保存する
+  (setq savehist-additional-variables '((kill-ring . 50)))
+  ;; ファイル名の入力履歴を最大10000件保存する
+  (put 'file-name-history 'history-length 10000)
+  ;; ミニバッファ履歴と追加指定した kill-ring の保存を有効にする
+  (savehist-mode t))
 
 ;;=======================================================================
 ;; save-place
