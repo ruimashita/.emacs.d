@@ -88,7 +88,6 @@
     typescript-mode
     use-package
     vertico
-    visual-regexp
     vterm
     web-mode
     yaml-mode
@@ -443,7 +442,10 @@
 ;;=======================================================================
 ;; visual-regexp
 ;;=====================================================================
-(global-set-key (kbd "C-M-%") 'vr/query-replace)
+(use-package visual-regexp
+  :ensure t
+  ;; 置換結果をプレビューしながら正規表現で置換する。
+  :bind ("C-M-%" . vr/query-replace))
 
 
 ;;=======================================================================
