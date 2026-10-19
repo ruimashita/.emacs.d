@@ -61,7 +61,6 @@
     affe
     apache-mode
     clang-format
-    coffee-mode
     color-theme-modern
     consult
     dockerfile-mode
@@ -997,77 +996,79 @@
 ;;=======================================================================
 ;; coffee-mode
 ;;=====================================================================
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-(defun coffee-custom ()
-  "coffee-mode-hook"
+(use-package coffee-mode
+  :ensure t
+  ;; CoffeeScript と Cakefile を開く際に読み込む。
+  :mode (("Cakefile" . coffee-mode)
+         ("\\.coffee$" . coffee-mode))
+  :hook (coffee-mode . coffee-custom)
+  :config
+  (defun coffee-custom ()
+    "coffee-mode-hook"
 
-  ;; CoffeeScript uses two spaces.
-  (make-local-variable 'tab-width)
-  (set 'tab-width 2)
-  (setq coffee-tab-width 2)
+    ;; CoffeeScript uses two spaces.
+    (make-local-variable 'tab-width)
+    (set 'tab-width 2)
+    (setq coffee-tab-width 2)
 
 
-  ;; If you don't have js2-mode
-  ;; (setq coffee-js-mode 'javascript-mode)
+    ;; If you don't have js2-mode
+    ;; (setq coffee-js-mode 'javascript-mode)
 
-  ;; If you don't want your compiled files to be wrapped
-  (setq coffee-args-compile '("-c" "--bare"))
+    ;; If you don't want your compiled files to be wrapped
+    (setq coffee-args-compile '("-c" "--bare"))
 
-  ;; *Messages* spam
-  (setq coffee-debug-mode t)
+    ;; *Messages* spam
+    (setq coffee-debug-mode t)
 
-  ;; Emacs key binding
-  (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+    ;; Emacs key binding
+    (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
 
-  ;; Riding edge.
-  (setq coffee-command (expand-file-name "~/node_modules/.bin/coffee"))
+    ;; Riding edge.
+    (setq coffee-command (expand-file-name "~/node_modules/.bin/coffee"))
 
-  ;; Compile '.coffee' files on every save
-  ;; (and (file-exists-p (buffer-file-name))
-  ;;      (file-exists-p (coffee-compiled-file-name))
-  ;;      (coffee-cos-mode t))
+    ;; Compile '.coffee' files on every save
+    ;; (and (file-exists-p (buffer-file-name))
+    ;;      (file-exists-p (coffee-compiled-file-name))
+    ;;      (coffee-cos-mode t))
+
+    ;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
+    (define-key coffee-mode-map (kbd "<tab>") 'coffee-indent)
+    (define-key coffee-mode-map (kbd "<backtab>") 'coffee-unindent)
+    )
+
 
   ;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
-  (define-key coffee-mode-map (kbd "<tab>") 'coffee-indent)
-  (define-key coffee-mode-map (kbd "<backtab>") 'coffee-unindent)
-  )
+  (defun shift-region (numcols)
+    (setq region-start (region-beginning))
+    (setq region-finish (region-end))
+    (save-excursion
+      (if (< (point) (mark)) (exchange-point-and-mark))
+      (let ((save-mark (mark)))
+        (indent-rigidly region-start region-finish numcols))))
 
-(add-hook 'coffee-mode-hook 'coffee-custom)
+  (defun coffee-indent-block ()
+    (shift-region coffee-tab-width)
+    (setq deactivate-mark nil))
 
-;; https://github.com/bodil/emacs.d/blob/master/bodil-js.el
-(defun shift-region (numcols)
-  (setq region-start (region-beginning))
-  (setq region-finish (region-end))
-  (save-excursion
-    (if (< (point) (mark)) (exchange-point-and-mark))
-    (let ((save-mark (mark)))
-      (indent-rigidly region-start region-finish numcols))))
+  (defun coffee-unindent-block ()
+    (shift-region (- coffee-tab-width))
+    (setq deactivate-mark nil))
 
-(defun coffee-indent-block ()
-  (shift-region coffee-tab-width)
-  (setq deactivate-mark nil))
+  (defun coffee-indent ()
+    (interactive)
+    (if (and (boundp 'ac-trigger-command-p) (ac-trigger-command-p last-command))
+        (auto-complete)
+      (if mark-active
+          (coffee-indent-block)
+        (indent-for-tab-command))))
 
-(defun coffee-unindent-block ()
-  (shift-region (- coffee-tab-width))
-  (setq deactivate-mark nil))
-
-(defun coffee-indent ()
-  (interactive)
-  (if (and (boundp 'ac-trigger-command-p) (ac-trigger-command-p last-command))
-      (auto-complete)
+  (defun coffee-unindent ()
+    (interactive)
     (if mark-active
-        (coffee-indent-block)
-      (indent-for-tab-command))))
-
-(defun coffee-unindent ()
-  (interactive)
-  (if mark-active
-      (coffee-unindent-block)
-    (progn
-      (indent-line-to (- (current-indentation) coffee-tab-width)))))
-
+        (coffee-unindent-block)
+      (progn
+        (indent-line-to (- (current-indentation) coffee-tab-width))))))
 
 ;;=======================================================================
 ;; haml-mode
