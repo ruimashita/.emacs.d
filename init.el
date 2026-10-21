@@ -68,7 +68,6 @@
     embark-consult
     go-mode
     google-c-style 
-    haml-mode
     julia-mode 
     less-css-mode
     lsp-pyright
@@ -1073,11 +1072,13 @@
 ;;=======================================================================
 ;; haml-mode
 ;;=====================================================================
-(require 'haml-mode)
-(add-hook 'haml-mode-hook
-          '(lambda ()
-             (setq indent-tabs-mode nil)
-             (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+(use-package haml-mode
+  :ensure t
+  ;; インデントにはタブを使わない。
+  :hook (haml-mode . (lambda () (setq indent-tabs-mode nil)))
+  :config
+  ;; 改行後にインデントする。
+  (define-key haml-mode-map "\C-m" 'newline-and-indent))
 
 
 ;;=======================================================================
